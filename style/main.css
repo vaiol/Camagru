@@ -1,0 +1,367 @@
+/*header*/
+header > nav {
+    vertical-align: top;
+}
+
+.menu {
+    width: 100%;
+    margin-left: 2%;
+    color: white;
+    padding: 16px;
+    font-size: 1.2vmin;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+}
+
+.drop {
+    width: 10%;
+}
+
+.drop, .main{
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+.line-1 {
+    margin: auto;
+    position: relative;
+    background-color: white;
+    width: 99%;
+    height: .3pc;
+    margin-top: 7%;
+    margin-bottom: 7%;
+}
+
+.drop-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.drop-content a {
+    border-bottom: 1px solid rosybrown;
+}
+
+.ot {
+    margin-top: 5%;
+}
+
+.main {
+    background-color: coral;
+    color: white;
+    padding: 16px;
+    font-size: 1.8vmin;
+    border: none;
+    cursor: pointer;
+    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.2);
+    width: 10%;
+    margin-right: 11%;
+}
+
+.drop-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.drop-content a:hover {
+    background-color: #f1f1f1
+}
+
+.drop:hover .drop-content {
+    display: block;
+}
+
+
+/*content*/
+body {
+    min-height: 100%;
+    font-family: monospace;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /*overflow: hidden;*/
+    margin: 0;
+    text-align: center;
+}
+header {
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    height: 7.5%;
+    background-color: bisque;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+#content {
+    text-align: center;
+    width: 65%;
+    height: 100%;
+    position: relative;
+    margin: auto;
+    margin-top: 4.5%;
+    z-index: 1;
+
+}
+#create_input {
+    margin: auto;
+    position: relative;
+    width: 90%;
+    height: 10%;
+    padding: 5%;
+    padding-bottom: 14%;
+    background-color: white;
+    border-radius: 3px 3px 0 0;
+}
+#create_input p {
+    font-size: 1.4vmin;
+}
+#create_input input {
+    width: 60%;
+    height: 10%;
+}
+#create_form {
+    position: relative;
+    top: 3%;
+}
+.create_button, .button, .inline-button, .button_buy {
+    display: block;
+    margin: auto;
+    width: 100%;
+    position: relative;
+    border-radius: 0 0 3px 3px;
+    border:none;
+    font-size: 1.8vmin;
+}
+.button, .inline-button, .button_buy {
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    margin-top: 7%;
+    width: 41%;
+
+    color: white;
+    font-size: 1.5vmin;
+}
+.inline-button {
+    display: inline-block;
+    margin: auto;
+    margin-top: 5%;
+    width: 30%;
+}
+.button_buy {
+    display: inline-block;
+    margin: auto;
+    width: 20%;
+}
+#create_label {
+    position: relative;
+    top: 3%;
+    margin: 0;
+    font-size: 2.5vmin;
+    font-weight: 600;
+}
+.labe {
+    position: relative;
+    margin: 0;
+    font-size: 2.5vmin;
+    font-weight: 600;
+    margin-top: 5%;
+}
+
+#create_container {
+    margin: auto;
+    position: relative;
+    width: 41%;
+    border-radius: 3px;
+    box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.2);
+}
+.line {
+    margin: auto;
+    position: relative;
+    background-color: white;
+    width: 99%;
+    height: .3pc;
+    margin-top: 7%;
+}
+/*product*/
+.product {
+    margin: auto;
+    margin-top: 3%;
+    position: relative;
+    width: 70%;
+    height: 15%;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.2);
+}
+.price {
+    margin: auto;
+    position: relative;
+    display: inline-block;
+    width: 10%;
+    font-size: 1.5vmin;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.2);
+}
+.product img {
+    height: 100%;
+    width: 30%;
+    float: left;
+    border-radius: 3px 0 0 3px;
+}
+.product_delim {
+    height: 9%;
+    width: 10%;
+    margin: auto;
+}
+.product_name {
+    font-weight: 600;
+    font-size: 1.7vmin;
+}
+.product_info {
+    font-size: 1.1vmin;
+    margin-left: 28%;
+    margin-right: 5%;
+}
+#background {
+    margin: auto;
+    width: 65%;
+    height: 100%;
+    left: 17.5%;
+    position: fixed;
+    background-color: antiquewhite;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
+}
+
+#cart_res, #order_res {
+    font-size: 1.5vmin;
+    width: 60%;
+    margin: auto;
+    background-color: white;
+    padding: 5%;
+    box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.2);
+    margin-bottom: 10%;
+    margin-top: -5%;
+}
+
+#order_res {
+    margin-top: 5%;
+}
+
+#cart_res .price {
+    width: 20%;
+}
+
+#order_res #create_form {
+    text-align: left;
+}
+
+#order_res input {
+    width: 60%;
+    float: right;
+}
+
+.inline {
+    margin: auto;
+    display: inline-block;
+    width: 30%;
+    font-size: 1.2vmin;
+}
+.big {
+    font-size: 2.0vmin;
+    font-weight: 900;
+    color: white;
+}
+
+.user_delim {
+    height: 1px;
+    width: 1px;
+    margin: 5%;
+}
+.delivery {
+    margin: auto;
+    vertical-align: center;
+    border: none;
+    background-color: coral;
+    color: white;
+    width: 30%;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    font-size: 1.7vmin;
+}
+
+
+
+/*INFO POP UP*/
+#info {
+    width: 60%;
+    position: relative;
+    margin: auto;
+    opacity: 0;
+    cursor: default;
+    z-index: -100;
+    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    background-color: #ff936f;
+    color: white;
+    font-size: 1.3vmin;
+    margin-top: 5%;
+}
+
+#pop:target #info{
+    z-index: 100;
+    animation: fadeOut 3s linear forwards;
+}
+@keyframes fadeOut {
+    0%  { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; transform: translateY(0px);}
+    99% { opacity: 0; transform: translateY(-30px);}
+    100% { opacity: 0; }
+}
+
+/*COLORS*/
+.invisible {
+    z-index: -100;
+    background: transparent;
+    cursor: none;
+}
+
+.green {
+    background-color: #4ccd50;
+}
+
+.green:hover {
+    background-color: #4caf50;
+}
+
+.red {
+    background-color: #ef5350;
+}
+
+.red:hover {
+    background-color: red;
+}
+
+.coral {
+    background-color: coral;
+}
+
+.coral-1 {
+    background-color: #ff936f;
+}
+
+.coral-1:hover {
+    background-color: coral;
+}
