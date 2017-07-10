@@ -9,18 +9,18 @@
 <div id="background"></div>
 <header>
     <nav>
-        <div class="main" onclick="window.location='index.php';">
+        <div class="logo" onclick="window.location='index.php';">
             CAMAGRU
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='user/login.php';">logout</button>
+            <button class="drop-button" onclick="window.location='user/login.php';">logout</button>
         </div>
     </nav>
 </header>
 
 <section id="content">
 	<p id="create_label">Setup DB:</p>
-	<div id="info">
+	<div id="popup">
 		<p>
 			<?php
 				require_once('database.php');

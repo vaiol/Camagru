@@ -16,18 +16,23 @@ if ($_SESSION['user'] === null || $_SESSION['user'] == "") {
 <div id="background"></div>
 <header>
 	<nav>
-		<div class="main" onclick="window.location='index.php';">
+		<div class="logo" onclick="window.location='index.php';">
 			CAMAGRU
 		</div>
 		<div class="drop coral-1">
-			<button class="menu coral-1" onclick="window.location='logout.php';">logout</button>
+			<button class="drop-button coral-1" onclick="window.location='logout.php';">USER</button>
+            <div class="drop-content">
+                <a href="134">COMMENTS</a>
+                <a href="134">LIKES</a>
+                <a href="134">LOGOUT</a>
+            </div>
 		</div>
 	</nav>
 </header>
 
 <section id="content">
 	<p id="create_label">Main Page:</p>
-    <div id="info">
+    <div id="popup">
         <p>
             <?php
                 if ($_GET['action'] == "registered") echo "User successfully registered! You can login!";

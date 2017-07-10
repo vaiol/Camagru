@@ -29,17 +29,17 @@ if ($_SESSION['loggued_on_user'] != null && $_SESSION['loggued_on_user'] != "") 
 <div id="background"></div>
 <header>
     <nav>
-        <div class="main" onclick="window.location='index.php';">
+        <div class="logo" onclick="window.location='index.php';">
             CAMAGRU
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='logout.php';">logout</button>
+            <button class="drop-button" onclick="window.location='logout.php';">logout</button>
         </div>
     </nav>
 </header>
 <section id="content">
 	<p id="create_label">Registration:</p>
-    <div id="info">
+    <div id="popup">
         <p><?php if ($_GET['action'] == "error") echo "Wrong Password! Try again!";
 			else if ($_GET['action'] == "exist") echo "User exist!";
 			else echo "143"?></p>

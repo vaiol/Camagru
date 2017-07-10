@@ -29,26 +29,26 @@ if ($_POST['submit'] == "OK") {
 <div id="background"></div>
 <header>
     <nav>
-        <div class="main" onclick="window.location='../index.php';">
+        <div class="logo" onclick="window.location='../index.php';">
             STORE
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='../index.php?type=Flower';">Flowers</button>
+            <button class="drop-button" onclick="window.location='../index.php?type=Flower';">Flowers</button>
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='../index.php?type=Device';">Devices</button>
+            <button class="drop-button" onclick="window.location='../index.php?type=Device';">Devices</button>
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='../product/cart.php';">Cart</button>
+            <button class="drop-button" onclick="window.location='../product/cart.php';">Cart</button>
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='login.php';"><?php whoami()?></button>
+            <button class="drop-button" onclick="window.location='login.php';"><?php whoami()?></button>
         </div>
     </nav>
 </header>
 <section id="content">
 	<p id="create_label">Change password:</p>
-    <div id="info">
+    <div id="popup">
         <p><?php if ($_GET['action'] == "error") echo "Wrong Password! Try again!";
 			else echo "143"?></p>
     </div>

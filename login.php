@@ -35,18 +35,28 @@ if ($_SESSION['user'] !== null && $_SESSION['user'] != "") {
 <div id="background"></div>
 <header>
     <nav>
-        <div class="main" onclick="window.location='index.php';">
+        <div class="logo" onclick="window.location='index.php';">
             CAMAGRU
         </div>
         <div class="drop coral-1">
-            <button class="menu coral-1" onclick="window.location='logout.php';">logout</button>
+            <button class="drop-button coral-1" onclick="window.location='logout.php';">USER</button>
+            <div class="drop-content">
+                <button class="drop-info">
+                    COMMENTS:
+                    <div class="inline">100</div>
+                </button>
+                <button class="drop-info">
+                    LIKES:
+                    <div class="inline">1020</div>
+                </button>
+                <button class="drop-button" onclick="window.location='logout.php';">LOGOUT</button>
+            </div>
         </div>
     </nav>
 </header>
-
 <section id="content">
 	<p id="create_label">Main Page:</p>
-	<div id="info">
+	<div id="popup">
 		<p>
 			<?php
 				if ($_GET['action'] == "error") echo "Wrong Password or user doesn't exist! Try again!";

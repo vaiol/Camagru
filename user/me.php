@@ -19,26 +19,26 @@ if ($_SESSION['loggued_on_user'] == null || $_SESSION['loggued_on_user'] == "") 
 <div id="background"></div>
 <header>
     <nav>
-        <div class="main" onclick="window.location='../index.php';">
+        <div class="logo" onclick="window.location='../index.php';">
             STORE
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='../index.php?type=Flower';">Flowers</button>
+            <button class="drop-button" onclick="window.location='../index.php?type=Flower';">Flowers</button>
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='../index.php?type=Device';">Devices</button>
+            <button class="drop-button" onclick="window.location='../index.php?type=Device';">Devices</button>
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='../product/cart.php';">Cart</button>
+            <button class="drop-button" onclick="window.location='../product/cart.php';">Cart</button>
         </div>
         <div class="drop">
-            <button class="menu" onclick="window.location='login.php';"><?php whoami()?></button>
+            <button class="drop-button" onclick="window.location='login.php';"><?php whoami()?></button>
         </div>
     </nav>
 </header>
 <section id="content">
     <p id="create_label">Login: <?php whoami()?></p>
-    <div id="info">
+    <div id="popup">
         <p><?php if ($_GET['action'] == "success") echo "Password successfully changed!";
 			else echo "143"?></p>
     </div>
