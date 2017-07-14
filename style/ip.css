@@ -133,7 +133,6 @@ header, footer, #open-btn {
 
 #mySidebar a, #open-btn {
     border:none;
-    display:inline-block;
     outline:0;
     padding:8px 16px;
     vertical-align:middle;
