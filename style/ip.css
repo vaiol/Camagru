@@ -80,6 +80,7 @@ header, footer, #open-btn {
         height: 13vw;
     }
 }
+
 @media (max-width: 992px) {
     .container {
         width: 85%;
@@ -143,10 +144,12 @@ header, footer, #open-btn {
     cursor:pointer;
     white-space:nowrap
 }
+
 #mySidebar a:hover, #open-btn:hover {
     color:#000!important;
     background-color:#ccc!important
 }
+
 #mySidebar button {
     font-size:18px!important
 }
@@ -175,6 +178,7 @@ header, footer, #open-btn {
     z-index:2;
     animation:animate-overlay 0.8s
 }
+
 @keyframes animate-overlay {
     from {
         opacity:0

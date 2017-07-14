@@ -19,21 +19,6 @@
         <a href="#" class="w3-bar-item w3-button">Link 3</a>
     </div>
     <div  id="myOverlay" onclick="w3_close()" style="cursor:pointer"></div>
-
-
-
-
-<!--    <button onclick="w3_open()" id="open-btn">☰</button>-->
-<!--    <nav>-->
-<!--        <img id="logo" src="img/logo.png" alt="logo">-->
-<!--    </nav>-->
-<!--    <div id="mySidebar" style="display:none;" >-->
-<!--        <button onclick="w3_close()">Close &times;</button>-->
-<!--        <a href="#">Link 1</a>-->
-<!--        <a href="#">Link 2</a>-->
-<!--        <a href="#">Link 3</a>-->
-<!--    </div>-->
-<!--    <div  id="myOverlay" onclick="w3_close()" style="cursor:pointer"></div>-->
 </header>
 <div id="content">
     <div class="container">
