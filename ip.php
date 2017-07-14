@@ -7,63 +7,18 @@
 </head>
 <body>
 <header>
+    <div class="block">
+<!--        <div id="logo">-->
+            <img src="img/logo.png" alt="logo">
+<!--        </div>-->
+    </div>
+
     <nav>
 
     </nav>
 </header>
 <div id="content">
     <div class="container">
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
-        <div class="photo">
-
-        </div>
         <div class="photo">
 
         </div>

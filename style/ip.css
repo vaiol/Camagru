@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    /*font-family: "Apple Braille";*/
 }
 
 header {
@@ -9,7 +10,7 @@ header {
 
     background-color: #ffffff;
     height: 77px;
-    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2);
     z-index: 100;
     position: relative;
 }
@@ -25,27 +26,33 @@ footer {
 
 #content {
     background-color: #f6f4f1;
-    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2);
 }
 
 .container {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+}
 
+.block, .container {
     margin: auto;
     width: 1344px;
 }
 
+
+
 .photo {
     width: 31%;
     height: 250px;
-    background-color: #ff936f;
     margin: 1%;
+
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.3);
+    border-radius: 2px;
+    background-color: #ff936f;
 }
 
 @media (max-width: 1920px) {
-    .container {
+    .block, .container {
         width: 70%;
     }
     .photo {
@@ -59,7 +66,7 @@ footer {
     }
 }
 @media (max-width: 992px) {
-    .container {
+    .block, .container {
         width: 85%;
     }
     .photo {
@@ -75,7 +82,7 @@ footer {
 }
 
 @media (max-width: 600px) {
-    .container {
+    .block, .container {
         width: 90%;
     }
     .photo {
