@@ -109,6 +109,10 @@ header, footer, #open-btn {
 }
 
 /*Sidebar*/
+.hidden {
+    display: none;
+}
+
 #mySidebar {
     height:100%;
     width:200px;
@@ -116,7 +120,6 @@ header, footer, #open-btn {
     position:fixed!important;
     z-index:3;
     overflow:auto;
-    animation:animate-sidebar 0.4s;
     border-right:1px solid #ccc!important
 }
 
@@ -153,7 +156,15 @@ header, footer, #open-btn {
     font-size:18px!important
 }
 
-@keyframes animate-sidebar {
+.sidebarOpen {
+    animation:animate-sidebar-open 0.3s
+}
+
+.sidebarClose {
+    animation:animate-sidebar-close 0.3s
+}
+
+@keyframes animate-sidebar-open {
     from{
         left:-300px;
         opacity:0
@@ -163,10 +174,19 @@ header, footer, #open-btn {
         opacity:1
     }
 }
+@keyframes animate-sidebar-close {
+    from{
+        left:0;
+        opacity:1
+    }
+    to {
+        left:-300px;
+        opacity:0
+    }
+}
 
 #myOverlay {
     position:fixed;
-    display:none;
     width:100%;
     height:100%;
     top:0;
@@ -175,14 +195,32 @@ header, footer, #open-btn {
     bottom:0;
     background-color:rgba(0,0,0,0.5);
     z-index:2;
-    animation:animate-overlay 0.8s
+    cursor: pointer;
 }
 
-@keyframes animate-overlay {
+
+.overlayOpen {
+    animation:animate-overlay-open 0.3s
+}
+
+.overlayClose {
+    animation:animate-overlay-close 0.3s
+}
+
+@keyframes animate-overlay-open {
     from {
         opacity:0
     }
     to{
         opacity:1
+    }
+}
+
+@keyframes animate-overlay-close {
+    from {
+        opacity:1
+    }
+    to{
+        opacity:0
     }
 }
