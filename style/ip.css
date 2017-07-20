@@ -5,38 +5,23 @@ body {
     flex-direction: column;
 }
 
-nav {
-    width: 1344px;
-    margin: auto;
-}
-
 header {
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-
     background-color: #ffffff;
-    height: 77px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2);
     z-index: 2;
     position: relative;
+    color: #816d65;
+    height: 64px;
 }
 
-footer {
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
 
-    height: 77px;
-    background-color: #e0dddc;
-}
 
 #content {
     background-color: #f6f4f1;
     flex: 1;
 }
 
-.container {
+nav, .container {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
@@ -44,9 +29,23 @@ footer {
     width: 1344px;
 }
 
+nav {
+    margin: auto;
+    height: inherit;
+    justify-content: space-between;
+}
+
+
+
+.container {
+    margin: auto;
+    height: inherit;
+    justify-content: space-between;
+}
+
 .photo {
     width: 31%;
-    height: 250px;
+    height: 234px;
     margin: 1%;
 
     cursor: pointer;
@@ -55,172 +54,188 @@ footer {
     background-color: #ff936f;
 }
 
+#navigation {
+    letter-spacing: 2px;
+    display: inline-block;
+    height: inherit;
+    text-align: center;
+    font-size: 0;
+}
+
+
+
+.test {
+    background-color: #846c63;
+    background-color: #816d65;
+}
+
+#navigation > a {
+    display: inline-block;
+    height: inherit;
+    font-size: 18px;
+    padding: 0 20px;
+    margin: 0 -1px;
+    border: 0;
+    text-decoration: none;
+    line-height: 64px;
+    color: inherit;
+    -webkit-transition: all 0.3s ease;;
+    -moz-transition: all 0.3s ease;;
+    -o-transition: all 0.3s ease;;
+    transition: all 0.3s ease;
+}
+
+#navigation > a:hover {
+    background-color: #bdb1ad;
+    color: #fff
+}
+
+#navigation a:last-child {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-bottom: 3px solid #816d65;
+    /*margin: up right down left*/
+}
+
+#logo {
+    display: inline-block;
+    height: inherit;
+    line-height: 90px;
+    width: 180px;
+}
+
+#logo > img{
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+}
+
+
 #open-btn {
     float: left;
     position: absolute;
     display: none;
-    font-size: 18px;
+    font-size: 40px;
+    height: inherit;
+
 }
 
-#logo {
-    display: block;
-    width: 180px;
-    cursor: pointer;
+
+/*
+FOOTER
+*/
+
+footer {
+    padding: 0;
+    margin: 0;
 }
 
-header, footer, #open-btn {
+#foot, #author {
+    width: 100%;
+}
+
+#foot {
+    height: 150px;
+    background-color: #bdb1ad;
+}
+
+#author {
     height: 64px;
+    background-color: #816d65;
 }
 
+#foot > .container {
+    margin: auto;
+}
+
+
+
+
+
+/*
+<i class="material-icons">dashboard</i>
+<i class="material-icons">add_a_photo</i>
+<i class="material-icons">favorite</i>
+ */
+
+
+
+/**
+MEDIA
+ */
 @media (max-width: 1920px) {
     nav, .container {
         width: 70%;
     }
     .photo {
-        height: 13vw;
+        height: 12.21vw;
     }
 }
 
 @media (max-width: 992px) {
-    .container {
+    nav, .container {
         width: 85%;
     }
     .photo {
-        height: 20vw;
+        height: 22.9vw;
         width: 48%;
     }
     #logo {
+        display: block;
         margin: auto;
     }
     #open-btn {
         display: block;
     }
+    #navigation {
+        display: none;
+    }
 }
 
 @media (max-width: 600px) {
-    .container {
+    nav, .container {
         width: 90%;
     }
     .photo {
-        height: 40vw;
+        height: 46.92vw;
         width: 96%;
         margin: 2%;
     }
-}
-
-/*Sidebar*/
-.hidden {
-    display: none;
-}
-
-#mySidebar {
-    height:100%;
-    width:200px;
-    background-color:#fff;
-    position:fixed!important;
-    z-index:3;
-    overflow:auto;
-    border-right:1px solid #ccc!important
-}
-
-#mySidebar * {
-    width:100%;
-    display:block;
-    padding:8px 16px;
-    text-align:left;
-    border:none;
-    outline:none;
-    white-space:normal;
-    float:none
-}
-
-#mySidebar a, #open-btn {
-    border:none;
-    outline:0;
-    padding:8px 16px;
-    vertical-align:middle;
-    overflow:hidden;
-    text-decoration:none;
-    color:inherit;
-    background-color: inherit;
-    cursor:pointer;
-    white-space:nowrap
-}
-
-#mySidebar a:hover, #open-btn:hover {
-    color:#000!important;
-    background-color:#ccc!important
-}
-
-#mySidebar button {
-    font-size:18px!important
-}
-
-.sidebarOpen {
-    animation:animate-sidebar-open 0.3s
-}
-
-.sidebarClose {
-    animation:animate-sidebar-close 0.3s
-}
-
-@keyframes animate-sidebar-open {
-    from{
-        left:-300px;
-        opacity:0
-    }
-    to {
-        left:0;
-        opacity:1
-    }
-}
-@keyframes animate-sidebar-close {
-    from{
-        left:0;
-        opacity:1
-    }
-    to {
-        left:-300px;
-        opacity:0
+    #open-btn {
+        margin: -2px 0 0 2%;
     }
 }
 
-#myOverlay {
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background-color:rgba(0,0,0,0.5);
-    z-index:2;
-    cursor: pointer;
+
+/*
+ICONS
+ */
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    margin: 0 5px 5px 0;
+    /*margin: up right down left*/
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
 }
 
-
-.overlayOpen {
-    animation:animate-overlay-open 0.3s
-}
-
-.overlayClose {
-    animation:animate-overlay-close 0.3s
-}
-
-@keyframes animate-overlay-open {
-    from {
-        opacity:0
-    }
-    to{
-        opacity:1
-    }
-}
-
-@keyframes animate-overlay-close {
-    from {
-        opacity:1
-    }
-    to{
-        opacity:0
-    }
-}

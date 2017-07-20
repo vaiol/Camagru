@@ -1,0 +1,145 @@
+.hidden {
+    display: none;
+}
+
+#mySidebar {
+    top:0;
+    height:100%;
+    width:200px;
+    background-color:#fff;
+    position:fixed;
+    z-index:3;
+    overflow:hidden;
+    border-right:1px solid #ccc
+}
+
+#mySidebar * {
+    width:100%;
+    display:block;
+    padding:8px 16px;
+    text-align:left;
+    border:none;
+    outline:none;
+    white-space:normal;
+    float:none
+}
+
+#mySidebar a, #open-btn {
+    border:none;
+    outline:0;
+    padding:8px 16px;
+    vertical-align:middle;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    background-color: inherit;
+    cursor:pointer;
+    white-space:nowrap
+}
+
+#mySidebar a {
+    width: 86%;
+    text-align: left;
+    line-height: 60px;
+    min-height: 60px;
+    font-size: 18px;
+    -webkit-transition: all 0.3s ease;;
+    -moz-transition: all 0.3s ease;;
+    -o-transition: all 0.3s ease;;
+    transition: all 0.3s ease;
+}
+
+#mySidebar .material-icons {
+    display: inline;
+}
+
+
+
+#open-btn {
+    color: #816d65;
+    padding: 0;
+    margin: -2px 0 0 .5%;
+}
+
+#mySidebar a:hover {
+    background-color: #bdb1ad;
+    color: #fff
+}
+
+#mySidebar button {
+    background-color: #b2a6a2;
+    color: #fff;
+    font-size: 20px;
+    min-height: 60px;
+    cursor: pointer;
+}
+
+
+.sidebarOpen {
+    animation:animate-sidebar-open 0.3s
+}
+
+.sidebarClose {
+    animation:animate-sidebar-close 0.3s
+}
+
+@keyframes animate-sidebar-open {
+    from{
+        left:-300px;
+        opacity:0
+    }
+    to {
+        left:0;
+        opacity:1
+    }
+}
+@keyframes animate-sidebar-close {
+    from{
+        left:0;
+        opacity:1
+    }
+    to {
+        left:-300px;
+        opacity:0
+    }
+}
+
+#myOverlay {
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:rgba(0,0,0,0.5);
+    z-index:2;
+    cursor: pointer;
+}
+
+
+.overlayOpen {
+    animation:animate-overlay-open 0.3s
+}
+
+.overlayClose {
+    animation:animate-overlay-close 0.3s
+}
+
+@keyframes animate-overlay-open {
+    from {
+        opacity:0
+    }
+    to{
+        opacity:1
+    }
+}
+
+@keyframes animate-overlay-close {
+    from {
+        opacity:1
+    }
+    to{
+        opacity:0
+    }
+}

@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>IP</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style/sidebar.css?v=<?=time();?>">
     <link rel="stylesheet" type="text/css" href="style/ip.css?v=<?=time();?>">
     <script src="js/ip.js"></script>
 </head>
 <body class="Site">
 <header>
-    <button onclick="sidebarOpen()" id="open-btn">☰</button>
     <nav>
-        <img id="logo" src="img/logo.png" alt="logo">
+        <button id="open-btn" onclick="sidebarOpen()" >☰</button>
+        <div id="logo">
+            <img src="img/logo.png" alt="logo">
+        </div>
+        <div id="navigation">
+            <a href="#"><i class="material-icons">photo_camera</i>Cam</a>
+            <a href="#"><i class="material-icons">dashboard</i>My Feed</a>
+            <a href="#">Logout</a>
+        </div>
     </nav>
     <div id="mySidebar" class="hidden sidebarClose">
-        <button onclick="sidebarClose()">Close &times;</button>
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+        <button onclick="sidebarClose()"><i class="material-icons">clear</i>Close</button>
+        <a href="#"><i class="material-icons">home</i>Home</a>
+        <a href="#"><i class="material-icons">photo_camera</i>Cam</a>
+        <a href="#"><i class="material-icons">dashboard</i>My Feed</a>
+        <a href="#"><i class="material-icons">highlight_off</i>Logout</a>
     </div>
     <div id="myOverlay" class="hidden overlayClose" onclick="sidebarClose()"></div>
 </header>
@@ -46,7 +57,26 @@
     </div>
 </div>
 <footer>
+    <div id="foot">
+        <div class="container">
+            <div class="column">
 
+            </div>
+            <div class="column">
+
+            </div>
+            <div class="column">
+
+            </div>
+            <div class="column">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="author">
+
+    </div>
 </footer>
 </body>
 </html>
