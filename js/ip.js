@@ -21,5 +21,5 @@ function sidebarClose() {
     setTimeout(function() {
         overlay.style.display = "none";
         sidebar.style.display = "none";
-    }, 300);
+    }, 200);
 }

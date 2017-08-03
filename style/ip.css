@@ -3,6 +3,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    font-family: 'Play','Saira Extra Condensed', 'Roboto', sans-serif;
 }
 
 header {
@@ -27,6 +28,11 @@ nav, .container {
     align-items: flex-start;
     margin: 1vw auto;
     width: 1344px;
+}
+
+.wide-container {
+    width: 1372px;
+    padding-top: 10px;
 }
 
 nav {
@@ -62,13 +68,6 @@ nav {
     font-size: 0;
 }
 
-
-
-.test {
-    background-color: #846c63;
-    background-color: #816d65;
-}
-
 #navigation > a {
     display: inline-block;
     height: inherit;
@@ -85,27 +84,72 @@ nav {
     transition: all 0.3s ease;
 }
 
+/*#navigation > a {*/
+    /*font-size: 18px;*/
+    /*padding: 5px 20px;*/
+    /*margin: 0 -1px;*/
+    /*margin-top: 15px;*/
+    /*text-decoration: none;*/
+    /*color: inherit;*/
+    /*-webkit-transition: all 0.3s ease;;*/
+    /*-moz-transition: all 0.3s ease;;*/
+    /*-o-transition: all 0.3s ease;;*/
+    /*transition: all 0.3s ease;*/
+    /*display: inline-block;*/
+    /*height: 34px;*/
+    /*!*line-height: 34px;*!*/
+    /*box-sizing: border-box;*/
+    /*-moz-box-sizing: border-box;*/
+    /*-webkit-box-sizing: border-box;*/
+    /*!*margin: up right down left*!*/
+/*}*/
+
+#navigation > div {
+    font-size: 18px;
+    padding: 5px 20px;
+    margin: 0 -1px;
+    margin-top: 15px;
+    margin-left: 10px;
+    text-decoration: none;
+    color: inherit;
+    -webkit-transition: all 0.3s ease;;
+    -moz-transition: all 0.3s ease;;
+    -o-transition: all 0.3s ease;;
+    transition: all 0.3s ease;
+    display: inline-block;
+    height: 34px;
+    /*line-height: 34px;*/
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid #bdb1ad;
+    border-radius: 2px;
+}
+
 #navigation > a:hover {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-bottom: 2px #816d65 solid;
     background-color: #bdb1ad;
     color: #fff
 }
 
-#navigation a:last-child {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border-bottom: 3px solid #816d65;
-    /*margin: up right down left*/
+#navigation > div:hover {
+    border: 1px solid #816d65;
+    background-color: #816d65;
+    color: #fff
 }
 
 #logo {
     display: inline-block;
     height: inherit;
     line-height: 90px;
-    width: 180px;
+    width: 200px;
 }
 
-#logo > img{
+#logo > img {
+    /*margin-top: 9px;*/
     display: inline-block;
     width: 100%;
     cursor: pointer;
@@ -122,11 +166,13 @@ nav {
 }
 
 
+
 /*
 FOOTER
 */
 
 footer {
+    color: #f6f4f1;
     padding: 0;
     margin: 0;
 }
@@ -149,15 +195,11 @@ footer {
     margin: auto;
 }
 
+#foot .column {
+    margin-top: 20px;
+}
 
 
-
-
-/*
-<i class="material-icons">dashboard</i>
-<i class="material-icons">add_a_photo</i>
-<i class="material-icons">favorite</i>
- */
 
 
 
@@ -168,13 +210,16 @@ MEDIA
     nav, .container {
         width: 70%;
     }
+    .wide-container {
+        width: 71.47%;
+    }
     .photo {
         height: 12.21vw;
     }
 }
 
 @media (max-width: 992px) {
-    nav, .container {
+    nav, .container, .wide-container {
         width: 85%;
     }
     .photo {
@@ -194,7 +239,7 @@ MEDIA
 }
 
 @media (max-width: 600px) {
-    nav, .container {
+    nav, .container, .wide-container {
         width: 90%;
     }
     .photo {
@@ -224,7 +269,7 @@ ICONS
     word-wrap: normal;
     white-space: nowrap;
     direction: ltr;
-    margin: 0 5px 5px 0;
+    margin: 0 5px 3px 0;
     /*margin: up right down left*/
 
     /* Support for all WebKit browsers. */

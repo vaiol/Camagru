@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>IP</title>
+    <link href="https://fonts.googleapis.com/css?family=Play|Roboto|Saira+Extra+Condensed" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/sidebar.css?v=<?=time();?>">
@@ -19,7 +20,7 @@
         <div id="navigation">
             <a href="#"><i class="material-icons">photo_camera</i>Cam</a>
             <a href="#"><i class="material-icons">dashboard</i>My Feed</a>
-            <a href="#">Logout</a>
+            <div>Logout</div>
         </div>
     </nav>
     <div id="mySidebar" class="hidden sidebarClose">
@@ -32,7 +33,7 @@
     <div id="myOverlay" class="hidden overlayClose" onclick="sidebarClose()"></div>
 </header>
 <div id="content">
-    <div class="container">
+    <div class="container wide-container">
         <div class="photo">
 
         </div>
@@ -60,16 +61,19 @@
     <div id="foot">
         <div class="container">
             <div class="column">
-
+                <h2>About Project</h2>
+                <h3></h3>
             </div>
             <div class="column">
-
+                <h2></h2>
+                <h3></h3>
             </div>
             <div class="column">
-
-            </div>
-            <div class="column">
-
+                <h2>Connect</h2>
+                <div class="social"></div>
+                <div class="social"></div>
+                <div class="social"></div>
+                <div class="social"></div>
             </div>
         </div>
     </div>

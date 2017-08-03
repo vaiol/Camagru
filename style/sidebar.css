@@ -119,11 +119,11 @@
 
 
 .overlayOpen {
-    animation:animate-overlay-open 0.3s
+    animation:animate-overlay-open 0.30s
 }
 
 .overlayClose {
-    animation:animate-overlay-close 0.3s
+    animation:animate-overlay-close 0.30s
 }
 
 @keyframes animate-overlay-open {
