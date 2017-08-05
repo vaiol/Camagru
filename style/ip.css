@@ -182,7 +182,7 @@ footer {
 }
 
 #foot {
-    height: 150px;
+    /*height: 150px;*/
     background-color: #bdb1ad;
 }
 
@@ -195,8 +195,12 @@ footer {
     margin: auto;
 }
 
+.column {
+    width: 50%;
+}
+
 #foot .column {
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 
 
