@@ -8,6 +8,7 @@
           rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style/sidebar.css?v=<?=time();?>">
     <link rel="stylesheet" type="text/css" href="style/ip.css?v=<?=time();?>">
+    <link rel="stylesheet" type="text/css" href="style/slider.css?v=<?=time();?>">
     <script src="js/ip.js"></script>
 </head>
 <body class="Site">
@@ -33,27 +34,110 @@
     <div id="myOverlay" class="hidden overlayClose" onclick="sidebarClose()"></div>
 </header>
 <div id="content">
+    <article id="slider">
+        <div>
+            <p>
+                <span>Elegant Responsive Pure CSS3 Slider</span>
+            </p>
+        </div>
+        <input checked type='radio' name='slider' id='slide1'/>
+        <input type='radio' name='slider' id='slide2'/>
+        <input type='radio' name='slider' id='slide3'/>
+        <input type='radio' name='slider' id='slide4'/>
+        <input type='radio' name='slider' id='slide5'/>
+        <div id="slides">
+            <div id="container">
+                <div class="inner">
+                    <article>
+                        <img src="http://placehold.it/942X400"/>
+                    </article>
+                    <article>
+                        <div class='caption'>
+                            <bar>A Bubble on Flower</bar>
+                        </div>
+                        <img src="https://0.s3.envato.com/files/84450220/img/Dummy1-942X400.jpg"/>
+                    </article>
+                    <article>
+                        <div class='caption'>
+                            <bar>A Small Elephant <a href="#">read more</a></bar>
+                        </div>
+                        <img src="https://0.s3.envato.com/files/84450220/img/Dummy2-942X400.jpg"/>
+                    </article>
+                    <article>
+                        <div class='caption'>
+                            <bar>A Yellow Flower <a href="#">read more</a></bar>
+                        </div>
+                        <img src="https://0.s3.envato.com/files/84450220/img/Dummy3-942X400.jpg"/>
+                    </article>
+                    <article>
+                        <div class='caption'>
+                            <bar>A Pink Flower</bar>
+                        </div>
+                        <img src="https://0.s3.envato.com/files/84450220/img/Dummy4-942X400.jpg"/>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div id="commands">
+            <label for='slide1'></label>
+            <label for='slide2'></label>
+            <label for='slide3'></label>
+            <label for='slide4'></label>
+            <label for='slide5'></label>
+        </div>
+        <div id="active">
+            <label for='slide1'></label>
+            <label for='slide2'></label>
+            <label for='slide3'></label>
+            <label for='slide4'></label>
+            <label for='slide5'></label>
+        </div>
+    </article>
     <div class="container wide-container">
         <div class="photo">
-
+            <img src="img/i1.jpg" alt="image-content">
         </div>
         <div class="photo">
-
+            <img src="img/i2.jpg" alt="image-content">
         </div>
         <div class="photo">
-
+            <img src="img/i3.jpg" alt="image-content">
         </div>
         <div class="photo">
-
+            <img src="img/i4.jpg" alt="image-content">
         </div>
         <div class="photo">
-
+            <img src="img/i5.jpg" alt="image-content">
         </div>
         <div class="photo">
-
+            <img src="img/i6.jpg" alt="image-content">
         </div>
         <div class="photo">
-
+            <img src="img/i7.jpg" alt="image-content">
+        </div>
+        <div class="photo">
+            <img src="img/i8.jpg" alt="image-content">
+        </div>
+        <div class="photo">
+            <img src="img/i9.jpg" alt="image-content">
+        </div>
+        <div class="photo">
+            <img src="img/i10.jpg" alt="image-content">
+        </div>
+        <div class="photo">
+            <img src="img/i11.jpg" alt="image-content">
+        </div>
+        <div class="photo">
+            <img src="img/i12.jpg" alt="image-content">
+        </div>
+        <div class="photo">
+            <img src="img/i13.jpg" alt="image-content">
+        </div>
+        <div class="photo">
+            <img src="img/i14.jpg" alt="image-content">
+        </div>
+        <div class="photo">
+            <img src="img/i15.jpg" alt="image-content">
         </div>
     </div>
 </div>
@@ -70,13 +154,13 @@
             <div class="column s3">
                 <h2>Connect</h2>
                 <div class="social">
-                    <img src="img/social-facebook.png" alt="facebook">
-                </div>
-                <div class="social">
-                    <img src="img/social-google.png" alt="google">
+                    <img src="img/social-github.png" alt="github">
                 </div>
                 <div class="social">
                     <img src="img/social-linkedin.png" alt="linkedin">
+                </div>
+                <div class="social">
+                    <img src="img/social-google.png" alt="google">
                 </div>
                 <div class="social">
                     <img src="img/social-telegram.png" alt="telegram">
