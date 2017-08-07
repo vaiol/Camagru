@@ -60,24 +60,35 @@
 <footer>
     <div id="foot">
         <div class="container">
-            <div class="column">
+            <div class="column s8">
                 <h2>About Project</h2>
                 <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h3>
             </div>
-            <div class="column">
+            <div class="column s1"></div>
+            <div class="column s3">
                 <h2>Connect</h2>
-                <div class="social"></div>
-                <div class="social"></div>
-                <div class="social"></div>
-                <div class="social"></div>
+                <div class="social">
+                    <img src="img/social-facebook.png" alt="facebook">
+                </div>
+                <div class="social">
+                    <img src="img/social-google.png" alt="google">
+                </div>
+                <div class="social">
+                    <img src="img/social-linkedin.png" alt="linkedin">
+                </div>
+                <div class="social">
+                    <img src="img/social-telegram.png" alt="telegram">
+                </div>
             </div>
         </div>
     </div>
 
     <div id="author">
-
+        <div class="container">
+            © 2017 Alexander Stepanov, All rights reserved.
+        </div>
     </div>
 </footer>
 </body>
