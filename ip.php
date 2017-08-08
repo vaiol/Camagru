@@ -35,18 +35,13 @@
 </header>
 <div id="content">
     <article id="slider">
-        <div>
-            <p>
-                <span>Elegant Responsive Pure CSS3 Slider</span>
-            </p>
-        </div>
         <input checked type='radio' name='slider' id='slide1'/>
         <input type='radio' name='slider' id='slide2'/>
         <input type='radio' name='slider' id='slide3'/>
         <input type='radio' name='slider' id='slide4'/>
         <input type='radio' name='slider' id='slide5'/>
         <div id="slides">
-            <div id="container">
+            <div id="cont">
                 <div class="inner">
                     <article>
                         <img src="http://placehold.it/942X400"/>
