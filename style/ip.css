@@ -41,12 +41,32 @@ nav {
     justify-content: space-between;
 }
 
-
-
 .container {
     margin: auto;
     height: inherit;
     justify-content: space-between;
+}
+
+
+/*PHOTO*/
+
+.photo > .likes {
+    /*float: right;*/
+    visibility: hidden;
+    opacity: 0;
+    position: relative;
+    background: white;
+    padding: 0 5px;
+    margin: -12% 0 0 86%;
+    z-index: 3;
+    transition: visibility 0s, opacity .3s ease;
+}
+
+.photo i {
+    display: inline-block;
+    font-size: 15px;
+    margin: 0 0 2px 5px;
+    color:#ef5350;
 }
 
 .photo {
@@ -58,11 +78,19 @@ nav {
     box-shadow: 0 1px 2px 0 rgba(0,0,0,0.3);
     border-radius: 2px;
     background-color: #ff936f;
+    -webkit-transition: all 0.3s ease;;
+    -moz-transition: all 0.3s ease;;
+    -o-transition: all 0.3s ease;;
     transition: all 0.3s ease;
 }
 
 .photo:hover {
     box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.4);
+}
+
+.photo:hover > .likes {
+    visibility: visible;
+    opacity: .6;
 }
 
 .photo > img {
@@ -262,7 +290,6 @@ footer .container {
 
 
 
-
 /**
 MEDIA
  */
@@ -283,7 +310,7 @@ MEDIA
         width: 85%;
     }
     .wide-container {
-        width: 86.3%;
+        width: 86.9%;
     }
     .photo {
         height: 22.9vw;
@@ -313,7 +340,7 @@ MEDIA
         width: 90%;
     }
     .wide-container {
-        width: 92.6%;
+        width: 93.6%;
     }
     .photo {
         height: 46.92vw;

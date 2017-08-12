@@ -44,31 +44,31 @@
             <div id="cont">
                 <div class="inner">
                     <article>
-                        <img src="http://placehold.it/942X400"/>
+                        <img src="https://www.nasa.gov/sites/default/files/images/751993main_Manhattan_NS_large.jpg"/>
                     </article>
                     <article>
                         <div class='caption'>
-                            <bar>A Bubble on Flower</bar>
+                            <div class="bar">A Bubble on Flower</div>
                         </div>
-                        <img src="https://0.s3.envato.com/files/84450220/img/Dummy1-942X400.jpg"/>
+                        <img src="http://wallscollection.net/wp-content/uploads/2016/12/Animals-Image-HD-Collection.jpg"/>
                     </article>
                     <article>
                         <div class='caption'>
-                            <bar>A Small Elephant <a href="#">read more</a></bar>
+                            <div class="bar">A Small Elephant <a href="#">read more</a></div>
                         </div>
-                        <img src="https://0.s3.envato.com/files/84450220/img/Dummy2-942X400.jpg"/>
+                        <img src="http://livemoments.in/wp-content/uploads/2016/08/Wonderful-Zen-Image.jpg"/>
                     </article>
                     <article>
                         <div class='caption'>
-                            <bar>A Yellow Flower <a href="#">read more</a></bar>
+                            <div class="bar">A Yellow Flower <a href="#">read more</a></div>
                         </div>
-                        <img src="https://0.s3.envato.com/files/84450220/img/Dummy3-942X400.jpg"/>
+                        <img src="http://www.gratuit-en-ligne.com/telecharger-gratuit-en-ligne/telecharger-image-wallpaper-gratuit/image-wallpaper-animaux/img/images/image-wallpaper-animaux-autruche.jpg"/>
                     </article>
                     <article>
                         <div class='caption'>
-                            <bar>A Pink Flower</bar>
+                            <div class="bar">A Pink Flower</div>
                         </div>
-                        <img src="https://0.s3.envato.com/files/84450220/img/Dummy4-942X400.jpg"/>
+                        <img src="http://d2rormqr1qwzpz.cloudfront.net/photos/2015/02/11/73227-hurricane_and_spitfire.jpg"/>
                     </article>
                 </div>
             </div>
@@ -91,48 +91,63 @@
     <div class="container wide-container">
         <div class="photo">
             <img src="img/i1.jpg" alt="image-content">
+            <div class="likes">41<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i2.jpg" alt="image-content">
+            <div class="likes">43<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i3.jpg" alt="image-content">
+            <div class="likes">23<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i4.jpg" alt="image-content">
+            <div class="likes">67<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i5.jpg" alt="image-content">
+            <div class="likes">31<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i6.jpg" alt="image-content">
+            <div class="likes">58<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i7.jpg" alt="image-content">
+            <div class="likes">83<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i8.jpg" alt="image-content">
+            <div class="likes">64<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i9.jpg" alt="image-content">
+            <div class="likes">96<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i10.jpg" alt="image-content">
+            <div class="likes">27<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i11.jpg" alt="image-content">
+            <div class="likes">66<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i12.jpg" alt="image-content">
+            <div class="likes">78<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i13.jpg" alt="image-content">
+            <div class="likes">35<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i14.jpg" alt="image-content">
+            <div class="likes">74<i class="material-icons">favorite</i></div>
         </div>
         <div class="photo">
             <img src="img/i15.jpg" alt="image-content">
+            <div class="likes">13<i class="material-icons">favorite</i></div>
         </div>
     </div>
 </div>
