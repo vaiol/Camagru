@@ -1,46 +1,145 @@
-<?php
-session_start();
-if ($_SESSION['user'] === null || $_SESSION['user'] == "") {
-	header("Location: login.php?action=register#pop");
-	exit;
-}
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Index</title>
-    <link rel="stylesheet" type="text/css" href="style/main.css?v=<?=time();?>">
-</head>
-<body id="pop">
-<div id="background"></div>
-<header>
-	<nav>
-		<div class="logo" onclick="window.location='index.php';">
-			CAMAGRU
-		</div>
-		<div class="drop coral-1">
-			<button class="drop-button coral-1" onclick="window.location='logout.php';">USER</button>
-            <div class="drop-content">
-                <a href="134">COMMENTS</a>
-                <a href="134">LIKES</a>
-                <a href="134">LOGOUT</a>
-            </div>
-		</div>
-	</nav>
-</header>
-
-<section id="content">
-	<p id="create_label">Main Page:</p>
-    <div id="popup">
-        <p>
-            <?php
-                if ($_GET['action'] == "registered") echo "User successfully registered! You can login!";
-                else if ($_GET['action'] == "welcome") echo "WELCOME!!!";
-			    else echo "143";
-			?>
-        </p>
+<?php require "header.html"; ?>
+<div id="content">
+    <div class="main-text">
+        <div class="container">
+            FEATURED PHOTOS
+        </div>
     </div>
-</section>
-</body>
-</html>
+    <div class="container wide-container">
+        <div class="photo">
+            <img src="img/i1.jpg" alt="image-content">
+            <div class="likes">41<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i2.jpg" alt="image-content">
+            <div class="likes">43<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i3.jpg" alt="image-content">
+            <div class="likes">23<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i4.jpg" alt="image-content">
+            <div class="likes">67<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i5.jpg" alt="image-content">
+            <div class="likes">31<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i6.jpg" alt="image-content">
+            <div class="likes">58<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i7.jpg" alt="image-content">
+            <div class="likes">83<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i8.jpg" alt="image-content">
+            <div class="likes">64<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i9.jpg" alt="image-content">
+            <div class="likes">96<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i10.jpg" alt="image-content">
+            <div class="likes">27<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i11.jpg" alt="image-content">
+            <div class="likes">66<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i12.jpg" alt="image-content">
+            <div class="likes">78<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i13.jpg" alt="image-content">
+            <div class="likes">35<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i14.jpg" alt="image-content">
+            <div class="likes">74<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i15.jpg" alt="image-content">
+            <div class="likes">13<i class="material-icons">favorite</i></div>
+        </div>
+    </div>
+    <div class="main-text">
+        <div class="container">
+            LAST ADDED PHOTOS
+        </div>
+    </div>
+    <div class="container wide-container">
+        <div class="photo">
+            <img src="img/i1.jpg" alt="image-content">
+            <div class="likes">41<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i2.jpg" alt="image-content">
+            <div class="likes">43<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i3.jpg" alt="image-content">
+            <div class="likes">23<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i4.jpg" alt="image-content">
+            <div class="likes">67<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i5.jpg" alt="image-content">
+            <div class="likes">31<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i6.jpg" alt="image-content">
+            <div class="likes">58<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i7.jpg" alt="image-content">
+            <div class="likes">83<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i8.jpg" alt="image-content">
+            <div class="likes">64<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i9.jpg" alt="image-content">
+            <div class="likes">96<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i10.jpg" alt="image-content">
+            <div class="likes">27<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i11.jpg" alt="image-content">
+            <div class="likes">66<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i12.jpg" alt="image-content">
+            <div class="likes">78<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i13.jpg" alt="image-content">
+            <div class="likes">35<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i14.jpg" alt="image-content">
+            <div class="likes">74<i class="material-icons">favorite</i></div>
+        </div>
+        <div class="photo">
+            <img src="img/i15.jpg" alt="image-content">
+            <div class="likes">13<i class="material-icons">favorite</i></div>
+        </div>
+    </div>
+    <div id="butt-next">
+        <div class="container">
+            <div class="butt-next-button">
+                SHOW MORE
+            </div>
+        </div>
+    </div>
+</div>
+<?php require "footer.html" ?>

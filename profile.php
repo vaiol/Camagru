@@ -2,7 +2,7 @@
 <div id="content">
     <div class="main-text">
         <div class="container">
-            LOGIN
+            PROFILE
         </div>
     </div>
 </div>
