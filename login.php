@@ -5,5 +5,7 @@
             LOGIN
         </div>
     </div>
+    <div class="container wide-container">
+    </div>
 </div>
 <?php require "footer.html"; ?>

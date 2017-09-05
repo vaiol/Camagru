@@ -75,7 +75,6 @@ nav {
     margin: 1%;
 
     cursor: pointer;
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.3);
     border-radius: 2px;
     background-color: #ff936f;
     -webkit-transition: all 0.3s ease;;
@@ -105,8 +104,6 @@ nav {
     text-align: center;
     font-size: 0;
 }
-
-
 
 #navigation > a {
     display: inline-block;
@@ -188,7 +185,6 @@ nav {
     display: none;
     font-size: 40px;
     height: inherit;
-
 }
 
 
