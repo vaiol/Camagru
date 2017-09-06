@@ -1,40 +1,101 @@
 #cam {
     width: 100%;
-    /*background-color: #b2a6a2;*/
-    /*box-shadow: 0 0 5px 1px rgba(0,0,0,0.3);*/
-    /*margin-bottom: 100px;*/
 }
 
-#camera {
-    margin: 30px 0;
+button {
+    border:none;
+    background-color: inherit;
 }
 
-#camera > img {
+canvas {
+    width: 100%;
+    -webkit-transition: all 0.3s ease;;
+    -moz-transition: all 0.9s ease;;
+    -o-transition: all 0.9s ease;;
+    transition: all 0.9s ease;
+    z-index: 2;
+}
+
+
+
+#canvas:hover {
+    opacity: 0.15;
+}
+
+#cans {
+    width: 33%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 1px solid #816d65;
+    color: #816d65;
+    /*height: inherit;*/
+}
+
+#cans, #video, #control, #overlay-canvas {
+    margin: 15px 0;
+}
+
+#video, #overlay-canvas {
+    width: 66%;
+}
+
+#video {
+    visibility: hidden;
+    position: absolute;
+}
+
+#canvas1, #canvas2, #canvas3, #canvas4 {
     width: 100%;
 }
+#canvas3, #canvas4 {
+    display: none;
+}
+
+#effects img {
+    width: 100%;
+    height: 100%;
+}
+
+.effect {
+    -webkit-transition: all 0.3s ease;;
+    -moz-transition: all 0.3s ease;;
+    -o-transition: all 0.3s ease;;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.effect:hover {
+
+    box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.4);
+}
+
+
 
 #effects {
     display: flex;
     justify-content: space-between;
     width: 100%;
     height: 10vw;
-    margin-bottom: 30px;
+
 }
 
 .effect {
     width: 24.5%;
-    background-color: #ff936f;
+    background-color: #999999;
     height: inherit;
     display: inline-block;
+    border-radius: 3px;
 }
 
 #control {
-    margin: 30px 0;
     display: flex;
     justify-content: space-between;
     width: 100%;
     height: 80px;
-    /*background-color: #DDDDDD;*/
 }
 
 .butt {
@@ -57,8 +118,100 @@
     color: #816d65;
 }
 
+#cans p {
+    margin: 1% 0 0 1%;
+    font-size: 20px;
+    position: absolute;
+}
+
 .butt:hover {
     background-color: #816d65;
     color: #f6f4f1;
-    /*box-shadow: 0 0 5px 1px rgba(0,0,0,0.3);*/
+}
+
+#overlay-canvas {
+    cursor: pointer;
+    background-color: inherit;
+    z-index: 1;
+    color: #f6f4f1;
+    -webkit-transition: all 0.9s ease;;
+    -moz-transition: all 0.9s ease;;
+    -o-transition: all 0.9s ease;;
+    transition: all 0.9s ease;
+}
+
+#overlay-canvas p {
+    font-size: 50px;
+    position: absolute;
+    margin: 15% 7% 0 2%;
+    z-index: 0;
+    visibility: hidden;
+}
+
+#overlay-canvas:hover {
+    background-color: #999999;
+}
+
+#overlay-canvas:hover p {
+    visibility: visible;
+}
+
+
+@media (max-width: 1920px) {
+    #overlay-canvas p {
+        font-size: 2.5vw;
+    }
+}
+
+
+@media (max-width: 992px) {
+    #cans {
+        width: 19.88%;
+    }
+    #cans, #video, #overlay-canvas {
+        margin: 10px 0;
+    }
+    #video, #overlay-canvas {
+        width: 79.5%;
+    }
+    #canvas3, #canvas4 {
+        display: block;
+    }
+    #overlay-canvas p {
+        font-size: 3.5vw;
+        margin: 25% 0 0 2%;
+    }
+}
+
+@media (max-width: 600px) {
+    #cans {
+        flex-direction: row;
+        width: 100%;
+    }
+    #canvas1, #canvas2, #canvas3, #canvas4 {
+        width: 24.5%;
+        height: 17vw;
+    }
+    #cans, #video, #overlay-canvas {
+        margin: 5px 0;
+    }
+    #video, #overlay-canvas {
+        width: 100%;
+    }
+    #effects {
+        height: 15vw;
+    }
+    #control {
+        height: 50px;
+    }
+    .butt {
+        line-height: 50px;
+    }
+    #overlay-canvas p {
+        font-size: 4.8vw;
+        margin: 33% 0 0 2%;
+    }
+    #cans {
+        height: 0;
+    }
 }

@@ -23,3 +23,4 @@ function sidebarClose() {
         sidebar.style.display = "none";
     }, 200);
 }
+
