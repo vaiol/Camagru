@@ -31,7 +31,14 @@ canvas {
     box-sizing: border-box;
     border: 1px solid #816d65;
     color: #816d65;
+    /*overflow: scroll;*/
+    overflow-y:scroll;
+    /*padding-right: 10px;*/
     /*height: inherit;*/
+}
+
+#cans::-webkit-scrollbar {
+    display: none;
 }
 
 #cans, #video, #control, #overlay-canvas {
@@ -129,6 +136,11 @@ canvas {
     color: #f6f4f1;
 }
 
+
+#overlay-canvas canvas {
+    /*position: absolute;*/
+}
+
 #overlay-canvas {
     cursor: pointer;
     background-color: inherit;
@@ -143,7 +155,7 @@ canvas {
 #overlay-canvas p {
     font-size: 50px;
     position: absolute;
-    margin: 15% 7% 0 2%;
+    margin: 0 2% 0 2%;
     z-index: 0;
     visibility: hidden;
 }
@@ -156,6 +168,15 @@ canvas {
     visibility: visible;
 }
 
+
+#getimage {
+    display: none;
+}
+
+
+#canvas {
+    margin-bottom: -5px;
+}
 
 @media (max-width: 1920px) {
     #overlay-canvas p {
@@ -179,7 +200,7 @@ canvas {
     }
     #overlay-canvas p {
         font-size: 3.5vw;
-        margin: 25% 0 0 2%;
+        /*margin: 25% 0 0 2%;*/
     }
 }
 
@@ -209,7 +230,7 @@ canvas {
     }
     #overlay-canvas p {
         font-size: 4.8vw;
-        margin: 33% 0 0 2%;
+        /*margin: 33% 0 0 2%;*/
     }
     #cans {
         height: 0;
