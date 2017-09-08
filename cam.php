@@ -10,7 +10,7 @@
         <div class="container">
             <video id="video" autoplay></video>
             <input type='file' id='getimage' name="background-image" onchange="readURL();this.value=null;return false;">
-            <div id="overlay-canvas" onclick="document.getElementById('getimage').click();">
+            <div id="overlay-canvas">
                 <p id="click-text">CLICK TO DOWNLOAD OTHER IMAGE</p>
                 <canvas id="canvas"></canvas>
             </div>
@@ -22,19 +22,23 @@
                 <canvas id="canvas3"></canvas>
                 <canvas id="canvas4"></canvas>
             </div>
-
+            Rotate:
+            <input type="range" name="rotate" min="-90" max="90" id="rotat">
+            Resize:
+            <input type="range" name="resize" min="-400" max="400" id="resize">
+            <input type="hidden" value="0" id="img_resize">
             <div id="effects">
-                <div class="effect" onclick="changeEffect('e1.png')">
-                    <img src="p1.png" alt="effect1">
+                <div class="effect" onclick="changeEffect('img/effects/e1.png')">
+                    <img src="img/effects/e1.png" alt="effect1">
                 </div>
-                <div class="effect" onclick="changeEffect('e2.png')">
-                    <img src="p2.png" alt="effect2">
+                <div class="effect" onclick="changeEffect('img/effects/e2.png')">
+                    <img src="img/effects/e2.png" alt="effect2">
                 </div>
-                <div class="effect" onclick="changeEffect('e3.png')">
-                    <img src="p3.png" alt="effect3">
+                <div class="effect" onclick="changeEffect('img/effects/e3.png')">
+                    <img src="img/effects/e3.png" alt="effect3">
                 </div>
-                <div class="effect" onclick="changeEffect('e4.png')">
-                    <img src="p4.png" alt="effect4">
+                <div class="effect" onclick="changeEffect('img/effects/e4.png')">
+                    <img src="img/effects/e4.png" alt="effect4">
                 </div>
             </div>
 
@@ -55,4 +59,7 @@
     </div>
 </div>
 <script src="js/cam.js"></script>
+<script src="js/input-range.js"></script>
 <?php require "footer.html"; ?>
+
+<!--                 onclick="document.getElementById('getimage').click();"-->

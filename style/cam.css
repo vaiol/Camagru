@@ -18,9 +18,7 @@ canvas {
 
 
 
-#canvas:hover {
-    opacity: 0.15;
-}
+
 
 #cans {
     width: 33%;
@@ -160,13 +158,17 @@ canvas {
     visibility: hidden;
 }
 
-#overlay-canvas:hover {
-    background-color: #999999;
-}
+/*#overlay-canvas:hover {*/
+    /*background-color: #999999;*/
+/*}*/
 
-#overlay-canvas:hover p {
-    visibility: visible;
-}
+/*#overlay-canvas:hover p {*/
+    /*visibility: visible;*/
+/*}*/
+
+/*#canvas:hover {*/
+    /*opacity: 0.15;*/
+/*}*/
 
 
 #getimage {

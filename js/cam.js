@@ -24,7 +24,16 @@ else if(navigator.getUserMedia) {
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 var imageObj1 = new Image();
-imageObj1.src = "p0.png";
+imageObj1.src = "img/effects/e0.png";
+
+
+/*START*/
+var moveXAmount=0;
+var moveYAmount=0;
+var isDragging=false;
+var prevX = 0;
+var prevY = 0;
+/*END*/
 
 var img = null;
 time = setInterval(function(){
@@ -49,7 +58,25 @@ time = setInterval(function(){
         canvas.height = height;
         context.drawImage(video, 0, 0, width, height);
     }
-    context.drawImage(imageObj1, 0, 0, width, height);
+    context.save();
+    // ctx.clearRect(0, 0, canvas.width, canvas.height); //clear the canvas
+    var im_width = parseInt(width) + parseInt(document.getElementById("resize").value);
+    var im_height = parseInt(height) + parseInt(document.getElementById("resize").value);
+    context.translate(width / 2, height / 2);
+    context.rotate(document.getElementById("rotat").value * Math.PI / 180);
+
+    // context.translate((width / 2) * -1, (height / 2) * -1);
+    context.drawImage(imageObj1, moveXAmount, moveYAmount, im_width, im_height);
+    context.restore();
+
+
+
+    // ctx.save(); //saves the state of canvas
+    //
+    // ctx.translate(cache.width, cache.height); //let's translate
+    // ctx.rotate(Math.PI / 180 * (ang += 5)); //increment the angle and rotate the image
+    // ctx.drawImage(img, -cache.width / 2, -cache.height / 2, cache.width, cache.height); //draw the image ;)
+    // ctx.restore(); //restore the state of canvas
 
 },10);
 
@@ -92,7 +119,7 @@ var changeEffect = function(src) {
     imageObj1.src = src;
 };
 var clearEffect = function() {
-    imageObj1.src = "p0.png";
+    imageObj1.src = "img/effects/e0.png";
     img = null;
 };
 
@@ -109,3 +136,30 @@ function readURL() {
         reader.readAsDataURL(file);
     }
 }
+
+$("#canvas").mousedown(function(){
+    isDragging = true;
+    prevX=0;
+    prevY=0;
+
+});
+
+$(window).mouseup(function(){
+    isDragging = false;
+    prevX=0;
+    prevY=0;
+});
+
+$(window).mousemove(function(event) {
+    if( isDragging == true )
+    {
+        if( prevX>0 || prevY>0)
+        {
+            moveXAmount += event.pageX - prevX;
+            moveYAmount += event.pageY - prevY;
+            // buildcanvas();
+        }
+        prevX = event.pageX;
+        prevY = event.pageY;
+    }
+});
