@@ -1,3 +1,4 @@
+//GET VIDEO FROM WEBCAM
 var video = document.getElementById('video');
 if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
@@ -21,143 +22,130 @@ else if(navigator.getUserMedia) {
         video.play();
     }, errBack);
 }
+
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-var imageObj1 = new Image();
-imageObj1.src = "img/effects/e0.png";
-
-
-/*START*/
-var moveXAmount=0;
-var moveYAmount=0;
-var isDragging=false;
+var moveX = 0;
+var moveY = 0;
+var isDragging = false;
 var prevX = 0;
 var prevY = 0;
-/*END*/
+var uploadedImg = null;
+var maskImg = null;
 
-var img = null;
-time = setInterval(function(){
+function changePageStyle() {
     if (window.matchMedia( "(min-width: 601px)" ).matches) {
-        document.getElementById('cans').style.height = document.getElementById('canvas').offsetHeight+'px';
+        document.getElementById('previews').style.height = document.getElementById('canvas').offsetHeight+'px';
     } else {
-        document.getElementById('cans').style.height= 'auto';
+        document.getElementById('previews').style.height= 'auto';
     }
     document.getElementById('click-text').style.lineHeight = document.getElementById('canvas').offsetHeight+'px';
-    var width;
-    var height;
-    if (img !== null) {
-        width = img.width;
-        height = img.height;
-        canvas.width = width;
-        canvas.height = height;
-        context.drawImage(img, 0, 0, width, height);
+}
+
+function renderFrame() {
+    changePageStyle();
+
+    if (uploadedImg === null) {
+        //GET PICTURE FROM WEBCAM
+        canvas.width = document.getElementById('video').offsetWidth;
+        canvas.height = document.getElementById('video').offsetHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
     } else {
-        width = document.getElementById('video').offsetWidth;
-        height = document.getElementById('video').offsetHeight;
-        canvas.width = width;
-        canvas.height = height;
-        context.drawImage(video, 0, 0, width, height);
+        //GET PICTURE FROM UPLOADED IMAGE
+        canvas.width = uploadedImg.width;
+        canvas.height = uploadedImg.height;
+        context.drawImage(uploadedImg, 0, 0, canvas.width, canvas.height);
     }
-    context.save();
-    // ctx.clearRect(0, 0, canvas.width, canvas.height); //clear the canvas
-    var im_width = parseInt(width) + parseInt(document.getElementById("resize").value);
-    var im_height = parseInt(height) + parseInt(document.getElementById("resize").value);
-    context.translate(width / 2, height / 2);
-    context.rotate(document.getElementById("rotat").value * Math.PI / 180);
 
-    // context.translate((width / 2) * -1, (height / 2) * -1);
-    context.drawImage(imageObj1, moveXAmount, moveYAmount, im_width, im_height);
-    context.restore();
+    if (maskImg !== null)
+    {
+        //RENDER MASK FRAME WITH ROTATING, RESIZING AND MOVING
+        const resize = parseInt(document.getElementById("resize").value);
+        const imgWidth = parseInt(canvas.width) + resize;
+        const imgHeight = parseInt(canvas.height) + resize;
+        const nextMoveX = moveX - resize / 2;
+        const nextMoveY = moveY - resize / 2;
+        context.save();
+        context.translate(nextMoveX + imgWidth / 2, nextMoveY + imgHeight / 3);
+        context.rotate(document.getElementById("rotat").value * Math.PI / 180);
+        context.translate((nextMoveX + imgWidth /2) * -1, (nextMoveY + imgHeight/3) * -1);
+        context.drawImage(maskImg, nextMoveX, nextMoveY, imgWidth, imgHeight);
+        context.restore();
+    }
+}
 
+//RENDER 40 FRAMES IN SECOND
+setInterval(renderFrame, 25);
 
+function renderPreviews() {
+    var previews = [];
+    var childs = document.getElementById('previews').childNodes;
+    childs.forEach(function(currentValue) {
+        if(currentValue.tagName === 'CANVAS'){
+            previews.push(currentValue);
+        }
+    });
+    for (var i = previews.length - 1; i >= 0; i--) {
+        var currentContext = previews[i].getContext('2d');
+        var nextCanvas;
+        if (i === 0) {
+            nextCanvas = canvas;
+        } else {
+            nextCanvas = previews[i - 1];
+        }
+        previews[i].width = nextCanvas.width;
+        previews[i].height = nextCanvas.height;
+        currentContext.drawImage(nextCanvas, 0, 0, nextCanvas.width, nextCanvas.height);
+    }
+}
 
-    // ctx.save(); //saves the state of canvas
-    //
-    // ctx.translate(cache.width, cache.height); //let's translate
-    // ctx.rotate(Math.PI / 180 * (ang += 5)); //increment the angle and rotate the image
-    // ctx.drawImage(img, -cache.width / 2, -cache.height / 2, cache.width, cache.height); //draw the image ;)
-    // ctx.restore(); //restore the state of canvas
-
-},10);
-
-var canvas1 = document.getElementById('canvas1');
-var context1 = canvas1.getContext('2d');
-var canvas2 = document.getElementById('canvas2');
-var context2 = canvas2.getContext('2d');
-var canvas3 = document.getElementById('canvas3');
-var context3 = canvas3.getContext('2d');
-var canvas4 = document.getElementById('canvas4');
-var context4 = canvas4.getContext('2d');
-
-/*SAVE*/
-document.getElementById("snap").addEventListener("click", function() {
-    var width = document.getElementById('canvas').offsetWidth;
-    var height = document.getElementById('canvas').offsetHeight;
-
-    canvas4.width = width;
-    canvas4.height = height;
-    context4.drawImage(canvas3, 0, 0, width, height);
-    canvas3.width = width;
-    canvas3.height = height;
-    context3.drawImage(canvas2, 0, 0, width, height);
-    canvas2.width = width;
-    canvas2.height = height;
-    context2.drawImage(canvas1, 0, 0, width, height);
-    canvas1.width = width;
-    canvas1.height = height;
-    context1.drawImage(canvas, 0, 0, width, height);
-
+function saveImage() {
+    renderPreviews();
     document.getElementById('hidden_data').value = canvas.toDataURL("image/png");
     var fd = new FormData(document.forms["form1"]);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'camsave.php', true);
     xhr.send(fd);
-});
+}
 
+function changeEffect(src) {
+    maskImg = new Image();
+    maskImg.src = src;
+}
+function clearEffect() {
+    maskImg = null;
+    uploadedImg = null;
+}
 
-var changeEffect = function(src) {
-    imageObj1.src = src;
-};
-var clearEffect = function() {
-    imageObj1.src = "img/effects/e0.png";
-    img = null;
-};
-
-function readURL() {
-    console.log('yoyo');
+function uploadImg() {
     var file = document.getElementById("getimage").files[0];
     var reader = new FileReader();
     reader.onloadend = function() {
-        img = new Image();
-        img.src = reader.result;
-        console.log('success 2')
+        uploadedImg = new Image();
+        uploadedImg.src = reader.result;
     };
     if (file) {
         reader.readAsDataURL(file);
     }
 }
 
-$("#canvas").mousedown(function(){
+document.getElementById("canvas").addEventListener("mousedown", function() {
     isDragging = true;
     prevX=0;
     prevY=0;
-
 });
 
-$(window).mouseup(function(){
+window.addEventListener("mouseup", function() {
     isDragging = false;
     prevX=0;
     prevY=0;
 });
 
-$(window).mousemove(function(event) {
-    if( isDragging == true )
-    {
-        if( prevX>0 || prevY>0)
-        {
-            moveXAmount += event.pageX - prevX;
-            moveYAmount += event.pageY - prevY;
-            // buildcanvas();
+window.addEventListener("mousemove", function() {
+    if( isDragging === true && maskImg !== null) {
+        if( prevX>0 || prevY>0) {
+            moveX += event.pageX - prevX;
+            moveY += event.pageY - prevY;
         }
         prevX = event.pageX;
         prevY = event.pageY;

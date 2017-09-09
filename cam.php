@@ -9,13 +9,13 @@
     <div id="cam">
         <div class="container">
             <video id="video" autoplay></video>
-            <input type='file' id='getimage' name="background-image" onchange="readURL();this.value=null;return false;">
+            <input type='file' id='getimage' name="background-image" onchange="uploadImg();this.value=null;return false;">
             <div id="overlay-canvas">
                 <p id="click-text">CLICK TO DOWNLOAD OTHER IMAGE</p>
                 <canvas id="canvas"></canvas>
             </div>
 
-            <div id="cans">
+            <div id="previews">
                 <p>PREVIEW</p>
                 <canvas id="canvas1"></canvas>
                 <canvas id="canvas2"></canvas>
@@ -49,7 +49,7 @@
             <div class="butt" style="margin-right: 0.4%" onclick="clearEffect()">
                 CLEAR
             </div>
-            <div class="butt" id="snap" style="margin-left: 0.4%">
+            <div class="butt" id="snap" style="margin-left: 0.4%" onclick="saveImage()">
                 SAVE
             </div>
             <form method="post" accept-charset="utf-8" name="form1">
@@ -59,7 +59,7 @@
     </div>
 </div>
 <script src="js/cam.js"></script>
-<script src="js/input-range.js"></script>
+<script src="js/input-range-ui.js"></script>
 <?php require "footer.html"; ?>
 
 <!--                 onclick="document.getElementById('getimage').click();"-->

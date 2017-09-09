@@ -20,7 +20,7 @@ canvas {
 
 
 
-#cans {
+#previews {
     width: 33%;
     display: flex;
     justify-content: space-between;
@@ -35,11 +35,11 @@ canvas {
     /*height: inherit;*/
 }
 
-#cans::-webkit-scrollbar {
+#previews::-webkit-scrollbar {
     display: none;
 }
 
-#cans, #video, #control, #overlay-canvas {
+#previews, #video, #control, #overlay-canvas {
     margin: 15px 0;
 }
 
@@ -123,7 +123,7 @@ canvas {
     color: #816d65;
 }
 
-#cans p {
+#previews p {
     margin: 1% 0 0 1%;
     font-size: 20px;
     position: absolute;
@@ -188,10 +188,10 @@ canvas {
 
 
 @media (max-width: 992px) {
-    #cans {
+    #previews {
         width: 19.88%;
     }
-    #cans, #video, #overlay-canvas {
+    #previews, #video, #overlay-canvas {
         margin: 10px 0;
     }
     #video, #overlay-canvas {
@@ -207,7 +207,7 @@ canvas {
 }
 
 @media (max-width: 600px) {
-    #cans {
+    #previews {
         flex-direction: row;
         width: 100%;
     }
@@ -215,7 +215,7 @@ canvas {
         width: 24.5%;
         height: 17vw;
     }
-    #cans, #video, #overlay-canvas {
+    #previews, #video, #overlay-canvas {
         margin: 5px 0;
     }
     #video, #overlay-canvas {
@@ -234,7 +234,7 @@ canvas {
         font-size: 4.8vw;
         /*margin: 33% 0 0 2%;*/
     }
-    #cans {
+    #previews {
         height: 0;
     }
 }
