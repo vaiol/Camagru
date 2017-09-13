@@ -4,6 +4,7 @@ body {
     min-height: 100vh;
     flex-direction: column;
     font-family: 'Play','Saira Extra Condensed', 'Roboto', sans-serif;
+    min-width: 300px;
 }
 
 header {
@@ -189,6 +190,10 @@ nav {
     height: inherit;
 }
 
+
+.none {
+    display: none;
+}
 
 
 /*
