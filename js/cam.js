@@ -1,26 +1,47 @@
 //GET VIDEO FROM WEBCAM
+// var video = document.getElementById('video');
+// if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+//     navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+//         video.src = window.URL.createObjectURL(stream);
+//         video.play();
+//     });
+// }
+// else if(navigator.getUserMedia) {
+//     navigator.getUserMedia({ video: true }, function(stream) {
+//         video.src = stream;
+//         video.play();
+//     }, errBack);
+// } else if(navigator.webkitGetUserMedia) {
+//     navigator.webkitGetUserMedia({ video: true }, function(stream){
+//         video.src = window.webkitURL.createObjectURL(stream);
+//         video.play();
+//     }, errBack);
+// } else if(navigator.mozGetUserMedia) {
+//     navigator.mozGetUserMedia({ video: true }, function(stream){
+//         video.src = window.URL.createObjectURL(stream);
+//         video.play();
+//     }, errBack);
+// }
+
 var video = document.getElementById('video');
-if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-        video.src = window.URL.createObjectURL(stream);
-        video.play();
-    });
-}
-else if(navigator.getUserMedia) {
-    navigator.getUserMedia({ video: true }, function(stream) {
-        video.src = stream;
-        video.play();
-    }, errBack);
-} else if(navigator.webkitGetUserMedia) {
-    navigator.webkitGetUserMedia({ video: true }, function(stream){
-        video.src = window.webkitURL.createObjectURL(stream);
-        video.play();
-    }, errBack);
-} else if(navigator.mozGetUserMedia) {
-    navigator.mozGetUserMedia({ video: true }, function(stream){
-        video.src = window.URL.createObjectURL(stream);
-        video.play();
-    }, errBack);
+video.onloadedmetadata = function(e) {
+    video.play();
+};
+navigator.getUserMedia = navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia;
+
+if (navigator.getUserMedia) {
+    navigator.getUserMedia({ video: true },
+        function(stream) {
+            video.src = window.URL.createObjectURL(stream);
+        },
+        function(err) {
+            console.log("The following error occured: " + err.name);
+        }
+    );
+} else {
+    console.log("getUserMedia not supported");
 }
 
 var canvas = document.getElementById('canvas');
