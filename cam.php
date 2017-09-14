@@ -1,5 +1,26 @@
 <?php require "header.html"; ?>
+<div id="over-elem" class="hidden overlayClose" onclick="overBoxClose()"></div>
+<div id="over-box" class="hidden overlayClose">
+    <div>
+        <div class="main-text">
+            UPLOAD TOOLS
+            <div class="line"></div>
+        </div>
+        <div class="butt" onclick="document.getElementById('uploadImg').click();">
+            UPLOAD IMAGE
+        </div>
+        <div class="line"></div>
+        <div class="butt" onclick="document.getElementById('uploadMask').click();">
+            UPLOAD MASK
+        </div>
+    </div>
+</div>
 <div id="content">
+    <form method="post" accept-charset="utf-8" name="form1">
+        <input name="hidden_data" id='hidden_data' type="hidden"/>
+    </form>
+    <input type='file' id='uploadImg' class="none" name="upImg" onchange="uploadImg();this.value=null;return false;">
+    <input type='file' id='uploadMask' class="none" name="upMask" onchange="uploadMask();this.value=null;return false;">
     <div class="main-text">
         <div class="container">
             CAM
@@ -9,13 +30,8 @@
     <video id="video" autoplay></video>
     <div id="cam">
         <div class="container">
-            <form method="post" accept-charset="utf-8" name="form1">
-                <input name="hidden_data" id='hidden_data' type="hidden"/>
-            </form>
-            <input type='file' id='uploadImg' class="none" name="upImg" onchange="uploadImg();this.value=null;return false;">
-            <input type='file' id='uploadMask' class="none" name="upMask" onchange="uploadMask();this.value=null;return false;">
             <div id="overlay-canvas">
-                <p id="click-text">CLICK TO DOWNLOAD OTHER IMAGE</p>
+                <p id="errText"></p>
                 <canvas id="canvas"></canvas>
             </div>
             <div id="previews">
@@ -40,7 +56,7 @@
                     <div class="effect" onclick="changeEffect('img/effects/e4.png')">
                         <img src="img/effects/p4.png" alt="effect4">
                     </div>
-                    <div class="effect" onclick="document.getElementById('uploadMask').click();">
+                    <div class="effect" onclick="overBoxOpen()">
                         <p>UPLOAD YOUR MASK</p>
                     </div>
                 </div>
@@ -59,7 +75,7 @@
             <div class="butt"  onclick="clearEffect()">
                 CLEAR
             </div>
-            <div class="butt" id="uploadButt" onclick="document.getElementById('uploadImg').click();">
+            <div class="butt" id="uploadButt" onclick="overBoxOpen()">
                 UPLOAD IMAGE
             </div>
             <div class="butt" id="snap"  onclick="saveImage()">
@@ -73,4 +89,10 @@
 <script src="js/input-range-ui.js"></script>
 <?php require "footer.html"; ?>
 
-<!--                 onclick="document.getElementById('uploadImg').click();"-->
+<!--<div class="butt" id="uploadButt" >-->
+<!--    UPLOAD IMAGE-->
+<!--</div>-->
+
+<!--<div class="effect" >-->
+<!--    <p>UPLOAD YOUR MASK</p>-->
+<!--</div>-->

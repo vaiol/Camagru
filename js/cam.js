@@ -1,29 +1,6 @@
 //GET VIDEO FROM WEBCAM
-// var video = document.getElementById('video');
-// if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-//     navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-//         video.src = window.URL.createObjectURL(stream);
-//         video.play();
-//     });
-// }
-// else if(navigator.getUserMedia) {
-//     navigator.getUserMedia({ video: true }, function(stream) {
-//         video.src = stream;
-//         video.play();
-//     }, errBack);
-// } else if(navigator.webkitGetUserMedia) {
-//     navigator.webkitGetUserMedia({ video: true }, function(stream){
-//         video.src = window.webkitURL.createObjectURL(stream);
-//         video.play();
-//     }, errBack);
-// } else if(navigator.mozGetUserMedia) {
-//     navigator.mozGetUserMedia({ video: true }, function(stream){
-//         video.src = window.URL.createObjectURL(stream);
-//         video.play();
-//     }, errBack);
-// }
-
 var video = document.getElementById('video');
+var errorVideo = null;
 video.onloadedmetadata = function(e) {
     video.play();
 };
@@ -35,13 +12,14 @@ if (navigator.getUserMedia) {
     navigator.getUserMedia({ video: true },
         function(stream) {
             video.src = window.URL.createObjectURL(stream);
+            errorVideo = null;
         },
         function(err) {
-            console.log("The following error occured: " + err.name);
+            errorVideo = "Some error occurred: " + err.name;
         }
     );
 } else {
-    console.log("getUserMedia not supported");
+    errorVideo = "Your browser doesn't support 'getUserMedia'";
 }
 
 var canvas = document.getElementById('canvas');
@@ -64,12 +42,17 @@ function changePageStyle() {
     } else {
         document.getElementById('previews').style.height= 'auto';
     }
-    document.getElementById('click-text').style.lineHeight = document.getElementById('canvas').offsetHeight+'px';
-
+    document.getElementById('errText').style.lineHeight = document.getElementById('canvas').offsetHeight+'px';
 }
 
 function renderFrame() {
     changePageStyle();
+
+    if (errorVideo !== null) {
+        document.getElementById('errText').innerHTML = errorVideo;
+        document.getElementById('overlay-canvas').style.backgroundColor = '#999999';
+        clearInterval(vRender);
+    }
 
     if (uploadedImg === null) {
         //GET PICTURE FROM WEBCAM
@@ -113,7 +96,7 @@ function renderFrame() {
 }
 
 //RENDER 40 FRAMES IN SECOND
-setInterval(renderFrame, 25);
+var vRender = setInterval(renderFrame, 25);
 
 function renderPreviews() {
     var previews = [];

@@ -93,6 +93,10 @@ canvas {
     box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.4);
 }
 
+#effects-block {
+    width: 100%;
+}
+
 #effects {
     display: flex;
     justify-content: space-between;
@@ -155,17 +159,22 @@ canvas {
 
 #overlay-canvas {
     cursor: pointer;
-    background-color: inherit;
     z-index: 1;
     color: #f6f4f1;
 }
 
 #overlay-canvas p {
-    font-size: 50px;
+    font-size: 35px;
     position: absolute;
     margin: 0 2% 0 2%;
     z-index: 0;
-    visibility: hidden;
+    display: block;
+}
+
+#over-box .butt {
+    margin-top: 10px;
+    width: 100%;
+    letter-spacing: 6px;
 }
 
 
@@ -175,7 +184,7 @@ canvas {
 
 @media (max-width: 1920px) {
     #overlay-canvas p {
-        font-size: 2.5vw;
+        font-size: 1.7vw;
     }
     .effect > p {
         line-height: 7.5vw;
@@ -197,7 +206,7 @@ canvas {
         display: block;
     }
     #overlay-canvas p {
-        font-size: 3.5vw;
+        font-size: 2.4vw;
     }
     #effects {
         height: 10vw;
@@ -241,7 +250,7 @@ canvas {
         line-height: 50px;
     }
     #overlay-canvas p {
-        font-size: 4.8vw;
+        font-size: 3vw;
         /*margin: 33% 0 0 2%;*/
     }
     #previews {

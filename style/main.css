@@ -298,6 +298,17 @@ footer .container {
     width: 100%;
 }
 
+.noscroll { overflow: hidden; }
+
+@media (min-device-width: 1025px) {
+    /* not strictly necessary, just an experiment for
+       this specific example and couldn't be necessary
+       at all on some browser */
+    .noscroll {
+        padding-right: 15px;
+    }
+}
+
 /**
 main-text
 */

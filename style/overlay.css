@@ -1,0 +1,52 @@
+#over-elem {
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:rgba(0,0,0,0.5);
+    z-index:100;
+    cursor: pointer;
+    overflow-y: scroll;
+}
+
+#over-box {
+    position: absolute;
+    width:50%;
+    height:50%;
+    background-color: white;
+    top:25%;
+    left:25%;
+    opacity: 1;
+    z-index:100;
+    border-radius: 3px;
+}
+
+
+#over-box > div {
+    width: 90%;
+    margin: 2% auto;
+}
+
+@media (max-width: 1920px) {
+}
+
+@media (max-width: 992px) {
+    #over-box {
+        top:20%;
+        left:15%;
+        width:70%;
+        height:60%;
+    }
+}
+
+@media (max-width: 600px) {
+    #over-box {
+        top:15%;
+        left:7.5%;
+        width:85%;
+        height:70%;
+    }
+}
