@@ -15,7 +15,7 @@ if (navigator.getUserMedia) {
             errorVideo = null;
         },
         function(err) {
-            errorVideo = "Some error occurred: " + err.name;
+            errorVideo = err.name;
         }
     );
 } else {
@@ -130,6 +130,7 @@ function saveImage() {
 }
 
 function changeEffect(src) {
+    maskFlag = false;
     maskImg = new Image();
     maskImg.onload = function(){
       maskFlag = true;
@@ -162,6 +163,7 @@ function uploadImg() {
     reader.onloadend = function() {
         uploadedImg = new Image();
         uploadedImg.src = reader.result;
+        overBoxClose();
     };
     if (file) {
         reader.readAsDataURL(file);
@@ -173,6 +175,7 @@ function uploadMask() {
     var reader = new FileReader();
     reader.onloadend = function() {
         changeEffect(reader.result);
+        overBoxClose();
     };
     if (file) {
         reader.readAsDataURL(file);
@@ -242,48 +245,3 @@ canvas.addEventListener("touchend", handleEnd, false);
 
 window.addEventListener("mousemove", maskMove);
 canvas.addEventListener("touchmove", handleMove, false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var timeoutId = null;
-// var canvasHovered = false;
-//
-// canvas.addEventListener('mouseover',function() {
-//     timeoutId = window.setTimeout(function(){
-//         canvasHovered = true;
-//     }, 3000);
-// });
-//
-// canvas.addEventListener('click',function() {
-//     if (canvasHovered) {
-//         document.getElementById('uploadImg').click();
-//     }
-// });
-//
-// // Cancel your action if mouse moved out within 2 sec
-// canvas.addEventListener('mouseout',function() {
-//     window.clearTimeout(timeoutId);
-//     canvasHovered = false;
-// });

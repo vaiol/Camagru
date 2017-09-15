@@ -6,6 +6,12 @@
             UPLOAD TOOLS
             <div class="line"></div>
         </div>
+
+        <form name="test" method="post" action="input1.php">
+            <p>Put link here:</p>
+            <input type="text" size="400">
+            <input type="submit" value="Отправить">
+        </form>
         <div class="butt" onclick="document.getElementById('uploadImg').click();">
             UPLOAD IMAGE
         </div>
