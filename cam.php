@@ -6,18 +6,32 @@
             UPLOAD TOOLS
             <div class="line"></div>
         </div>
-
-        <form name="test" method="post" action="input1.php">
-            <p>Put link here:</p>
-            <input type="text" size="400">
-            <input type="submit" value="Отправить">
-        </form>
-        <div class="butt" onclick="document.getElementById('uploadImg').click();">
-            UPLOAD IMAGE
-        </div>
-        <div class="line"></div>
-        <div class="butt" onclick="document.getElementById('uploadMask').click();">
-            UPLOAD MASK
+        <div id='over-grid-input' class="flex column between">
+            <div>
+                <div class="sub-text">
+                    MASK
+                </div>
+                <form>
+                    <input size="400">
+                    <input type="submit" value="SEND">
+                </form>
+                <div class="butt" onclick="document.getElementById('uploadImg').click();">
+                    UPLOAD IMAGE
+                </div>
+            </div>
+            <div class="sub-text st-input"><div class="line"></div></div>
+            <div>
+                <div class="sub-text">
+                    IMAGE
+                </div>
+                <form>
+                    <input size="400">
+                    <input type="submit" value="SEND">
+                </form>
+                <div class="butt" onclick="document.getElementById('uploadMask').click();">
+                    UPLOAD MASK
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -94,11 +108,3 @@
 <script src="js/cam.js"></script>
 <script src="js/input-range-ui.js"></script>
 <?php require "footer.html"; ?>
-
-<!--<div class="butt" id="uploadButt" >-->
-<!--    UPLOAD IMAGE-->
-<!--</div>-->
-
-<!--<div class="effect" >-->
-<!--    <p>UPLOAD YOUR MASK</p>-->
-<!--</div>-->

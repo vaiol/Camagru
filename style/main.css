@@ -300,6 +300,19 @@ footer .container {
 
 .noscroll { overflow: hidden; }
 
+.flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+
 @media (min-device-width: 1025px) {
     /* not strictly necessary, just an experiment for
        this specific example and couldn't be necessary
@@ -332,6 +345,28 @@ main-text
     background-color: #816d65;
     border-radius: 1px;
     margin-top: 10px;
+}
+
+/**
+sub-text
+ */
+.sub-text {
+    /*background-color: #b2a6a2;*/
+    /*color: #f6f4f1;*/
+    text-align: center;
+    color: #816d65;
+    font-size: 20px;
+    margin: 10px 0 10px 0;
+    /*height: 100px;*/
+
+}
+
+.sub-text .line {
+    height: 2px;
+    width: 60%;
+    background-color: #816d65;
+    border-radius: 1px;
+    margin: 10px auto;
 }
 
 /**

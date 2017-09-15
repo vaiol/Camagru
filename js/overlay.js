@@ -16,7 +16,6 @@ function overBoxOpen() {
 }
 
 function overBoxClose() {
-    console.log('Yo');
     var overlay = document.getElementById("over-elem");
     var overBox = document.getElementById("over-box");
     overlay.classList.toggle('overlayOpen');

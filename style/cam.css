@@ -146,12 +146,22 @@ canvas {
 .butt:hover {
     background-color: #816d65;
     color: #f6f4f1;
+    letter-spacing: 5px;
 }
 
 #previews p {
     margin: 1% 0 0 1%;
     font-size: 20px;
     position: absolute;
+}
+
+
+
+
+#over-grid-input {
+    height: 100%;
+    width: 100%;
+    margin: 20px 0 50px 0;
 }
 
 
@@ -171,16 +181,78 @@ canvas {
     display: block;
 }
 
+.st-input .line {
+    margin: 30px auto;
+}
+
+
+
 #over-box .butt {
     margin-top: 10px;
     width: 100%;
     letter-spacing: 6px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 15px;
 }
 
+#over-box .butt:hover {
+    letter-spacing: 7px;
+}
 
 #canvas {
     margin-bottom: -5px;
 }
+
+
+form {
+    display: flex;
+    justify-content: space-between;
+}
+
+form > input {
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 78%;
+    border: 1px solid #816d65;
+    box-sizing: border-box;
+    font-size: 25px;
+}
+
+form > input[type='submit'] {
+    width: 20%;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+
+
+    -webkit-transition: all 0.3s ease;;
+    -moz-transition: all 0.3s ease;;
+    -o-transition: all 0.3s ease;;
+    transition: all 0.3s ease;
+    font-size: 15px;
+
+    background-color: inherit;
+    color: #816d65;
+    letter-spacing: 2px;
+}
+
+form > input[type='submit']:hover {
+    background-color: #816d65;
+    color: white;
+    letter-spacing: 4px;
+}
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 1920px) {
     #overlay-canvas p {
