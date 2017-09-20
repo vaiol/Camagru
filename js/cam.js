@@ -132,8 +132,13 @@ function saveImage() {
 function changeEffect(src) {
     maskFlag = false;
     maskImg = new Image();
+    maskImg.crossOrigin="anonymous";
     maskImg.onload = function(){
       maskFlag = true;
+    };
+    maskImg.onerror = function(){
+        clearEffect();
+        toastIt('Broken link for mask');
     };
     maskImg.src = src;
     document.getElementById('eff-control').style.display = 'flex';
@@ -181,6 +186,31 @@ function uploadMask() {
         reader.readAsDataURL(file);
     }
 }
+
+function sendLinkMask() {
+    var link = document.getElementById('linkMask').value;
+    if (link) {
+        changeEffect(link);
+        overBoxClose();
+    }
+
+}
+
+function sendLinkImg() {
+    var link = document.getElementById('linkImg').value;
+    if (link) {
+        uploadedImg = new Image();
+        uploadedImg.onerror = function () {
+            toastIt('Broken link for image');
+            uploadedImg = null;
+        };
+        uploadedImg.crossOrigin = "anonymous";
+        uploadedImg.src = document.getElementById('linkImg').value;
+        overBoxClose();
+    }
+}
+
+
 
 
 function maskMoveStart() {

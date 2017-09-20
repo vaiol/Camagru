@@ -11,12 +11,12 @@
                 <div class="sub-text">
                     MASK
                 </div>
-                <form>
-                    <input size="400">
-                    <input type="submit" value="SEND">
+                <form onsubmit="sendLinkMask(); return false;">
+                    <input size="400" id="linkMask">
+                    <input type="submit" value="SEND LINK">
                 </form>
-                <div class="butt" onclick="document.getElementById('uploadImg').click();">
-                    UPLOAD IMAGE
+                <div class="butt" onclick="document.getElementById('uploadMask').click();">
+                    UPLOAD MASK
                 </div>
             </div>
             <div class="sub-text st-input"><div class="line"></div></div>
@@ -24,12 +24,12 @@
                 <div class="sub-text">
                     IMAGE
                 </div>
-                <form>
-                    <input size="400">
-                    <input type="submit" value="SEND">
+                <form onsubmit="sendLinkImg(); return false;">
+                    <input size="400" id="linkImg">
+                    <input type="submit" value="SEND LINK">
                 </form>
-                <div class="butt" onclick="document.getElementById('uploadMask').click();">
-                    UPLOAD MASK
+                <div class="butt" onclick="document.getElementById('uploadImg').click();">
+                    UPLOAD IMAGE
                 </div>
             </div>
         </div>
@@ -105,6 +105,8 @@
         </div>
     </div>
 </div>
+<div id="toast"></div>
 <script src="js/cam.js"></script>
 <script src="js/input-range-ui.js"></script>
+<script src="js/toast.js"></script>
 <?php require "footer.html"; ?>

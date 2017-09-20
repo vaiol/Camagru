@@ -155,15 +155,17 @@ canvas {
     position: absolute;
 }
 
-
-
-
 #over-grid-input {
     height: 100%;
     width: 100%;
     margin: 20px 0 50px 0;
 }
 
+#over-box p {
+    text-align: center;
+    color: #777777;
+    margin: 2px 0;
+}
 
 
 
@@ -219,6 +221,7 @@ form > input {
     border: 1px solid #816d65;
     box-sizing: border-box;
     font-size: 25px;
+    color: #816d65;
 }
 
 form > input[type='submit'] {
@@ -288,8 +291,24 @@ form > input[type='submit']:hover {
         font-size: 1.4vw;
     }
     .butt {
-        font-size: 18px;
+        font-size: 15px;
         letter-spacing: 3px;
+        line-height: 60px;
+    }
+    .butt:hover {
+        letter-spacing: 4px;
+    }
+    #control {
+        height: 60px;
+    }
+    form > input {
+        width: 68%;
+        font-size: 22px;
+    }
+
+    form > input[type='submit'] {
+        width: 30%;
+        font-size: 13px;
     }
 }
 
@@ -321,6 +340,9 @@ form > input[type='submit']:hover {
     .butt {
         line-height: 50px;
     }
+    .butt:hover {
+        letter-spacing: 0;
+    }
     #overlay-canvas p {
         font-size: 3vw;
         /*margin: 33% 0 0 2%;*/
@@ -334,5 +356,18 @@ form > input[type='submit']:hover {
     .butt {
         font-size: 12px;
         letter-spacing: 0;
+        line-height: 50px;
+    }
+    #control {
+        height: 50px;
+    }
+    form > input {
+        width: 58%;
+        font-size: 20px;
+    }
+
+    form > input[type='submit'] {
+        width: 40%;
+        font-size: 12px;
     }
 }
