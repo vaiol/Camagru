@@ -14,7 +14,6 @@
 #over-box {
     position: absolute;
     width:50%;
-    /*height:50%;*/
     background-color: white;
     top:25%;
     left:25%;
@@ -24,13 +23,46 @@
     color: #816d65;
 }
 
+#over-box > div {
+    width: 90%;
+    margin: 2% auto;
+}
 
 #over-box > div {
     width: 90%;
     margin: 2% auto;
 }
 
+#large-overlay1 {
+    z-index: 5;
+    position: fixed;
+    overflow-y: scroll;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: rgba(40,40,40, .75);
+    background-color: #9e6957;
+}
+
+
+#large-overlay-div {
+    background-color: white;
+    border-radius: 3px;
+    color: #816d65;
+    width:69.48%;
+    margin: 5vw 14.85vw;
+    z-index: 20;
+    pointer-events: none;
+    position: relative;
+    transition: all .8s;
+    height: 100px;
+}
+
+#large-overlay-div:hover {
+    background-color: red;
+}
+
+
 @media (max-width: 1920px) {
+
 }
 
 @media (max-width: 992px) {
@@ -38,7 +70,11 @@
         top:20%;
         left:15%;
         width:70%;
-        /*height:60%;*/
+    }
+    .large-overlay {
+        width:80%;
+        top:7%;
+        left:10%;
     }
 }
 
@@ -47,6 +83,72 @@
         top:15%;
         left:7.5%;
         width:85%;
-        /*height:70%;*/
+    }
+    .large-overlay {
+        width:90%;
+        top:5%;
+        left:5%;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* to the body element */
+.noscroll { overflow: hidden; }
+
+#overlay-l {
+    position: fixed;
+    overflow-y: scroll;
+    top: 0; right: 0; bottom: 0; left: 0; }
+
+[aria-hidden="true"] { display: none; }
+[aria-hidden="false"] { display: block; }
+
+
+
+
+/* this code is not strictly necessary: just to make this demo a bit pleasant */
+
+#overlay-l div {
+    margin: 15vh auto;
+    width: 80%;
+    max-width: 650px;
+    padding: 30px;
+    min-height: 200vh;
+    background: rgba(255,255,255, .95);
+}
+#overlay-l {
+    background:  rgba(40,40,40, .75);
+}
+
+
+
+
+
+
+
+
+
+
+* { box-sizing: border-box; }
+button { padding: 1.5em 4em; cursor: pointer;}
+pre { background: #fafafa; padding: 15px; border: 1px #ccd dashed; }
+pre + p { margin: 5vh 0; }

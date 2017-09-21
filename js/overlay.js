@@ -12,7 +12,6 @@ function overBoxOpen() {
     if (document.body.offsetHeight > window.innerHeight) {
         document.body.classList.toggle('noscroll');
     }
-
 }
 
 function overBoxClose() {
@@ -31,3 +30,28 @@ function overBoxClose() {
         }
     }, 200);
 }
+
+function overBoxOpn() {
+    var overBox = document.getElementById("large-overlay1");
+    overBox.classList.remove('hidden');
+    overBox.style.display = "block";
+    overBox.classList.toggle('overlayOpen');
+    overBox.classList.toggle('overlayClose');
+    if (document.body.offsetHeight > window.innerHeight) {
+        document.body.classList.toggle('noscroll');
+    }
+}
+
+function overBoxClse() {
+    var overBox = document.getElementById("large-overlay1");
+    overBox.classList.toggle('overlayOpen');
+    overBox.classList.toggle('overlayClose');
+    setTimeout(function() {
+        overBox.style.display = "none";
+        if (document.body.offsetHeight > window.innerHeight) {
+            document.body.classList.toggle('noscroll');
+        }
+    }, 200);
+}
+
+

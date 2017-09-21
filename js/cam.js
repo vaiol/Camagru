@@ -129,89 +129,9 @@ function saveImage() {
     xhr.send(fd);
 }
 
-function changeEffect(src) {
-    maskFlag = false;
-    maskImg = new Image();
-    maskImg.crossOrigin="anonymous";
-    maskImg.onload = function(){
-      maskFlag = true;
-    };
-    maskImg.onerror = function(){
-        clearEffect();
-        toastIt('Broken link for mask');
-    };
-    maskImg.src = src;
-    document.getElementById('eff-control').style.display = 'flex';
-}
-function clearEffect() {
-    maskFlag = false;
-    maskImg = null;
-    uploadedImg = null;
-    moveX = 0;
-    moveY = 0;
-    isDragging = false;
-    prevX = 0;
-    prevY = 0;
-    prevCanvasWidth = -1;
-    document.getElementById('rotat').value = '0';
-    document.getElementById('resize').value = '0';
-    var event = document.createEvent('Event');
-    event.initEvent('input', true, true);
-    document.getElementById('rotat').dispatchEvent(event);
-    document.getElementById('resize').dispatchEvent(event);
-    document.getElementById('eff-control').style.display = 'none';
-}
-
-function uploadImg() {
-    var file = document.getElementById("uploadImg").files[0];
-    var reader = new FileReader();
-    reader.onloadend = function() {
-        uploadedImg = new Image();
-        uploadedImg.src = reader.result;
-        overBoxClose();
-    };
-    if (file) {
-        reader.readAsDataURL(file);
-    }
-}
-
-function uploadMask() {
-    var file = document.getElementById("uploadMask").files[0];
-    var reader = new FileReader();
-    reader.onloadend = function() {
-        changeEffect(reader.result);
-        overBoxClose();
-    };
-    if (file) {
-        reader.readAsDataURL(file);
-    }
-}
-
-function sendLinkMask() {
-    var link = document.getElementById('linkMask').value;
-    if (link) {
-        changeEffect(link);
-        overBoxClose();
-    }
-
-}
-
-function sendLinkImg() {
-    var link = document.getElementById('linkImg').value;
-    if (link) {
-        uploadedImg = new Image();
-        uploadedImg.onerror = function () {
-            toastIt('Broken link for image');
-            uploadedImg = null;
-        };
-        uploadedImg.crossOrigin = "anonymous";
-        uploadedImg.src = document.getElementById('linkImg').value;
-        overBoxClose();
-    }
-}
-
-
-
+/*
+ * MASK MOVING
+ */
 
 function maskMoveStart() {
     isDragging = true;
@@ -275,3 +195,97 @@ canvas.addEventListener("touchend", handleEnd, false);
 
 window.addEventListener("mousemove", maskMove);
 canvas.addEventListener("touchmove", handleMove, false);
+
+
+/*
+ * UPLOAD TOOLS
+ */
+
+function changeEffect(src) {
+    maskFlag = false;
+    maskImg = new Image();
+    maskImg.crossOrigin="anonymous";
+    maskImg.onload = function(){
+      maskFlag = true;
+    };
+    maskImg.onerror = function(){
+        clearEffect();
+        toastIt('MASK IS BROKEN');
+    };
+    maskImg.src = src;
+    document.getElementById('eff-control').style.display = 'flex';
+}
+
+function changeImg(src) {
+    var newImg = new Image();
+    newImg.onerror = function () {
+        uploadedImg = null;
+        toastIt('IMAGE IS BROKEN!');
+    };
+    newImg.onload = function () {
+        uploadedImg = newImg;
+    };
+    newImg.crossOrigin = "anonymous";
+    newImg.src = crossOriginProxy + src;
+}
+
+function clearEffect() {
+    maskFlag = false;
+    maskImg = null;
+    uploadedImg = null;
+    moveX = 0;
+    moveY = 0;
+    isDragging = false;
+    prevX = 0;
+    prevY = 0;
+    prevCanvasWidth = -1;
+    document.getElementById('rotat').value = '0';
+    document.getElementById('resize').value = '0';
+    var event = document.createEvent('Event');
+    event.initEvent('input', true, true);
+    document.getElementById('rotat').dispatchEvent(event);
+    document.getElementById('resize').dispatchEvent(event);
+    document.getElementById('eff-control').style.display = 'none';
+}
+
+function uploadImg() {
+    var file = document.getElementById("uploadImg").files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        changeImg(reader.result);
+        overBoxClose();
+    };
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+}
+
+function uploadMask() {
+    var file = document.getElementById("uploadMask").files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        changeEffect(reader.result);
+        overBoxClose();
+    };
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+}
+
+var crossOriginProxy = 'https://cors-anywhere.herokuapp.com/';
+
+function sendLinkMask() {
+    var link = document.getElementById('linkMask').value;
+    if (link) {
+        changeEffect(crossOriginProxy + link);
+        overBoxClose();
+    }
+}
+
+function sendLinkImg() {
+    var link = document.getElementById('linkImg').value;
+    if (link) {
+        changeImg(crossOriginProxy + link);
+        overBoxClose();
+    }
+}

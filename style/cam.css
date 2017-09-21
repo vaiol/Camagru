@@ -195,7 +195,7 @@ canvas {
     letter-spacing: 6px;
     height: 40px;
     line-height: 40px;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 #over-box .butt:hover {
@@ -220,7 +220,7 @@ form > input {
     width: 78%;
     border: 1px solid #816d65;
     box-sizing: border-box;
-    font-size: 25px;
+    font-size: 16px;
     color: #816d65;
 }
 
@@ -235,12 +235,15 @@ form > input[type='submit'] {
     -moz-transition: all 0.3s ease;;
     -o-transition: all 0.3s ease;;
     transition: all 0.3s ease;
-    font-size: 15px;
+    font-size: 16px;
 
     background-color: inherit;
     color: #816d65;
     letter-spacing: 2px;
 }
+
+
+
 
 form > input[type='submit']:hover {
     background-color: #816d65;
@@ -264,6 +267,18 @@ form > input[type='submit']:hover {
     .effect > p {
         line-height: 7.5vw;
         font-size: 1.2vw;
+    }
+    #over-box .butt {
+        font-size: .95vw;
+    }
+    form > input {
+        width: 68%;
+        font-size: .95vw;
+    }
+
+    form > input[type='submit'] {
+        width: 30%;
+        font-size: .95vw;
     }
 }
 
@@ -301,9 +316,12 @@ form > input[type='submit']:hover {
     #control {
         height: 60px;
     }
+    #over-box .butt {
+        font-size: 13px;
+    }
     form > input {
         width: 68%;
-        font-size: 22px;
+        font-size: 13px;
     }
 
     form > input[type='submit'] {
@@ -361,9 +379,12 @@ form > input[type='submit']:hover {
     #control {
         height: 50px;
     }
+    #over-box .butt {
+        font-size: 12px;
+    }
     form > input {
         width: 58%;
-        font-size: 20px;
+        font-size: 12px;
     }
 
     form > input[type='submit'] {

@@ -399,6 +399,24 @@ butt-next
     color: #f6f4f1;
 }
 
+
+
+/**
+OVERLAY PHOTO
+ */
+
+#over-box .img {
+    margin: 0;
+    width: 100%;
+}
+
+#over-box img {
+    width: 100%;
+    border-top-left-radius:  3px !important;
+    border-top-right-radius:  3px !important;
+}
+
+
 /**
 MEDIA
  */

@@ -1,5 +1,5 @@
-var event = document.createEvent('HTMLEvents');
-event.initEvent('input', true, false);
+var event1 = document.createEvent('HTMLEvents');
+event1.initEvent('input', true, false);
 var ranges = document.querySelectorAll('input[type=range]');
 ranges.forEach(function (currentRange) {
     currentRange.addEventListener('input', function(e) {
@@ -9,7 +9,7 @@ ranges.forEach(function (currentRange) {
 
         e.target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%';
     });
-    currentRange.dispatchEvent(event);
+    currentRange.dispatchEvent(event1);
 });
 
 
