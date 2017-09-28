@@ -1,32 +1,27 @@
-function overBoxImgOpen(img) {
-    
+var overlay = document.getElementById('overlay-main');
+
+function cls() {
+
+    overlay.classList.toggle('overlayOpen');
+    overlay.classList.toggle('overlayClose');
+    setTimeout(function() {
+        overlay.classList.toggle('hidden');
+        if (document.body.offsetHeight > window.innerHeight) {
+            document.body.classList.toggle('noscroll');
+        }
+    }, 200);
+    overlay.scrollTop = 0;
 }
 
-var body = document.body,
-    overlay = document.getElementById('overlay-l'),
-    overlayBtts = document.querySelectorAll('button[class$="overlay"]');
-
-[].forEach.call(overlayBtts, function(btt) {
-
-    btt.addEventListener('click', function() {
-
-        /* Detect the button class name */
-        var overlayOpen = this.className === 'open-overlay';
-
-        /* Toggle the aria-hidden state on the overlay and the
-           no-scroll class on the body */
-        overlay.setAttribute('aria-hidden', !overlayOpen);
-        body.classList.toggle('noscroll', overlayOpen);
-
-        /* On some mobile browser when the overlay was previously
-           opened and scrolled, if you open it again it doesn't
-           reset its scrollTop property */
-        overlay.scrollTop = 0;
-
-    }, false);
-
-});
-
+function opn() {
+    overlay.classList.toggle('hidden');
+    overlay.classList.toggle('overlayOpen');
+    overlay.classList.toggle('overlayClose');
+    if (document.body.offsetHeight > window.innerHeight) {
+        document.body.classList.toggle('noscroll');
+    }
+    overlay.scrollTop = 0;
+}
 
 
 function stopBubble(e)

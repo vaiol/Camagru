@@ -1,0 +1,23 @@
+#overlay-main .img {
+    margin: 0;
+    width: 100%;
+}
+
+.img img {
+    width: 100%;
+    border-top-left-radius:  3px !important;
+    border-top-right-radius:  3px !important;
+}
+
+
+#author-block {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#author-block img {
+    width: 10%;
+    border-radius: 50%;
+}

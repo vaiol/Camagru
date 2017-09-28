@@ -33,31 +33,24 @@
     margin: 2% auto;
 }
 
-#large-overlay1 {
-    z-index: 5;
+#overlay-main {
     position: fixed;
     overflow-y: scroll;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background: rgba(40,40,40, .75);
-    background-color: #9e6957;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color:rgba(0,0,0,0.5);
 }
 
 
-#large-overlay-div {
+#overlay-main > div {
     background-color: white;
     border-radius: 3px;
     color: #816d65;
-    width:69.48%;
-    margin: 5vw 14.85vw;
-    z-index: 20;
-    pointer-events: none;
-    position: relative;
+    margin: 100px 14.85vw;
     transition: all .8s;
-    height: 100px;
-}
-
-#large-overlay-div:hover {
-    background-color: red;
+    min-height: 100px;
 }
 
 
@@ -71,10 +64,8 @@
         left:15%;
         width:70%;
     }
-    .large-overlay {
-        width:80%;
-        top:7%;
-        left:10%;
+    #overlay-main div {
+        margin: 100px 7.2vw;
     }
 }
 
@@ -84,71 +75,7 @@
         left:7.5%;
         width:85%;
     }
-    .large-overlay {
-        width:90%;
-        top:5%;
-        left:5%;
+    #overlay-main div {
+        margin: 100px 4.8vw;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* to the body element */
-.noscroll { overflow: hidden; }
-
-#overlay-l {
-    position: fixed;
-    overflow-y: scroll;
-    top: 0; right: 0; bottom: 0; left: 0; }
-
-[aria-hidden="true"] { display: none; }
-[aria-hidden="false"] { display: block; }
-
-
-
-
-/* this code is not strictly necessary: just to make this demo a bit pleasant */
-
-#overlay-l div {
-    margin: 15vh auto;
-    width: 80%;
-    max-width: 650px;
-    padding: 30px;
-    min-height: 200vh;
-    background: rgba(255,255,255, .95);
-}
-#overlay-l {
-    background:  rgba(40,40,40, .75);
-}
-
-
-
-
-
-
-
-
-
-
-* { box-sizing: border-box; }
-button { padding: 1.5em 4em; cursor: pointer;}
-pre { background: #fafafa; padding: 15px; border: 1px #ccd dashed; }
-pre + p { margin: 5vh 0; }
