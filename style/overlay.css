@@ -33,25 +33,7 @@
     margin: 2% auto;
 }
 
-#overlay-main {
-    position: fixed;
-    overflow-y: scroll;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color:rgba(0,0,0,0.5);
-}
 
-
-#overlay-main > div {
-    background-color: white;
-    border-radius: 3px;
-    color: #816d65;
-    margin: 100px 14.85vw;
-    transition: all .8s;
-    min-height: 100px;
-}
 
 
 @media (max-width: 1920px) {
@@ -64,9 +46,6 @@
         left:15%;
         width:70%;
     }
-    #overlay-main div {
-        margin: 100px 7.2vw;
-    }
 }
 
 @media (max-width: 600px) {
@@ -74,8 +53,5 @@
         top:15%;
         left:7.5%;
         width:85%;
-    }
-    #overlay-main div {
-        margin: 100px 4.8vw;
     }
 }

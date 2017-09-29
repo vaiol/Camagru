@@ -6,13 +6,20 @@
         </div>
         <div id="author-block">
             <div>
-                <img src="img/i2.jpg" alt="image-content">
-                AUTHOR
-            </div>
-            <div>
 
             </div>
+            <div>
+                <img src="img/ava.jpg" alt="image-content">
+                <div>AUTHOR</div>
+            </div>
         </div>
+        <div class="line"></div>
+
+
+
+
+
+
     </div>
 </section>
 
