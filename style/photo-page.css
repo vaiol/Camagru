@@ -41,14 +41,15 @@
     margin-top: -54px;
     margin-bottom: 0;
     height: 50px;
-    opacity: 0.6;
+    opacity: 0;
     transition: all 0.5s;
     visibility: hidden;
 }
 
 #overlay-main > div:hover #author-block {
     background-color: #EEEEEE;
-
+    visibility: visible;
+    opacity: 0.6;
 }
 
 #author-block img {
