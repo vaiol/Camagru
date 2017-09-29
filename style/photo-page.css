@@ -35,11 +35,20 @@
 
 
 #author-block {
-    width: 90%;
-    margin: auto;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: -100px;
+    margin-top: -54px;
+    margin-bottom: 0;
+    height: 50px;
+    opacity: 0.6;
+    transition: all 0.5s;
+    visibility: hidden;
+}
+
+#overlay-main > div:hover #author-block {
+    background-color: #EEEEEE;
+
 }
 
 #author-block img {
@@ -49,7 +58,7 @@
 
 #author-block div {
     display: flex;
-    height: 50px;
+
     justify-content: flex-start;
     align-items: center;
 }
