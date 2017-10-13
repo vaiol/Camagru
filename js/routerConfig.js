@@ -34,12 +34,17 @@ Router
             content.innerHTML = ""+this.response;
         };
         togleActive('index');
-        content.removeChild(script);
+        // content.removeChild(script);
     })
     .add(/photo\/(.*)/, function() {
+        // if (Router.getFragment() === '') {
+            Router.check('index');
+        // }
+        console.log(Router.getFragment());
         // Router.check('index');
         openPhotoPage(arguments[0]);
-        console.log('photo', arguments[0]);
+        // console.log('photo', arguments[0]);
+
     })
     .add(/cam/, function() {
         var xmlResponse = uploadPartials('cam.htm');
@@ -49,7 +54,17 @@ Router
         togleActive('cam');
         content.appendChild(script);
     })
+    .add(/profile/, function() {
+        var xmlResponse = uploadPartials('profile.htm');
+        xmlResponse.onload = function() {
+            content.innerHTML = ""+this.response;
+        };
+        togleActive('profile');
+    })
     .listen();
 
-Router.check('index');
+// Router.check('index');
 Router.check(Router.getFragment());
+if (Router.getFragment() === '') {
+    Router.check('index');
+}

@@ -27,9 +27,12 @@ function openPhotoPage(id) {
     }
     opened = true;
     imgID = id;
+
+
     overlay.classList.toggle('hidden');
     overlay.classList.toggle('overlayOpen');
     overlay.classList.toggle('overlayClose');
+    console.log("1231");
     if (document.body.offsetHeight > window.innerHeight) {
         document.body.classList.toggle('noscroll');
     }

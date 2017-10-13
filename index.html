@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/camagru/">
+    <link href="https://fonts.googleapis.com/css?family=Play|Roboto|Saira+Extra+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="style/sidebar.css">
+    <link rel="stylesheet" type="text/css" href="style/main.css">
+    <link rel="stylesheet" type="text/css" href="style/cam.css">
+    <link rel="stylesheet" type="text/css" href="style/input-range-ui.css">
+    <link rel="stylesheet" type="text/css" href="style/overlay.css">
+    <link rel="stylesheet" type="text/css" href="style/toast.css">
+    <link rel="stylesheet" type="text/css" href="style/photo-page.css">
+    <script src="js/Router.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/overlay.js"></script>
+    <script src="js/logic.js"></script>
+    <script src="js/visio.js"></script>
+</head>
+<body class="Site">
+<header>
+    <nav>
+        <button id="open-btn" onclick="sidebarOpen()" >☰</button>
+        <div id="logo">
+            <img src="img/logo.png" alt="logo">
+        </div>
+        <div id="navigation">
+            <a onclick='Router.navigate("index")' class="active" id="indexPage"><i class="material-icons">home</i>Home</a>
+            <a onclick='Router.navigate("cam")' id="camPage"><i class="material-icons">photo_camera</i>Cam</a>
+            <a onclick='Router.navigate("profile")' id="profilePage"><i class="material-icons">dashboard</i>My Feed</a>
+            <div>Logout</div>
+        </div>
+    </nav>
+    <div id="mySidebar" class="hidden sidebarClose">
+        <button onclick="sidebarClose()"><i class="material-icons">clear</i>Close</button>
+        <a onclick='Router.navigate("index")'><i class="material-icons">home</i>Home</a>
+        <a onclick='Router.navigate("cam")'><i class="material-icons">photo_camera</i>Cam</a>
+        <a onclick='Router.navigate("profile")'><i class="material-icons">dashboard</i>My Feed</a>
+        <a><i class="material-icons">highlight_off</i>Logout</a>
+    </div>
+    <div id="myOverlay" class="hidden overlayClose" onclick="sidebarClose()"></div>
+</header>
+
+<?php require "header.html"; ?>
+<section id="overlay-main" class="overlayClose hidden">
+    <div id='overlay-content' onclick="stopBubble(event)">
+        <div class="img">
+            <img id="image-full" alt="image-content">
+        </div>
+        <div id="author-block">
+            <div>
+                <div>
+                    <i id="like-button" class="material-icons">favorite_border</i>
+                    <div id="like-counter"></div>
+
+                </div>
+                <div id="chat-button">
+                    <i class="material-icons">forum</i>
+                    <div id="chat-counter"></div>
+                </div>
+            </div>
+            <div id="author-button">
+                <img alt="ava">
+                <div></div>
+            </div>
+        </div>
+        <div id="comment-block" class="none comm-hidden">
+            <div class="line"></div>
+            <div id="add-comment">
+                <form action="javascript:addComment();">
+                    <textarea></textarea>
+                    <input type="submit" value="ADD COMMENT">
+                </form>
+            </div>
+            <div class="small-line">
+                <div class="line"></div>
+            </div>
+            <div id="comment-list">
+            </div>
+        </div>
+        <div id="endofdiv" class="none"></div>
+    </div>
+</section>
+<script src="js/diana.js"></script>
+<script src="js/photo-page.js"></script>
+
+
+<div id="content">
+
+</div>
+
+
+
+
+
+
+<div id="toast"></div>
+<script src="js/routerConfig.js"></script>
+<script src="js/input-range-ui.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/index.js"></script>
+<footer>
+    <div id="foot">
+        <div class="container">
+            <div class="column s8">
+                <h2>About Project</h2>
+                <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h3>
+            </div>
+            <div class="column s1"></div>
+            <div class="column s3">
+                <h2>Connect</h2>
+                <div class="social">
+                    <img src="img/social-github.png" alt="github">
+                </div>
+                <div class="social">
+                    <img src="img/social-linkedin.png" alt="linkedin">
+                </div>
+                <div class="social">
+                    <img src="img/social-google.png" alt="google">
+                </div>
+                <div class="social">
+                    <img src="img/social-telegram.png" alt="telegram">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="author">
+        <div class="container">
+            © 2017 Alexander Stepanov, All rights reserved.
+        </div>
+    </div>
+</footer>
+</body>
+</html>
