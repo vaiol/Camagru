@@ -92,6 +92,7 @@ function renderFrame() {
         context.translate((nextMoveX + imgWidth / 2) * -1, (nextMoveY + imgHeight / 3) * -1);
         context.drawImage(maskImg, nextMoveX, nextMoveY, imgWidth, imgHeight);
         context.restore();
+
     }
 }
 
@@ -147,7 +148,7 @@ function maskMoveFinish() {
 
 function maskMove() {
     if( isDragging === true && maskImg !== null) {
-        if( prevX>0 || prevY>0) {
+        if( prevX > 0 || prevY > 0) {
             moveX += event.pageX - prevX;
             moveY += event.pageY - prevY;
         }

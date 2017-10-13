@@ -74,9 +74,6 @@ header {
     cursor: pointer;
     border-radius: 2px;
     background-color: #ff936f;
-    -webkit-transition: all 0.3s ease;;
-    -moz-transition: all 0.3s ease;;
-    -o-transition: all 0.3s ease;;
     transition: all 0.3s ease;
 }
 
@@ -118,9 +115,6 @@ nav {
     text-decoration: none;
     line-height: 64px;
     color: inherit;
-    -webkit-transition: all 0.3s ease;;
-    -moz-transition: all 0.3s ease;;
-    -o-transition: all 0.3s ease;;
     transition: all 0.3s ease;
 }
 
@@ -132,15 +126,10 @@ nav {
     margin-left: 10px;
     text-decoration: none;
     color: inherit;
-    -webkit-transition: all 0.3s ease;;
-    -moz-transition: all 0.3s ease;;
-    -o-transition: all 0.3s ease;;
     transition: all 0.3s ease;
     display: inline-block;
     height: 34px;
     box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     border: 1px solid #bdb1ad;
     border-radius: 2px;
 }
@@ -312,6 +301,13 @@ footer .container {
     justify-content: space-between;
 }
 
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
 
 @media (min-device-width: 1025px) {
     /* not strictly necessary, just an experiment for
@@ -492,9 +488,6 @@ MEDIA
         width: 96%;
         margin: 2%;
     }
-    /*#open-btn {*/
-        /*margin: -2px 0 0 2%;*/
-    /*}*/
     .social {
         width: 14%;
     }
