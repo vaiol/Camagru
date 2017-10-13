@@ -108,5 +108,6 @@
 <div id="toast"></div>
 <script src="js/cam.js"></script>
 <script src="js/input-range-ui.js"></script>
+
 <script src="js/toast.js"></script>
 <?php require "footer.html"; ?>

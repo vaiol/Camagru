@@ -21,7 +21,7 @@ function getPhotoById(id) {
     return {
         "src": "img/i"+id+".jpg",
         "likeCount": 134,
-        "chatCount": 3
+        "chatCount": 32
     };
 }
 
@@ -32,7 +32,7 @@ function isLiked() {
 
 function getCommentList(id, first, last) {
     console.log("getCommentList("+id+", "+first+", "+last+")");
-    if (first > 40) {
+    if (first > 20) {
         return [
             {
                 "user": getCurrentUser(),

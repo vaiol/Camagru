@@ -143,4 +143,5 @@
 <script src="js/index.js"></script>
 <script src="js/diana.js"></script>
 <script src="js/photo-page.js"></script>
+<script src="js/routerConfig.js"></script>
 <?php require "footer.html" ?>
