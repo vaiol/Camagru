@@ -52,6 +52,8 @@ var Router = {
             var match = fragment.match(this.routes[i].re);
             if(match) {
                 match.shift();
+                // console.log(f);
+                // console.log(this.routes[i].handler);
                 this.routes[i].handler.apply({}, match);
                 return this;
             }
@@ -63,9 +65,14 @@ var Router = {
         var current = self.getFragment();
         var fn = function() {
             if(current !== self.getFragment()) {
+                // console.log(typeof current + ": " + current);
+                // console.log(typeof self.getFragment() + ": " + self.getFragment());
+
                 current = self.getFragment();
                 self.check(current);
+
             }
+
         };
         clearInterval(this.interval);
         this.interval = setInterval(fn, 50);

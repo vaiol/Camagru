@@ -17,8 +17,15 @@ var chatTrigger = false;
 
 var imgID = null;
 
+var opened = false;
+
 
 function openPhotoPage(id) {
+    console.log("open"+id);
+    if (opened) {
+        closePhotoPage();
+    }
+    opened = true;
     imgID = id;
     overlay.classList.toggle('hidden');
     overlay.classList.toggle('overlayOpen');
@@ -45,6 +52,8 @@ function openPhotoPage(id) {
 
 /*EVENTS*/
 function closePhotoPage() {
+    Router.navigate();
+    opened = false;
     overlay.classList.toggle('overlayOpen');
     overlay.classList.toggle('overlayClose');
     setTimeout(function() {

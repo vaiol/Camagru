@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>IP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <base href="/camagru/">
     <link href="https://fonts.googleapis.com/css?family=Play|Roboto|Saira+Extra+Condensed" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -29,9 +29,9 @@
             <img src="img/logo.png" alt="logo">
         </div>
         <div id="navigation">
-            <a href="index.php" class="active"><i class="material-icons">home</i>Home</a>
-            <a href="cam.php"><i class="material-icons">photo_camera</i>Cam</a>
-            <a href="profile.php"><i class="material-icons">dashboard</i>My Feed</a>
+            <a onclick='Router.navigate("index")'  class="active" id="indexPage"><i class="material-icons">home</i>Home</a>
+            <a onclick='Router.navigate("cam")' id="camPage"><i class="material-icons">photo_camera</i>Cam</a>
+            <a href="profile.php" id="profilePage"><i class="material-icons">dashboard</i>My Feed</a>
             <div onclick="location.href = './login.php';">Logout</div>
         </div>
     </nav>
