@@ -12,30 +12,34 @@ var overlay = document.getElementById('overlay-main');
 var photo = document.getElementById('image-full');
 var textareaComm = document.getElementById('add-comment').firstElementChild.firstElementChild;
 
+var openBtn = document.getElementById('open-btn');
+var backBtn = document.getElementById('back-btn');
+
 var likeTrigger = false;
 var chatTrigger = false;
 
 var imgID = null;
 
-var opened = false;
-
+var openedPhoto = false;
 
 function openPhotoPage(id) {
     console.log("open"+id);
-    if (opened) {
+    if (openedPhoto) {
+        console.log('openedPhoto');
         closePhotoPage();
     }
-    opened = true;
+    openedPhoto = true;
     imgID = id;
 
 
-    overlay.classList.toggle('hidden');
-    overlay.classList.toggle('overlayOpen');
-    overlay.classList.toggle('overlayClose');
-    console.log("1231");
-    if (document.body.offsetHeight > window.innerHeight) {
-        document.body.classList.toggle('noscroll');
+    overlay.classList.remove('hidden');
+    overlay.classList.add('overlayOpen');
+    overlay.classList.remove('overlayClose');
+
+    if (document.body.offsetWidth < window.innerWidth) {
+        document.body.classList.add('noscroll15');
     }
+    document.body.classList.add('noscroll');
     overlay.scrollTop = 0;
     //PUT DATA
     var photoJSON = getPhotoById(id);
@@ -47,23 +51,31 @@ function openPhotoPage(id) {
     likeTrigger = isLiked(id);
     if (likeTrigger) {
         likeButt.innerHTML = "favorite";
+        likeButt.style.color = "#ef5350";
     } else {
         likeButt.innerHTML = "favorite_border";
+        likeButt.style.color = "#816d65";
     }
     chatTrigger = false;
+    if (window.matchMedia( "(max-width: 992px)" ).matches) {
+        openBtn.classList.add('none');
+        backBtn.classList.remove('none');
+    }
 }
 
 /*EVENTS*/
 function closePhotoPage() {
-    Router.navigate();
-    opened = false;
-    overlay.classList.toggle('overlayOpen');
-    overlay.classList.toggle('overlayClose');
+    if (!openedPhoto) {
+        return;
+    }
+    Router.navigate('index');
+    openedPhoto = false;
+    overlay.classList.remove('overlayOpen');
+    overlay.classList.add('overlayClose');
     setTimeout(function() {
         overlay.classList.toggle('hidden');
-        if (document.body.offsetHeight > window.innerHeight) {
-            document.body.classList.toggle('noscroll');
-        }
+        document.body.classList.remove('noscroll15');
+        document.body.classList.remove('noscroll');
     }, 200);
     overlay.scrollTop = 0;
     if (chatTrigger) {
@@ -75,6 +87,8 @@ function closePhotoPage() {
         chatTrigger = false;
     }
     commentList.innerHTML = "";
+    openBtn.classList.remove('none');
+    backBtn.classList.add('none');
     imgID = null;
 }
 
@@ -86,11 +100,13 @@ function likePhoto() {
     if (likeTrigger) {
         likeCount.innerHTML = likes - 1;
         likeButt.innerHTML = "favorite_border";
+        likeButt.style.color = "#816d65";
         likeTrigger = false;
         makeDislike(imgID);
     } else {
         likeCount.innerHTML = likes + 1;
         likeButt.innerHTML = "favorite";
+        likeButt.style.color = "#ef5350";
         likeTrigger = true;
         makeLike(imgID);
     }

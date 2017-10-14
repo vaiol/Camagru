@@ -24,7 +24,7 @@
     float:none
 }
 
-#mySidebar a, #open-btn {
+#mySidebar a, .nav-btn {
     border:none;
     outline:0;
     padding:8px 16px;
@@ -55,7 +55,7 @@
 
 
 
-#open-btn {
+.nav-btn {
     color: #816d65;
     padding: 0;
     margin: -2px 0 0 0;
@@ -115,6 +115,7 @@
     background-color:rgba(0,0,0,0.5);
     z-index:2;
     cursor: pointer;
+    overflow-y: scroll;
 }
 
 

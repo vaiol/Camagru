@@ -1,29 +1,8 @@
 //GET VIDEO FROM WEBCAM
-var video = document.getElementById('video');
+var video = null;
 var errorVideo = null;
-video.onloadedmetadata = function(e) {
-    video.play();
-};
-navigator.getUserMedia = navigator.getUserMedia ||
-    navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia;
-
-if (navigator.getUserMedia) {
-    navigator.getUserMedia({ video: true },
-        function(stream) {
-            video.src = window.URL.createObjectURL(stream);
-            errorVideo = null;
-        },
-        function(err) {
-            errorVideo = err.name;
-        }
-    );
-} else {
-    errorVideo = "Your browser doesn't support 'getUserMedia'";
-}
-
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
+var canvas = null;
+var context = null;
 var moveX = 0;
 var moveY = 0;
 var isDragging = false;
@@ -33,8 +12,76 @@ var uploadedImg = null;
 var maskImg = null;
 var maskFlag = false;
 var prevCanvasWidth = -1;
+var vRender = null;
+var crossOriginProxy = 'https://cors-anywhere.herokuapp.com/';
+var streamm = null;
 
+function rangesInit() {
+    var event1 = document.createEvent('HTMLEvents');
+    event1.initEvent('input', true, false);
+    var ranges = document.querySelectorAll('input[type=range]');
+    ranges.forEach(function (currentRange) {
+        currentRange.addEventListener('input', function(e) {
+            var min = e.target.min,
+                max = e.target.max,
+                val = e.target.value;
 
+            e.target.style.backgroundSize = (val - min) * 100 / (max - min) + '% 100%';
+        });
+        currentRange.dispatchEvent(event1);
+    });
+}
+
+function videoStart() {
+    video = document.getElementById('video');
+    canvas = document.getElementById('canvas');
+    context = canvas.getContext('2d');
+    errorVideo = null;
+    rangesInit();
+    video.onloadedmetadata = function(e) {
+        video.play();
+    };
+    navigator.getUserMedia = navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia;
+
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({ video: true },
+            function(stream) {
+                streamm = stream;
+                video.src = window.URL.createObjectURL(stream);
+                errorVideo = null;
+            },
+            function(err) {
+                errorVideo = err.name;
+            }
+        );
+    } else {
+        errorVideo = "Your browser doesn't support 'getUserMedia'";
+    }
+    canvas.addEventListener("mousedown", maskMoveStart);
+    canvas.addEventListener("touchstart", handleStart, false);
+    window.addEventListener("mouseup", maskMoveFinish);
+    canvas.addEventListener("touchend", handleEnd, false);
+    window.addEventListener("mousemove", maskMove);
+    canvas.addEventListener("touchmove", handleMove, false);
+    vRender = setInterval(renderFrame, 25)
+}
+
+function videoFinish() {
+    if (video) {
+        video.pause();
+        streamm.getTracks()[0].stop();
+        streamm = null;
+        video = null;
+    }
+    canvas = null;
+    context = null;
+    if (vRender) {
+        clearInterval(vRender);
+        vRender = null;
+    }
+}
 
 function changePageStyle() {
     if (window.matchMedia( "(min-width: 601px)" ).matches) {
@@ -47,6 +94,11 @@ function changePageStyle() {
 
 function renderFrame() {
     changePageStyle();
+
+    if (video === null && vRender) {
+        clearInterval(vRender);
+        vRender = null;
+    }
 
     if (errorVideo !== null) {
         document.getElementById('errText').innerHTML = errorVideo;
@@ -97,7 +149,6 @@ function renderFrame() {
 }
 
 //RENDER 40 FRAMES IN SECOND
-var vRender = setInterval(renderFrame, 25);
 
 function renderPreviews() {
     var previews = [];
@@ -187,17 +238,6 @@ function handleEnd(evt) {
     prevY=0;
 }
 
-
-canvas.addEventListener("mousedown", maskMoveStart);
-canvas.addEventListener("touchstart", handleStart, false);
-
-window.addEventListener("mouseup", maskMoveFinish);
-canvas.addEventListener("touchend", handleEnd, false);
-
-window.addEventListener("mousemove", maskMove);
-canvas.addEventListener("touchmove", handleMove, false);
-
-
 /*
  * UPLOAD TOOLS
  */
@@ -272,8 +312,6 @@ function uploadMask() {
         reader.readAsDataURL(file);
     }
 }
-
-var crossOriginProxy = 'https://cors-anywhere.herokuapp.com/';
 
 function sendLinkMask() {
     var link = document.getElementById('linkMask').value;

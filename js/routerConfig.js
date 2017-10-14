@@ -1,7 +1,3 @@
-Router.config({ mode: 'hash', root: '/camagru/'});
-
-// adding routes
-
 function uploadPartials(page) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "partials/"+page);
@@ -24,46 +20,50 @@ function togleActive(page) {
 }
 
 var content = document.getElementById('content');
-var script = document.createElement('script');
-script.src = 'js/cam.js';
+
+Router.config({ mode: 'hash', root: '/camagru/'});
 
 Router
     .add(/index/, function() {
+
+        sidebarClose();
         var xmlResponse = uploadPartials('index.htm');
         xmlResponse.onload = function() {
-            content.innerHTML = ""+this.response;
+            content.innerHTML = this.response;
         };
         togleActive('index');
-        // content.removeChild(script);
+        videoFinish();
     })
     .add(/photo\/(.*)/, function() {
-        // if (Router.getFragment() === '') {
-            Router.check('index');
-        // }
-        console.log(Router.getFragment());
-        // Router.check('index');
+        videoFinish();
+        Router.check('index');
         openPhotoPage(arguments[0]);
-        // console.log('photo', arguments[0]);
 
     })
     .add(/cam/, function() {
+        sidebarClose();
         var xmlResponse = uploadPartials('cam.htm');
         xmlResponse.onload = function() {
-            content.innerHTML = ""+this.response;
+            content.innerHTML = this.response;
+            videoStart();
         };
         togleActive('cam');
-        content.appendChild(script);
+        closePhotoPage();
     })
     .add(/profile/, function() {
+        sidebarClose();
+        videoFinish();
         var xmlResponse = uploadPartials('profile.htm');
         xmlResponse.onload = function() {
-            content.innerHTML = ""+this.response;
+            content.innerHTML = this.response;
         };
         togleActive('profile');
+        closePhotoPage();
+
     })
     .listen();
 
-// Router.check('index');
+
 Router.check(Router.getFragment());
 if (Router.getFragment() === '') {
     Router.check('index');

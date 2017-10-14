@@ -20,11 +20,13 @@
     <script src="js/overlay.js"></script>
     <script src="js/logic.js"></script>
     <script src="js/visio.js"></script>
+    <script src="js/cam.js"></script>
 </head>
 <body class="Site">
 <header>
     <nav>
-        <button id="open-btn" onclick="sidebarOpen()" >☰</button>
+        <button id="open-btn" class="nav-btn" onclick="sidebarOpen()" ><i class="material-icons">menu</i></button>
+        <button id="back-btn" class="nav-btn none" onclick="closePhotoPage()" ><i class="material-icons">arrow_back</i></button>
         <div id="logo">
             <img src="img/logo.png" alt="logo">
         </div>
@@ -89,6 +91,25 @@
 <script src="js/photo-page.js"></script>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="content">
 
 </div>
@@ -98,9 +119,26 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="toast"></div>
 <script src="js/routerConfig.js"></script>
-<script src="js/input-range-ui.js"></script>
 <script src="js/toast.js"></script>
 <script src="js/index.js"></script>
 <footer>

@@ -67,15 +67,18 @@ var Router = {
             if(current !== self.getFragment()) {
                 // console.log(typeof current + ": " + current);
                 // console.log(typeof self.getFragment() + ": " + self.getFragment());
-
                 current = self.getFragment();
                 self.check(current);
 
             }
-
         };
         clearInterval(this.interval);
         this.interval = setInterval(fn, 50);
+        return this;
+    },
+    clearListener: function(path) {
+        console.log('clearListener');
+        clearInterval(this.interval);
         return this;
     },
     navigate: function(path) {
