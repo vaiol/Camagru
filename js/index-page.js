@@ -1,4 +1,3 @@
-
 var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 var fc = 18;
 var pc = 30;
@@ -44,12 +43,15 @@ function generateShowButtonPhoto(photoListNode, start, buttNext) {
     return button;
 }
 
-function showPhotos(photoListNode, photoList, start, buttNext) {
+function showPhotos(photoListNode, photoList, start, buttNext, gen) {
+    if (!gen) {
+        gen = generatePhoto;
+    }
     if (buttNext.firstChild) {
         buttNext.removeChild(buttNext.firstChild);
     }
     for (var i = 0, len = photoList.length; i < len; i++) {
-        photoListNode.appendChild(generatePhoto(photoList[i]));
+        photoListNode.appendChild(gen(photoList[i], photoListNode));
     }
     if (photoList.length >= photosInPage) {
         buttNext.appendChild(generateShowButtonPhoto(photoListNode, start, buttNext));

@@ -467,7 +467,6 @@ input[type=range]::-moz-range-thumb {
     }
     #overlay-canvas p {
         font-size: 3vw;
-        /*margin: 33% 0 0 2%;*/
     }
     #previews {
         height: 0;

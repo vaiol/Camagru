@@ -66,8 +66,8 @@ function openPhotoPage(id) {
     photo.src = photoJSON.src;
     likeCount.innerHTML = photoJSON.likeCount;
     chatCount.innerHTML = photoJSON.chatCount;
-    authorButt.firstElementChild.src = getCurrentUserAvatar();
-    authorButt.lastElementChild.innerHTML = getCurrentUser();
+    authorButt.firstElementChild.src = getUserAvatar(photoJSON.user);
+    authorButt.lastElementChild.innerHTML = photoJSON.user;
     likeTrigger = isLiked(id);
     if (likeTrigger) {
         likeButt.innerHTML = "favorite";

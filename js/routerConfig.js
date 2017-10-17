@@ -1,4 +1,3 @@
-
 var uploadedPartials = [];
 var uploadedStyle = [];
 var content = document.getElementById('content');
@@ -37,7 +36,7 @@ function uploadPartials(page, loadScript) {
     }
 }
 
-function togleActive(page) {
+function toggleActive(page) {
     if (page !== 'index') {
         document.getElementById('indexPage').classList.remove('active');
     }
@@ -67,7 +66,7 @@ Router
             openIndexPage();
             indexOpened = true;
         });
-        togleActive('index');
+        toggleActive('index');
     })
     .add(/photo\/(.*)/, function() {
         sidebarClose();
@@ -79,12 +78,10 @@ Router
                 indexOpened = true;
                 openPhotoPage(arg);
             });
-            togleActive('index');
+            toggleActive('index');
         } else {
             openPhotoPage(arg);
         }
-        connectStyle('photo');
-
     })
     .add(/cam/, function() {
         closePhotoPage(event, 'cam');
@@ -93,7 +90,7 @@ Router
             videoStart();
             indexOpened = false;
         });
-        togleActive('cam');
+        toggleActive('cam');
 
     })
     .add(/profile/, function() {
@@ -102,8 +99,9 @@ Router
         videoFinish();
         uploadPartials('profile.htm', function() {
             indexOpened = false;
+            openProfilePage();
         });
-        togleActive('profile');
+        toggleActive('profile');
     })
     .listen();
 
@@ -112,3 +110,10 @@ Router.check(Router.getFragment());
 if (Router.getFragment() === '') {
     Router.check('index');
 }
+
+var author = document.getElementById('mySidebar').firstElementChild.lastElementChild;
+var authorImg = document.getElementById('mySidebar').firstElementChild.firstElementChild;
+author.innerHTML = getCurrentUser();
+authorImg.src = getCurrentUserAvatar();
+
+

@@ -338,6 +338,7 @@ main-text
 .main-text {
     color: #816d65;
     font-size: 35px;
+    letter-spacing: 2px;
 }
 
 .main-text > .container {
