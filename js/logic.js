@@ -1,6 +1,7 @@
 var user = null;
 
 function getCurrentUser() {
+    console.log("getCurrentUser()");
     if (user) {
         return user;
     }
@@ -9,15 +10,17 @@ function getCurrentUser() {
 }
 
 function getUserAvatar(userName) {
+    console.log("getUserAvatar(): img/ava/"+userName+".jpg");
     return "img/ava/"+userName+".jpg"
 }
 
 function getCurrentUserAvatar() {
-    console.log("ava: img/ava/"+getCurrentUser()+".jpg");
+    console.log("getCurrentUserAvatar(): img/ava/"+getCurrentUser()+".jpg");
     return "img/ava/"+getCurrentUser()+".jpg"
 }
 
 function getPhotoById(id) {
+    console.log("getPhotoById()");
     return {
         "id": id,
         "src": "img/i"+id+".jpg",
@@ -129,11 +132,17 @@ function getCommentList(id, first, last) {
 
 function getPhotoList(first, last) {
     console.log("getPhotoList("+first+", "+last+")");
-    if (first > 100) {
+    if (first > 60) {
         return [
             {
                 "id": 1,
                 "src": "img/i"+1+".jpg",
+                "likeCount": 134,
+                "chatCount": 32
+            },
+            {
+                "id": 2,
+                "src": "img/i"+2+".jpg",
                 "likeCount": 134,
                 "chatCount": 32
             },
@@ -148,6 +157,11 @@ function getPhotoList(first, last) {
     return [{"id":1,"src":"img/i1.jpg","likeCount":134,"chatCount":32},{"id":2,"src":"img/i2.jpg","likeCount":134,"chatCount":32},{"id":3,"src":"img/i3.jpg","likeCount":134,"chatCount":32},{"id":4,"src":"img/i4.jpg","likeCount":134,"chatCount":32},{"id":5,"src":"img/i5.jpg","likeCount":134,"chatCount":32},{"id":6,"src":"img/i6.jpg","likeCount":134,"chatCount":32},{"id":7,"src":"img/i7.jpg","likeCount":134,"chatCount":32},{"id":8,"src":"img/i8.jpg","likeCount":134,"chatCount":32},{"id":9,"src":"img/i9.jpg","likeCount":134,"chatCount":32},{"id":10,"src":"img/i10.jpg","likeCount":134,"chatCount":32},{"id":11,"src":"img/i11.jpg","likeCount":134,"chatCount":32},{"id":12,"src":"img/i12.jpg","likeCount":134,"chatCount":32},{"id":13,"src":"img/i13.jpg","likeCount":134,"chatCount":32},{"id":14,"src":"img/i14.jpg","likeCount":134,"chatCount":32},{"id":15,"src":"img/i15.jpg","likeCount":134,"chatCount":32},{"id":1,"src":"img/i1.jpg","likeCount":134,"chatCount":32},{"id":2,"src":"img/i2.jpg","likeCount":134,"chatCount":32},{"id":3,"src":"img/i3.jpg","likeCount":134,"chatCount":32},{"id":4,"src":"img/i4.jpg","likeCount":134,"chatCount":32},{"id":5,"src":"img/i5.jpg","likeCount":134,"chatCount":32},{"id":6,"src":"img/i6.jpg","likeCount":134,"chatCount":32},{"id":7,"src":"img/i7.jpg","likeCount":134,"chatCount":32},{"id":8,"src":"img/i8.jpg","likeCount":134,"chatCount":32},{"id":9,"src":"img/i9.jpg","likeCount":134,"chatCount":32},{"id":10,"src":"img/i10.jpg","likeCount":134,"chatCount":32},{"id":11,"src":"img/i11.jpg","likeCount":134,"chatCount":32},{"id":12,"src":"img/i12.jpg","likeCount":134,"chatCount":32},{"id":13,"src":"img/i13.jpg","likeCount":134,"chatCount":32},{"id":14,"src":"img/i14.jpg","likeCount":134,"chatCount":32},{"id":15,"src":"img/i15.jpg","likeCount":134,"chatCount":32}]
 }
 
+
+function getFeaturedPhotoList(max) {
+    console.log("getFeaturedPhotoList("+max+")");
+    return [{"id":1,"src":"img/i1.jpg","likeCount":134,"chatCount":32},{"id":2,"src":"img/i2.jpg","likeCount":134,"chatCount":32},{"id":3,"src":"img/i3.jpg","likeCount":134,"chatCount":32},{"id":4,"src":"img/i4.jpg","likeCount":134,"chatCount":32},{"id":5,"src":"img/i5.jpg","likeCount":134,"chatCount":32},{"id":6,"src":"img/i6.jpg","likeCount":134,"chatCount":32},{"id":7,"src":"img/i7.jpg","likeCount":134,"chatCount":32},{"id":8,"src":"img/i8.jpg","likeCount":134,"chatCount":32},{"id":9,"src":"img/i9.jpg","likeCount":134,"chatCount":32},{"id":10,"src":"img/i10.jpg","likeCount":134,"chatCount":32},{"id":11,"src":"img/i11.jpg","likeCount":134,"chatCount":32},{"id":12,"src":"img/i12.jpg","likeCount":134,"chatCount":32},{"id":13,"src":"img/i13.jpg","likeCount":134,"chatCount":32},{"id":14,"src":"img/i14.jpg","likeCount":134,"chatCount":32},{"id":15,"src":"img/i15.jpg","likeCount":134,"chatCount":32}]
+}
 
 
 

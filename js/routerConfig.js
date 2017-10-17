@@ -1,9 +1,25 @@
-function uploadPartials(page) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "partials/"+page);
-    xhr.responseType = "text";
-    xhr.send();
-    return xhr;
+
+var uploadedPartials = [];
+var content = document.getElementById('content');
+
+
+function uploadPartials(page, loadScript) {
+    if (!uploadedPartials[page]) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "partials/"+page);
+        xhr.responseType = "text";
+        xhr.send();
+        xhr.onload = function () {
+            content.innerHTML = this.response;
+            uploadedPartials[page] = this.response;
+            console.log('UPLOAD: partials/'+page);
+            loadScript();
+
+        };
+    } else {
+        content.innerHTML = uploadedPartials[page];
+        loadScript();
+    }
 }
 
 function togleActive(page) {
@@ -19,47 +35,63 @@ function togleActive(page) {
     document.getElementById(page+'Page').classList.add('active');
 }
 
-var content = document.getElementById('content');
+
+
+
+
 
 Router.config({ mode: 'hash', root: '/camagru/'});
 
+var indexOpened = false;
+
+
 Router
     .add(/index/, function() {
-
-        sidebarClose();
-        var xmlResponse = uploadPartials('index.htm');
-        xmlResponse.onload = function() {
-            content.innerHTML = this.response;
-        };
-        togleActive('index');
+        if (indexOpened) {
+            return;
+        }
         videoFinish();
+        sidebarClose();
+        uploadPartials('index.htm', function() {
+            openIndexPage();
+            indexOpened = true;
+        });
+        togleActive('index');
     })
     .add(/photo\/(.*)/, function() {
+        sidebarClose();
         videoFinish();
-        Router.check('index');
-        openPhotoPage(arguments[0]);
+        var arg = arguments[0];
+        if (!indexOpened) {
+            uploadPartials('index.htm', function() {
+                openIndexPage();
+                indexOpened = true;
+                openPhotoPage(arg);
+            });
+            togleActive('index');
+        } else {
+            openPhotoPage(arg);
+        }
 
     })
     .add(/cam/, function() {
+        closePhotoPage(event, 'cam');
         sidebarClose();
-        var xmlResponse = uploadPartials('cam.htm');
-        xmlResponse.onload = function() {
-            content.innerHTML = this.response;
+        uploadPartials('cam.htm', function() {
             videoStart();
-        };
+            indexOpened = false;
+        });
         togleActive('cam');
-        closePhotoPage();
+
     })
     .add(/profile/, function() {
+        closePhotoPage(event, 'profile');
         sidebarClose();
         videoFinish();
-        var xmlResponse = uploadPartials('profile.htm');
-        xmlResponse.onload = function() {
-            content.innerHTML = this.response;
-        };
+        uploadPartials('profile.htm', function() {
+            indexOpened = false;
+        });
         togleActive('profile');
-        closePhotoPage();
-
     })
     .listen();
 

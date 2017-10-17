@@ -1,36 +1,56 @@
-var authorBlock = document.getElementById('author-block');
-var endofdiv = document.getElementById('endofdiv');
-var content = document.getElementById('overlay-content');
-var commentBlock = document.getElementById('comment-block');
-var commentList = document.getElementById('comment-list');
-var likeButt = document.getElementById('like-button');
-var chatButt = document.getElementById('chat-button');
-var authorButt = document.getElementById('author-button');
-var likeCount = document.getElementById('like-counter');
-var chatCount = document.getElementById('chat-counter');
-var overlay = document.getElementById('overlay-main');
-var photo = document.getElementById('image-full');
-var textareaComm = document.getElementById('add-comment').firstElementChild.firstElementChild;
-
-var openBtn = document.getElementById('open-btn');
-var backBtn = document.getElementById('back-btn');
+var authorBlock = null;
+var endofdiv = null;
+var overlayContent = null;
+var commentBlock = null;
+var commentList = null;
+var likeButt = null;
+var chatButt = null;
+var authorButt = null;
+var likeCount = null;
+var chatCount = null;
+var overlay = null;
+var photo = null;
+var textareaComm = null;
+var openBtn = null;
+var backBtn = null;
 
 var likeTrigger = false;
 var chatTrigger = false;
 
 var imgID = null;
-
 var openedPhoto = false;
 
+const commentCount = 15;
+
 function openPhotoPage(id) {
-    console.log("open"+id);
     if (openedPhoto) {
-        console.log('openedPhoto');
         closePhotoPage();
     }
+    authorBlock = document.getElementById('author-block');
+    endofdiv = document.getElementById('endofdiv');
+    overlayContent = document.getElementById('overlay-content');
+    commentBlock = document.getElementById('comment-block');
+    commentList = document.getElementById('comment-list');
+    likeButt = document.getElementById('like-button');
+    chatButt = document.getElementById('chat-button');
+    authorButt = document.getElementById('author-button');
+    likeCount = document.getElementById('like-counter');
+    chatCount = document.getElementById('chat-counter');
+    overlay = document.getElementById('overlay-main');
+    photo = document.getElementById('image-full');
+    textareaComm = document.getElementById('add-comment').firstElementChild.firstElementChild;
+    openBtn = document.getElementById('open-btn');
+    backBtn = document.getElementById('back-btn');
+
+    likeButt.addEventListener("click", likePhoto);
+    overlay.addEventListener("click", closePhotoPage);
+    chatButt.addEventListener("click", openChat);
+    authorButt.addEventListener("click", openAuthor);
+    overlayContent.addEventListener('mouseover', mouseOverContent);
+    overlayContent.addEventListener('mouseout', mouseOutContent);
+
     openedPhoto = true;
     imgID = id;
-
 
     overlay.classList.remove('hidden');
     overlay.classList.add('overlayOpen');
@@ -64,11 +84,12 @@ function openPhotoPage(id) {
 }
 
 /*EVENTS*/
-function closePhotoPage() {
+function closePhotoPage(e, page1) {
     if (!openedPhoto) {
         return;
     }
-    Router.navigate('index');
+    var nextPage = page1 ? page1 : 'index';
+    Router.navigate(nextPage);
     openedPhoto = false;
     overlay.classList.remove('overlayOpen');
     overlay.classList.add('overlayClose');
@@ -90,27 +111,84 @@ function closePhotoPage() {
     openBtn.classList.remove('none');
     backBtn.classList.add('none');
     imgID = null;
+    var opened = document.getElementsByClassName('openedPhoto');
+    for (var i = 0, len = opened.length; i < len; i++) {
+        opened[i].classList.remove('openedPhoto');
+    }
 }
 
 function likePhoto() {
     if (imgID === null) {
         return;
     }
+    var opened = document.getElementsByClassName('openedPhoto');
     var likes = parseInt(likeCount.innerHTML);
     if (likeTrigger) {
         likeCount.innerHTML = likes - 1;
         likeButt.innerHTML = "favorite_border";
         likeButt.style.color = "#816d65";
         likeTrigger = false;
+        opened[0].lastElementChild.innerHTML = (likes - 1).toString(10);
+        opened[0].lastElementChild.appendChild(generateIcon('favorite'));
         makeDislike(imgID);
     } else {
         likeCount.innerHTML = likes + 1;
         likeButt.innerHTML = "favorite";
         likeButt.style.color = "#ef5350";
         likeTrigger = true;
+        opened[0].lastElementChild.innerHTML = (likes + 1).toString(10);
+        opened[0].lastElementChild.appendChild(generateIcon('favorite'));
         makeLike(imgID);
     }
 }
+
+
+function generateCommentBlock(commentJSON) {
+    var commentAuthor = document.createElement('div');
+    commentAuthor.className = "comment-author";
+    commentAuthor.innerHTML = commentJSON.user;
+    var commentText = document.createElement('div');
+    commentText.className = "comment-text";
+
+    commentText.innerHTML = "<pre>"+commentJSON.text+"</pre>";
+
+    var div = document.createElement('div');
+    div.appendChild(commentAuthor);
+    div.appendChild(commentText);
+    var img = document.createElement('img');
+    img.src = getUserAvatar(commentJSON.user);
+
+    var comment = document.createElement('div');
+    comment.className = "comment";
+    comment.appendChild(img);
+    comment.appendChild(div);
+    return comment;
+}
+
+
+function generateShowButton(comentListNode, start, imgID) {
+    var button = document.createElement('div');
+    button.className = "butt-next-button";
+    button.innerHTML = "SHOW MORE";
+    button.addEventListener("click", function () {
+        showComments(comentListNode, getCommentList(imgID, start, start + commentCount - 1), start + commentCount, imgID);
+    });
+    return button;
+}
+
+function showComments(comentListNode, commentList, start, imgID) {
+    if (start !== commentCount) {
+        comentListNode.removeChild(comentListNode.lastChild);
+    }
+    for (var i = 0, len = commentList.length; i < len; i++) {
+        comentListNode.appendChild(generateCommentBlock(commentList[i]));
+    }
+    if (commentList.length >= commentCount) {
+        comentListNode.appendChild(generateShowButton(comentListNode, start, imgID));
+    }
+}
+
+
 function openChat() {
     if (chatTrigger) {
         authorBlock.classList.toggle('author-hover');
@@ -155,10 +233,7 @@ function addComment() {
     textareaComm.value = "";
 }
 
-likeButt.addEventListener("click", likePhoto);
-overlay.addEventListener("click", closePhotoPage);
-chatButt.addEventListener("click", openChat);
-authorButt.addEventListener("click", openAuthor);
+
 
 
 /*HOVER OVER IMAGE PAGE WITH TIMEOUT*/
@@ -176,8 +251,7 @@ function mouseOutContent() {
     }, 500);
 }
 
-content.addEventListener('mouseover', mouseOverContent);
-content.addEventListener('mouseout', mouseOutContent);
+
 
 
 /*ADDITIONAL*/

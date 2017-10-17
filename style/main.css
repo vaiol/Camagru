@@ -9,7 +9,7 @@ body {
     flex-direction: column;
     font-family: 'Play','Saira Extra Condensed', 'Roboto', sans-serif;
     min-width: 300px;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 header {
@@ -25,15 +25,11 @@ header .material-icons {
     font-size: 25px;
 }
 
-/*::-webkit-scrollbar {*/
-    /*position: absolute;*/
-/*}*/
 
 #content {
     background-color: #f6f4f1;
     flex: 1;
 }
-
 
 
 #slider, nav, .container {
@@ -46,9 +42,7 @@ header .material-icons {
 
 .wide-container {
     width: 1372px;
-    /*padding-top: 10px;*/
 }
-
 
 
 .container {
@@ -58,18 +52,24 @@ header .material-icons {
 }
 
 
+.photo {
+    overflow: hidden;
+}
+
 /*PHOTO*/
 
 .photo > .likes {
-    /*float: right;*/
     visibility: hidden;
     opacity: 0;
     position: relative;
     background: white;
-    padding: 0 5px;
-    margin: -12% 0 0 86%;
+    margin: -28px 0 0 -10px;
     z-index: 3;
     transition: visibility 0s, opacity .3s ease;
+    height: 100px;
+    text-align: center;
+    width: 105%;
+    padding: 3px 0;
 }
 
 .photo i {
@@ -134,9 +134,10 @@ nav {
 #navigation > div {
     font-size: 18px;
     padding: 5px 20px;
-    margin: 0 -1px;
-    margin-top: 15px;
-    margin-left: 10px;
+    margin: 15px -1px 0 10px;
+    /*margin: 0 -1px;*/
+    /*margin-top: 15px;*/
+    /*margin-left: 10px;*/
     text-decoration: none;
     color: inherit;
     transition: all 0.3s ease;
@@ -324,22 +325,18 @@ pre {
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-/*@media (min-device-width: 1025px) {*/
-    .noscroll15 {
-        padding-right: 15px;
-    }
-/*}*/
+.noscroll15 {
+    padding-right: 15px;
+}
 
 /**
 main-text
 */
 
 .main-text {
-    /*background-color: #b2a6a2;*/
-    /*color: #f6f4f1;*/
+
     color: #816d65;
     font-size: 35px;
-    /*height: 100px;*/
 
 }
 
@@ -360,13 +357,10 @@ main-text
 sub-text
  */
 .sub-text {
-    /*background-color: #b2a6a2;*/
-    /*color: #f6f4f1;*/
     text-align: center;
     color: #816d65;
     font-size: 20px;
     margin: 10px 0 10px 0;
-    /*height: 100px;*/
 
 }
 
@@ -429,30 +423,18 @@ MEDIA
     }
 }
 
-@media (min-width: 1350px) and (max-width: 1600px) {
-    .photo > .likes {
-        margin: -12% 0 0 83%;
-    }
-}
-
-@media (min-width: 1150px) and (max-width: 1350px) {
-    .photo > .likes {
-        margin: -12% 0 0 80%;
-    }
-}
-
 @media (min-width: 992px) and (max-width: 1150px) {
     #navigation > a {
         font-size: 18px;
         padding: 0 10px;
     }
-    .photo > .likes {
-        margin: -12% 0 0 77%;
-    }
 
 }
 
 @media (max-width: 992px) {
+    .photo:hover > .likes {
+       visibility: hidden;
+    }
     header .material-icons {
         font-size: 30px;
     }
@@ -465,10 +447,6 @@ MEDIA
         line-height: 80px;
         width: 165px;
     }
-
-    /*::-webkit-scrollbar {*/
-    /*position: absolute;*/
-    /*}*/
 
     #content {
         margin-top: 55px;
@@ -536,7 +514,7 @@ ICONS
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;  /* Preferred icon size */
+    font-size: 24px;
     display: inline-block;
     line-height: 1;
     vertical-align: middle;
@@ -546,17 +524,9 @@ ICONS
     white-space: nowrap;
     direction: ltr;
     margin: 0 5px 3px 0;
-    /*margin: up right down left*/
-
-    /* Support for all WebKit browsers. */
     -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
     text-rendering: optimizeLegibility;
-
-    /* Support for Firefox. */
     -moz-osx-font-smoothing: grayscale;
-
-    /* Support for IE. */
     font-feature-settings: 'liga';
 }
 
