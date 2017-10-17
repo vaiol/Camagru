@@ -1,5 +1,13 @@
-const photosInPage = 30;
-const featuredCount = 18;
+
+var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+var fc = 18;
+var pc = 30;
+if (width <= 992) {
+    fc = 6;
+    pc = 12;
+}
+const photosInPage = pc;
+const featuredCount = fc;
 
 function generateIcon(str) {
     var icon = document.createElement('i');

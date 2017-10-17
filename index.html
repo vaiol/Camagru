@@ -9,15 +9,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="style/sidebar.css">
-    <link rel="stylesheet" type="text/css" href="style/main.css">
-    <link rel="stylesheet" type="text/css" href="style/cam.css">
-    <link rel="stylesheet" type="text/css" href="style/input-range-ui.css">
-    <link rel="stylesheet" type="text/css" href="style/overlay.css">
+    <link rel="stylesheet" type="text/css" href="style/index-page.css">
     <link rel="stylesheet" type="text/css" href="style/toast.css">
-    <link rel="stylesheet" type="text/css" href="style/photo-page.css">
+
     <script src="js/Router.js"></script>
     <script src="js/sidebar.js"></script>
-    <script src="js/overlay.js"></script>
     <script src="js/logic.js"></script>
     <script src="js/cam-page.js"></script>
     <script src="js/diana.js"></script>
@@ -41,7 +37,10 @@
         </div>
     </nav>
     <div id="mySidebar" class="hidden sidebarClose">
-        <button onclick="sidebarClose()"><i class="material-icons">clear</i>Close</button>
+        <div>
+            <img src="img/ava/AUTHOR.jpg">
+            <div>AUTHOR</div>
+        </div>
         <a onclick='Router.navigate("index");sidebarClose()'><i class="material-icons">home</i>Home</a>
         <a onclick='Router.navigate("cam");sidebarClose()'><i class="material-icons">photo_camera</i>Cam</a>
         <a onclick='Router.navigate("profile");sidebarClose()'><i class="material-icons">dashboard</i>My Feed</a>

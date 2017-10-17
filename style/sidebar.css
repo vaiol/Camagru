@@ -5,12 +5,12 @@
 #mySidebar {
     top:0;
     height:100%;
-    width:200px;
+    width:250px;
     background-color:#fff;
     position:fixed;
     z-index:3;
     overflow:hidden;
-    border-right:1px solid #ccc
+    box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.4);
 }
 
 #mySidebar * {
@@ -53,7 +53,29 @@
     display: inline;
 }
 
+#mySidebar > div {
+    padding: 20px 0 10px 0;
+    width: 100%;
+    background-color: #b2a6a2;
+    color: #fff;
+    /*box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.4);*/
+    /*z-index: 5;*/
+}
 
+#mySidebar > div > img {
+    border-radius: 50%;
+    width: 60%;
+    padding: 0;
+    margin: auto;
+}
+
+#mySidebar > div > div {
+    padding: 0;
+    margin: 10px auto 0 auto;
+    width: 100%;
+    text-align: center;
+
+}
 
 .nav-btn {
     color: #816d65;

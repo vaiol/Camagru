@@ -1,7 +1,21 @@
 
 var uploadedPartials = [];
+var uploadedStyle = [];
 var content = document.getElementById('content');
 
+
+function connectStyle(page) {
+    if (page === "index" || uploadedStyle.includes(page)) {
+        return;
+    }
+    var link = document.createElement('link');
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = "style/"+page+"-page.css";
+    console.log("UPLOAD: style/"+page+"-page.css");
+    uploadedStyle.push(page);
+    document.head.appendChild(link);
+}
 
 function uploadPartials(page, loadScript) {
     if (!uploadedPartials[page]) {
@@ -13,6 +27,7 @@ function uploadPartials(page, loadScript) {
             content.innerHTML = this.response;
             uploadedPartials[page] = this.response;
             console.log('UPLOAD: partials/'+page);
+            connectStyle(page.substring(0, page.indexOf(".")));
             loadScript();
 
         };
@@ -34,10 +49,6 @@ function togleActive(page) {
     }
     document.getElementById(page+'Page').classList.add('active');
 }
-
-
-
-
 
 
 Router.config({ mode: 'hash', root: '/camagru/'});
@@ -72,6 +83,7 @@ Router
         } else {
             openPhotoPage(arg);
         }
+        connectStyle('photo');
 
     })
     .add(/cam/, function() {

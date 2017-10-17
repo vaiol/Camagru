@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Index</title>
-	<link rel="stylesheet" type="text/css" href="../style/main.css">
+	<link rel="stylesheet" type="text/css" href="../style/index-page.css">
 </head>
 <body id="msg">
 <div id="background"></div>

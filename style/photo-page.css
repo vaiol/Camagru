@@ -113,12 +113,9 @@
 /*COMMENTS*/
 
 #comment-block {
-    /*display: flex;*/
     position: relative;
-    /*background-color: #9e6957;*/
     z-index: 0;
     transition: all .9s cubic-bezier(0.9, 0.46, 0.87, 1.04);
-    /*margin-top: -50px;*/
 }
 
 .comm-visible {
@@ -232,7 +229,6 @@
 
 .comment-author {
     font-size: 18px;
-    /*letter-spacing: 2px;*/
 }
 
 .small-line {
@@ -271,9 +267,6 @@
         letter-spacing: 1px;
     }
 
-    #comment-block {
-        /*background-color: #f6f4f1;*/
-    }
     #author-block {
         margin-top: -4px !important;
     }
@@ -293,8 +286,4 @@
     #author-button {
         width: 29%;
     }
-
-    /*#overlay-main > div {*/
-        /*margin: 100px 4.8vw;*/
-    /*}*/
 }
