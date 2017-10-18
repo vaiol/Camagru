@@ -1,20 +1,19 @@
 
 
 
-function deletePhoto(id, photoNode, node) {
-    if (photoNode.classList.contains('deletePhoto')) {
-        // photoNode.classList.add('none')
+function deletePhotoNode(id, photoNode, node) {
+    if (photoNode.classList.contains('deletePhotoNode')) {
         node.removeChild(photoNode);
-        console.log('deletePhoto(id)');
+        deletePhoto(id);
     }
-    var opened = document.getElementsByClassName('deletePhoto');
+    var opened = document.getElementsByClassName('deletePhotoNode');
     for (var i = 0, len = opened.length; i < len; i++) {
-        opened[i].classList.remove('deletePhoto');
+        opened[i].classList.remove('deletePhotoNode');
     }
-    photoNode.classList.add('deletePhoto');
+    photoNode.classList.add('deletePhotoNode');
     setTimeout(function () {
-        photoNode.classList.remove('deletePhoto');
-    }, 3000);
+        photoNode.classList.remove('deletePhotoNode');
+    }, 1000);
 }
 
 function generateMyPhoto(photoJSON, node) {
@@ -22,11 +21,9 @@ function generateMyPhoto(photoJSON, node) {
     img.src = photoJSON.src;
     var photo = document.createElement('div');
     photo.className = "photo";
-// <div class="deleteIt"><div><p>double click to</p><i class="material-icons">highlight_off</i><p>DELETE</p></div></div>
     var div = document.createElement('div');
     var p1 = document.createElement('p');
     p1.innerHTML = "double click to";
-    p1.style.fontSize = '10px';
     var p2 = document.createElement('p');
     p2.innerHTML = "DELETE";
     div.appendChild(p1);
@@ -38,14 +35,13 @@ function generateMyPhoto(photoJSON, node) {
     photo.appendChild(img);
     photo.appendChild(deleteit);
     photo.addEventListener("click", function () {
-        deletePhoto(photoJSON.id, this, node);
+        deletePhotoNode(photoJSON.id, this, node);
     });
-    // photo.appendChild(img);
     return photo;
 }
 
 function openProfilePage() {
     var myPhotoListNode = document.getElementById('myPhotos');
     var buttNext = document.getElementById('butt-next').firstElementChild;
-    showPhotos(myPhotoListNode, getMyPhotoList(0, photosInPage), photosInPage, buttNext, generateMyPhoto);
+    showPhotos(myPhotoListNode, getMyPhotoList(0, photosInPage), photosInPage, buttNext, generateMyPhoto, getMyPhotoList);
 }

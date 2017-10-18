@@ -65,7 +65,8 @@ function videoStart() {
     canvas.addEventListener("touchend", handleEnd, false);
     window.addEventListener("mousemove", maskMove);
     canvas.addEventListener("touchmove", handleMove, false);
-    vRender = setInterval(renderFrame, 25)
+    vRender = setInterval(renderFrame, 25);
+    restorePreviews();
 }
 
 function videoFinish() {
@@ -81,6 +82,7 @@ function videoFinish() {
         clearInterval(vRender);
         vRender = null;
     }
+    savePreviews();
 }
 
 function changePageStyle() {
@@ -152,8 +154,8 @@ function renderFrame() {
 
 function renderPreviews() {
     var previews = [];
-    var childs = document.getElementById('previews').childNodes;
-    childs.forEach(function(currentValue) {
+    var children = document.getElementById('previews').childNodes;
+    children.forEach(function(currentValue) {
         if(currentValue.tagName === 'CANVAS'){
             previews.push(currentValue);
         }
@@ -170,6 +172,45 @@ function renderPreviews() {
         previews[i].height = nextCanvas.height;
         currentContext.drawImage(nextCanvas, 0, 0, nextCanvas.width, nextCanvas.height);
     }
+}
+
+var s = null;
+
+function savePreviews() {
+
+    var previews = document.getElementById('previews');
+    if (previews) {
+        s = [];
+        var children = document.getElementById('previews').childNodes;
+        children.forEach(function(currentValue) {
+            if(currentValue.tagName === 'CANVAS') {
+                var img = new Image();
+                img.src = currentValue.toDataURL("image/png");
+                img.onload = function () {
+                    s.push(this);
+                };
+            }
+        });
+    }
+}
+
+function restorePreviews() {
+    if (s) {
+        var i = 0;
+        var children = document.getElementById('previews').childNodes;
+        console.log(s);
+        children.forEach(function(currentValue) {
+            if(currentValue.tagName === 'CANVAS') {
+                var currentContext = currentValue.getContext('2d');
+                currentValue.width = s[i].width;
+                currentValue.height = s[i].height;
+                console.log(typeof s[i]);
+                currentContext.drawImage(s[i], 0, 0, s[i].width, s[i].height);
+                i++;
+            }
+        });
+    }
+    s = null;
 }
 
 function saveImage() {
@@ -232,7 +273,6 @@ function handleMove(evt) {
 
 function handleEnd(evt) {
     evt.preventDefault();
-    console.log("touchend");
     isDragging = false;
     prevX=0;
     prevY=0;

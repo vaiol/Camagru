@@ -74,7 +74,7 @@
     width: 100%;
     background-color: #816d65;
     border-radius: 1px;
-    margin-top: 10px;
+    margin: 10px 0 7px 0;
 }
 
 .deleteIt {
@@ -90,7 +90,8 @@
 
 .deleteIt p {
     margin: auto;
-    font-size: 50px;
+    font-size: 30px;
+    letter-spacing: 2px;
 }
 
 .deleteIt .material-icons {
@@ -105,27 +106,30 @@
     position: relative;
     background-color: transparent;
     color: transparent;
-    margin: -85% -5px 0 -5px;
+    margin: -82% -5px 0 -5px;
     width: 103%;
     height: 200%;
     z-index: 0;
-    transition: all .3s cubic-bezier(0.9, 0.46, 0.87, 1.04);
+    transition: all .3s cubic-bezier(0.07, 0.64, 0.33, 1.01);
 }
 
 
-.photo:hover .deleteIt, .deletePhoto .deleteIt{
+.photo:hover .deleteIt, .deletePhotoNode .deleteIt{
     opacity: 0.6;
     background-color: red;
     color: #fff;
 }
 
-.photo:hover .material-icons, .deletePhoto .deleteIt {
+.deleteIt:hover .material-icons, .deletePhotoNode .material-icons {
     color: #fff;
 }
 
 @media (max-width: 1920px) {
+    .photo .deleteIt {
+        margin: -83% -5px 0 -5px;
+    }
     .deleteIt p {
-        font-size: 3vw;
+        font-size: 1.5vw;
     }
 
     .deleteIt .material-icons {
@@ -134,9 +138,26 @@
 }
 
 @media (max-width: 992px) {
+    .deleteIt p {
+        font-size: 2.7vw;
+    }
+
+    .deleteIt .material-icons {
+        font-size: 9.5vw;
+    }
 }
 
 @media (max-width: 600px) {
+    .photo .deleteIt {
+        margin: -80% -5px 0 -5px;
+    }
+    .deleteIt p {
+        font-size: 7vw;
+    }
+
+    .deleteIt .material-icons {
+        font-size: 20.5vw;
+    }
     #p-author {
         margin-bottom: 15px;
         box-shadow: 0 1px 2px 0 rgba(0,0,0,0.3);

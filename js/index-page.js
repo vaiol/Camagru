@@ -33,28 +33,31 @@ function generatePhoto(photoJSON) {
     return photo;
 }
 
-function generateShowButtonPhoto(photoListNode, start, buttNext) {
+function generateShowButtonPhoto(photoListNode, start, buttNext, genFunc, getFunc) {
     var button = document.createElement('div');
     button.className = "butt-next-button";
     button.innerHTML = "SHOW MORE";
     button.addEventListener("click", function () {
-        showPhotos(photoListNode, getPhotoList(start, start + photosInPage - 1), start + photosInPage, buttNext);
+        showPhotos(photoListNode, getFunc(start, start + photosInPage - 1), start + photosInPage, buttNext, genFunc);
     });
     return button;
 }
 
-function showPhotos(photoListNode, photoList, start, buttNext, gen) {
-    if (!gen) {
-        gen = generatePhoto;
+function showPhotos(photoListNode, photoList, start, buttNext, genFunc, getFunc) {
+    if (!genFunc) {
+        genFunc = generatePhoto;
+    }
+    if (!getFunc) {
+        getFunc = getPhotoList;
     }
     if (buttNext.firstChild) {
         buttNext.removeChild(buttNext.firstChild);
     }
     for (var i = 0, len = photoList.length; i < len; i++) {
-        photoListNode.appendChild(gen(photoList[i], photoListNode));
+        photoListNode.appendChild(genFunc(photoList[i], photoListNode));
     }
     if (photoList.length >= photosInPage) {
-        buttNext.appendChild(generateShowButtonPhoto(photoListNode, start, buttNext));
+        buttNext.appendChild(generateShowButtonPhoto(photoListNode, start, buttNext, genFunc, getFunc));
     }
 }
 
