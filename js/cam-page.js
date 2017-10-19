@@ -11,6 +11,7 @@ var prevY = 0;
 var uploadedImg = null;
 var maskImg = null;
 var maskFlag = false;
+var corsProxy = '/camagru/controller/fetch.php?url=';
 var prevCanvasWidth = -1;
 var vRender = null;
 var localStream = null;
@@ -86,11 +87,11 @@ function videoStart() {
     window.addEventListener("mousemove", maskMove);
     canvas.addEventListener("touchmove", handleMove, false);
     vRender = setInterval(renderFrame, 25);
-
 }
 
 function videoFinish() {
     stopStream();
+    savePreviews();
     canvas = null;
     context = null;
     if (vRender) {
@@ -98,7 +99,7 @@ function videoFinish() {
         vRender = null;
     }
     maskFlag = false;
-    savePreviews();
+
 }
 
 function changePageStyle() {
@@ -147,7 +148,6 @@ function renderFrame() {
         var shiftX = canvas.width - maskImg.width;
         shiftX = shiftX > 0 ? shiftX / 2 : 0;
         //get size of mask after resize:
-        console.log(document.getElementById("resize").value);
         const resize = parseInt(document.getElementById("resize").value);
         const resizeX = maskImg.width * (resize / 100);
         const resizeY = maskImg.height * (resize / 100);
@@ -197,7 +197,10 @@ var s = null;
 var sHeight = null;
 
 function savePreviews() {
-    sHeight = document.getElementById('canvas').offsetHeight+'px';
+    if (!canvas) {
+        return;
+    }
+    sHeight = canvas.offsetHeight+'px';
     var previews = document.getElementById('previews');
     if (previews) {
         s = [];
@@ -207,7 +210,7 @@ function savePreviews() {
                 var img = new Image();
                 img.src = currentValue.toDataURL("image/png");
                 img.onload = function () {
-                    s.push(this);
+                    s.push(img);
                 };
             }
         });
@@ -218,13 +221,12 @@ function restorePreviews() {
     if (s) {
         var i = 0;
         var children = document.getElementById('previews').childNodes;
-        console.log(s);
+
         children.forEach(function(currentValue) {
             if(currentValue.tagName === 'CANVAS') {
                 var currentContext = currentValue.getContext('2d');
                 currentValue.width = s[i].width;
                 currentValue.height = s[i].height;
-                console.log(typeof s[i]);
                 currentContext.drawImage(s[i], 0, 0, s[i].width, s[i].height);
                 i++;
             }
@@ -237,7 +239,12 @@ function restorePreviews() {
 
 function saveImage() {
     renderPreviews();
-    document.getElementById('hidden_data').value = canvas.toDataURL("image/png");
+    // try {
+        document.getElementById('hidden_data').value = document.getElementById('canvas1').toDataURL("image/png");
+    // } catch (error) {
+    //     toastIt('CORS Error');
+    // }
+
     var fd = new FormData(document.forms["form1"]);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'camsave.php', true);
@@ -358,8 +365,9 @@ function overBoxClose() {
 
 
 function createMaskImg(src) {
-    var img = document.createElement('img');
+    var img = new Image();
     img.src = src;
+    img.setAttribute('crossOrigin', 'anonymous');
     img.onload = function () {
         if (img.width > img.height) {
             img.style.width = '90%';
@@ -426,10 +434,10 @@ function downloadMasks(arr) {
 
 
 
-
+// <img src='dfgdfg'></img>
 
 function changeEffect(src, loaded) {
-    var newMask = document.createElement('img');
+    var newMask = new Image();
     newMask.onload = function () {
         maskFlag = true;
         maskImg = newMask;
@@ -506,7 +514,7 @@ function uploadMask() {
 function sendLinkMask() {
     var link = document.getElementById('linkMask').value;
     if (link) {
-        changeEffect(link, true);
+        changeEffect(corsProxy + link, true);
         overBoxClose();
     }
 }
@@ -514,7 +522,7 @@ function sendLinkMask() {
 function sendLinkImg() {
     var link = document.getElementById('linkImg').value;
     if (link) {
-        changeImg(link);
+        changeImg(corsProxy + link);
         overBoxClose();
     }
 }
