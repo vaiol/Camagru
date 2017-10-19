@@ -113,6 +113,10 @@
     transition: all .3s cubic-bezier(0.07, 0.64, 0.33, 1.01);
 }
 
+#previewMask img {
+    width: auto;
+}
+
 
 .photo:hover .deleteIt, .deletePhotoNode .deleteIt{
     opacity: 0.6;
