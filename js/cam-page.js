@@ -239,11 +239,11 @@ function restorePreviews() {
 
 function saveImage() {
     renderPreviews();
-    // try {
+    try {
         document.getElementById('hidden_data').value = document.getElementById('canvas1').toDataURL("image/png");
-    // } catch (error) {
-    //     toastIt('CORS Error');
-    // }
+    } catch (error) {
+        toastIt('Some Error');
+    }
 
     var fd = new FormData(document.forms["form1"]);
     var xhr = new XMLHttpRequest();
