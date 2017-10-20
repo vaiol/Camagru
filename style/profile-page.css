@@ -117,6 +117,10 @@
     width: auto;
 }
 
+#myPhotos {
+    margin-top: 4px;
+}
+
 
 .photo:hover .deleteIt, .deletePhotoNode .deleteIt{
     opacity: 0.6;
@@ -130,7 +134,7 @@
 
 @media (max-width: 1920px) {
     .photo .deleteIt {
-        margin: -83% -5px 0 -5px;
+        margin: -85% -5px 0 -5px;
     }
     .deleteIt p {
         font-size: 1.5vw;

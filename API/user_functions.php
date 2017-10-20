@@ -38,3 +38,8 @@ function auth($email, $password) {
 		return false;
 	}
 }
+
+function getUserId($login) {
+    $id = DB::run("SELECT `id` FROM `user` WHERE `login` = ? AND `activated` = ?", [$login, 1])->fetch()['id'];
+    return $id;
+}

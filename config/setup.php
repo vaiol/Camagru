@@ -30,7 +30,7 @@
 					PDO::ATTR_EMULATE_PREPARES   => TRUE,
 				);
 				try {
-					$pdo = new PDO('mysql:host='.DB_HOST.';dbname=;charset='.DB_CHARSET, DB_USER, DB_PASSWORD, $opt);
+					$pdo = new PDO('mysql:host='.DB_HOST.';port='.DB_PORT.';dbname=;charset='.DB_CHARSET, DB_USER, DB_PASSWORD, $opt);
 					$pdo->query('CREATE DATABASE IF NOT EXISTS '.DB_NAME);
 					$pdo->query('USE '.DB_NAME);
 					//CREATE USER TABLE
@@ -38,6 +38,7 @@
 					$pdo->query('CREATE TABLE `user` (
                                   `id` int(11) NOT NULL,
                                   `email` varchar(254) NOT NULL,
+                                  `login` varchar(16) NOT NULL,
                                   `password` varchar(254) NOT NULL,
                                   `activated` tinyint(1) NOT NULL
                                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8');
@@ -50,7 +51,8 @@
 					$pdo->query('DROP TABLE IF EXISTS `likes`');
 					$pdo->query('CREATE TABLE `likes` (
                                   `id_user` int(11) NOT NULL,
-                                  `id_image` int(11) NOT NULL
+                                  `id_image` int(11) NOT NULL,
+                                  `name` varchar(40) NOT NULL
                                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 					$pdo->query('ALTER TABLE `likes`
                                   ADD KEY `id_user` (`id_user`,`id_image`);');
@@ -82,7 +84,7 @@
 					exit();
 				}
 				echo "SETUP COMPLETED SUCCESFULL";
-				header( "refresh:3;url=../index.php" );
+				header( "refresh:3;url=../" );
 			?>
 		</p>
 	</div>

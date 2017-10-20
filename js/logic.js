@@ -169,7 +169,24 @@ function getPhotoList(first, last) {
 
 function getMyPhotoList(first, last) {
     console.log("getMyPhotoList("+first+", "+last+")");
-    if (first > 40) {
+
+    var body = 'type=GET&list=MYLIST&login='+getCurrentUser()+'&first='+0+'&last='+2;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'controller/controller-photo.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            console.log(xhr.getAllResponseHeaders());
+            console.log(xhr.responseText);
+            console.log('DONE:', xhr.status);
+        }
+    };
+
+    xhr.send(body);
+
+
+
+if (first > 40) {
         return [
             {
                 "id": 1,
@@ -195,6 +212,19 @@ function getMyPhotoList(first, last) {
         ];
     }
     return [{"id":1,"src":"img/i1.jpg","likeCount":134,"chatCount":32},{"id":2,"src":"img/i2.jpg","likeCount":134,"chatCount":32},{"id":3,"src":"img/i3.jpg","likeCount":134,"chatCount":32},{"id":4,"src":"img/i4.jpg","likeCount":134,"chatCount":32},{"id":5,"src":"img/i5.jpg","likeCount":134,"chatCount":32},{"id":6,"src":"img/i6.jpg","likeCount":134,"chatCount":32},{"id":7,"src":"img/i7.jpg","likeCount":134,"chatCount":32},{"id":8,"src":"img/i8.jpg","likeCount":134,"chatCount":32},{"id":9,"src":"img/i9.jpg","likeCount":134,"chatCount":32},{"id":10,"src":"img/i10.jpg","likeCount":134,"chatCount":32},{"id":11,"src":"img/i11.jpg","likeCount":134,"chatCount":32},{"id":12,"src":"img/i12.jpg","likeCount":134,"chatCount":32},{"id":13,"src":"img/i13.jpg","likeCount":134,"chatCount":32},{"id":14,"src":"img/i14.jpg","likeCount":134,"chatCount":32},{"id":15,"src":"img/i15.jpg","likeCount":134,"chatCount":32},{"id":1,"src":"img/i1.jpg","likeCount":134,"chatCount":32},{"id":2,"src":"img/i2.jpg","likeCount":134,"chatCount":32},{"id":3,"src":"img/i3.jpg","likeCount":134,"chatCount":32},{"id":4,"src":"img/i4.jpg","likeCount":134,"chatCount":32},{"id":5,"src":"img/i5.jpg","likeCount":134,"chatCount":32},{"id":6,"src":"img/i6.jpg","likeCount":134,"chatCount":32},{"id":7,"src":"img/i7.jpg","likeCount":134,"chatCount":32},{"id":8,"src":"img/i8.jpg","likeCount":134,"chatCount":32},{"id":9,"src":"img/i9.jpg","likeCount":134,"chatCount":32},{"id":10,"src":"img/i10.jpg","likeCount":134,"chatCount":32},{"id":11,"src":"img/i11.jpg","likeCount":134,"chatCount":32},{"id":12,"src":"img/i12.jpg","likeCount":134,"chatCount":32},{"id":13,"src":"img/i13.jpg","likeCount":134,"chatCount":32},{"id":14,"src":"img/i14.jpg","likeCount":134,"chatCount":32},{"id":15,"src":"img/i15.jpg","likeCount":134,"chatCount":32}]
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

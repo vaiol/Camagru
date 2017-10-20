@@ -51,14 +51,14 @@ function uploadAva() {
     var input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/x-png,image/gif,image/jpeg';
+    input.value = "";
     input.onchange = function () {
         var file = this.files[0];
         var reader = new FileReader();
         reader.onloadend = function () {
             var img = new Image();
             img.src = this.result;
-
-            document.getElementById('p-author').firstElementChild.src = ;
+            document.getElementById('p-author').firstElementChild.src = this.result;
         };
         if (file) {
             reader.readAsDataURL(file);

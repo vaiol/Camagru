@@ -237,19 +237,7 @@ function restorePreviews() {
     s = null;
 }
 
-function saveImage() {
-    renderPreviews();
-    try {
-        document.getElementById('hidden_data').value = document.getElementById('canvas1').toDataURL("image/png");
-    } catch (error) {
-        toastIt('Some Error');
-    }
 
-    var fd = new FormData(document.forms["form1"]);
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'camsave.php', true);
-    xhr.send(fd);
-}
 
 /*
  * MASK MOVING
@@ -525,5 +513,33 @@ function sendLinkImg() {
         changeImg(corsProxy + link);
         overBoxClose();
     }
+}
+
+
+
+function saveImage() {
+    renderPreviews();
+    try {
+        document.getElementById('f-file').value = document.getElementById('canvas1').toDataURL("image/png");
+        document.getElementById('f-login').value = getCurrentUser();
+        document.getElementById('f-type').value = 'PUT';
+    } catch (error) {
+        toastIt('Some Error');
+    }
+
+    var fd = new FormData(document.forms["form1"]);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'controller/controller-photo.php', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            // console.log(xhr.getAllResponseHeaders());
+            // console.log(xhr.responseText);
+            // console.log('DONE - stache', xhr.status);
+        }
+    };
+    xhr.onload = function () {
+        console.log('DONE', xhr.status);
+    };
+    xhr.send(fd);
 }
 
