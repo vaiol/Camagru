@@ -171,7 +171,7 @@ function getMyPhotoList(first, last) {
     return new Promise(function(resolve, reject) {
 
         console.log("getMyPhotoList("+first+", "+last+")");
-        var body = 'type=GET&list=MYLIST&login='+getCurrentUser()+'&first='+0+'&last='+6;
+        var body = 'type=GET&list=MYLIST&login='+getCurrentUser()+'&first='+first+'&last='+last;
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'controller/controller-photo.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

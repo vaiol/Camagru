@@ -9,18 +9,25 @@ function savePhoto($authorID)
     $img = str_replace(' ', '+', $img);
     $data = base64_decode($img);
 
-    $photoName = mktime().".png";
-    $path = UPLOAD_DIR.$photoName;
-    file_put_contents($path, $data);
+    $time = round(microtime(1) * 1000);
+    $photoName = $authorID.$time.".jpg";
+    $photoNameJPG = $authorID.$time.".jpg";
 
-    $result = putPhoto($photoName, $authorID);
-    print $result;
+    $image = imagecreatefromstring($data);
+    imagejpeg($image, UPLOAD_DIR.$photoName, 90);
+    imagejpeg($image, COMPRESSED_DIR.$photoNameJPG, 20);
+
+    putPhoto($photoName, $authorID);
 }
+
+
+
+
 
 
 function getBase64Src($array) {
     foreach ($array as $key => $elem) {
-        $path = UPLOAD_DIR.$elem['name'];
+        $path = COMPRESSED_DIR.$elem['name'];
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
@@ -36,14 +43,12 @@ function getMyPhotoList($authorID, $first, $last)
     $result = getUserPhotoList($authorID, $first, $last);
     $result = getBase64Src($result);
     $result = json_encode($result);
-//    var_dump($result);
     print $result;
 }
 
 $type = $_POST['type'];
 $login = $_POST['login'];
 
-//echo 'login:'.$login.';';
 
 $authorID = getUserId($login);
 

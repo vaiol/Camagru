@@ -533,7 +533,7 @@ function saveImage() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             // console.log(xhr.getAllResponseHeaders());
-            // console.log(xhr.responseText);
+            console.log(xhr.responseText);
             // console.log('DONE - stache', xhr.status);
         }
     };

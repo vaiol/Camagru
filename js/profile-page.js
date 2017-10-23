@@ -44,7 +44,6 @@ function openProfilePage() {
     var myPhotoListNode = document.getElementById('myPhotos');
     var buttNext = document.getElementById('butt-next').firstElementChild;
     getMyPhotoList(0, photosInPage).then(function (myPhotoList) {
-        console.log(myPhotoList);
         showPhotos(myPhotoListNode, myPhotoList, photosInPage, buttNext, generateMyPhoto, getMyPhotoList);
     });
 

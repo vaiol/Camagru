@@ -51,8 +51,7 @@
 					$pdo->query('DROP TABLE IF EXISTS `likes`');
 					$pdo->query('CREATE TABLE `likes` (
                                   `id_user` int(11) NOT NULL,
-                                  `id_image` int(11) NOT NULL,
-                                  `name` varchar(40) NOT NULL
+                                  `id_image` int(11) NOT NULL
                                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 					$pdo->query('ALTER TABLE `likes`
                                   ADD KEY `id_user` (`id_user`,`id_image`);');
@@ -60,7 +59,8 @@
 					$pdo->query('DROP TABLE IF EXISTS `image`');
 					$pdo->query('CREATE TABLE `image` (
                                   `id` int(11) NOT NULL,
-                                  `id_user` int(11) NOT NULL
+                                  `id_user` int(11) NOT NULL,
+                                  `name` varchar(40) NOT NULL
                                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 					$pdo->query('ALTER TABLE `image`
                                   ADD PRIMARY KEY (`id`);');
@@ -78,7 +78,14 @@
                                   ADD PRIMARY KEY (`id`);');
 					$pdo->query('ALTER TABLE `comment`
                                   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;');
-					$pdo = null;
+
+
+                    $pdo->query('INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES (\'1\', \'vaiol.ans@gmail.com\', \'AUTHOR\', \'123456\', \'1\');');
+                    $pdo->query('INSERT INTO `likes` (`id_user`, `id_image`) VALUES (\'1\', \'91\');');
+//                    $pdo->query('');
+                    $pdo->query('INSERT INTO `comment` (`id`, `id_user`, `id_image`, `comment`) VALUES (\'1\', \'1\', \'90\', \'sfgdfghfghdghdfgh dg fgh f gdddh \');');
+
+                    $pdo = null;
 				} catch (PDOException $e) {
 					echo 'ERROR!!!</p></div><br><div><p>'.$e->getMessage();
 					exit();
