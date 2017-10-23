@@ -43,7 +43,11 @@ function generateMyPhoto(photoJSON, node) {
 function openProfilePage() {
     var myPhotoListNode = document.getElementById('myPhotos');
     var buttNext = document.getElementById('butt-next').firstElementChild;
-    showPhotos(myPhotoListNode, getMyPhotoList(0, photosInPage), photosInPage, buttNext, generateMyPhoto, getMyPhotoList);
+    getMyPhotoList(0, photosInPage).then(function (myPhotoList) {
+        console.log(myPhotoList);
+        showPhotos(myPhotoListNode, myPhotoList, photosInPage, buttNext, generateMyPhoto, getMyPhotoList);
+    });
+
 }
 
 

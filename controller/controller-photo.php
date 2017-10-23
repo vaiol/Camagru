@@ -1,14 +1,16 @@
 <?php
 require_once __DIR__.'/../API/API.php';
+
+
 function savePhoto($authorID)
 {
     $img = $_POST['file'];
     $img = str_replace('data:image/png;base64,', '', $img);
     $img = str_replace(' ', '+', $img);
     $data = base64_decode($img);
-    $upload_dir = "../photos/";
+
     $photoName = mktime().".png";
-    $path = $upload_dir.$photoName;
+    $path = UPLOAD_DIR.$photoName;
     file_put_contents($path, $data);
 
     $result = putPhoto($photoName, $authorID);
@@ -16,16 +18,32 @@ function savePhoto($authorID)
 }
 
 
+function getBase64Src($array) {
+    foreach ($array as $key => $elem) {
+        $path = UPLOAD_DIR.$elem['name'];
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        unset($array[$key]['name']);
+        $array[$key]['src'] = $base64;
+    }
+    return $array;
+}
+
+
 function getMyPhotoList($authorID, $first, $last)
 {
     $result = getUserPhotoList($authorID, $first, $last);
-    var_dump($result);
+    $result = getBase64Src($result);
+    $result = json_encode($result);
+//    var_dump($result);
+    print $result;
 }
 
 $type = $_POST['type'];
 $login = $_POST['login'];
 
-echo 'login:'.$login.';';
+//echo 'login:'.$login.';';
 
 $authorID = getUserId($login);
 
