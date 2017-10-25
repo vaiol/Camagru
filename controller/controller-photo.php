@@ -103,6 +103,14 @@ function getPhotoList($first, $last)
     print $result;
 }
 
+function getFeaturedPhotoList($max)
+{
+    $result = selectFeaturedPhotoList($max);
+    $result = getBase64Src($result, COMPRESSED_DIR);
+    $result = json_encode($result);
+    print $result;
+}
+
 $type = $_POST['type'];
 $login = $_POST['login'];
 
@@ -128,6 +136,7 @@ if ($type == 'GET') {
         getMyPhotoList($authorID, $first, $last);
     } else if ($list === 'FEATURED') {
         $max = $_POST['max'];
+        getFeaturedPhotoList($max);
     } else if ($list === 'ALL') {
         $first = intval($_POST['first']);
         $last = intval($_POST['last']);

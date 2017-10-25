@@ -69,8 +69,9 @@ function openIndexPage() {
     let featuredPhotoListNode = document.getElementById('fPhotos');
     let laPhotoListNode = document.getElementById('laPhotos');
     let buttNext = document.getElementById('butt-next').firstElementChild;
-    showPhotos(featuredPhotoListNode, getFeaturedPhotoList(featuredCount), -1, buttNext);
-
+    getFeaturedPhotoList(featuredCount).then(function (photoList) {
+        showPhotos(featuredPhotoListNode, photoList, photosInPage, buttNext);
+    });
     getPhotoList(0, photosInPage).then(function (photoList) {
         showPhotos(laPhotoListNode, photoList, photosInPage, buttNext);
     });
