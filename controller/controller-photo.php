@@ -2,22 +2,71 @@
 require_once __DIR__.'/../API/API.php';
 
 
+function resize_image($image, $w, $h) {
+
+    $width = imagesx($image);
+    $height = imagesy($image);
+    $r = $width / $height;
+    if ($w / $h > $r) {
+        $new_width = $h * $r;
+        $new_height = $h;
+    } else {
+        $new_height = $w / $r;
+        $new_width = $w;
+    }
+    $dst = imagecreatetruecolor($new_width, $new_height);
+    imagecopyresampled($dst, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+    return $dst;
+}
+
+function crop_image($image) {
+    $ratio = 1.7777777778;
+    $shiftX = 0;
+    $shiftY = 0;
+    $width = imagesx($image);
+    $height = imagesy($image);
+    $expectedHeight = $width / $ratio;
+    if ($expectedHeight < $height) {
+        $shiftY = ($height - $expectedHeight) / 2;
+        $height = $expectedHeight;
+    } else {
+        $expectedWidth = $height * $ratio;
+        $shiftX = ($width - $expectedWidth) / 2;
+        $width = $expectedWidth;
+    }
+    $image_cropped = imagecrop($image, ['x' => $shiftX, 'y' => $shiftY, 'width' => $width, 'height' => $height]);
+    return $image_cropped;
+}
+
+
 function savePhoto($authorID)
 {
+    echo "1 ";
     $img = $_POST['file'];
+    echo "2 ";
     $img = str_replace('data:image/png;base64,', '', $img);
+    echo "3 ";
     $img = str_replace(' ', '+', $img);
+    echo "4 ";
     $data = base64_decode($img);
-
+    echo "5 ";
     $time = round(microtime(1) * 1000);
     $photoName = $authorID.$time.".jpg";
     $photoNameJPG = $authorID.$time.".jpg";
 
+    //SAVE ORIGINAL PHOTO WITH SMALL COMPRESSION
     $image = imagecreatefromstring($data);
     imagejpeg($image, UPLOAD_DIR.$photoName, 90);
-    imagejpeg($image, COMPRESSED_DIR.$photoNameJPG, 20);
-
-    putPhoto($photoName, $authorID);
+    echo "6 ";
+    //RESIZE CROP AND COMPRESS PHOTO
+    $image = resize_image($image, 425, 425);
+    $image = crop_image($image);
+    imagejpeg($image, COMPRESSED_DIR.$photoNameJPG, 25);
+    echo "7 ";
+    //SAVE PHOTO TO DB
+    insertPhoto($photoName, $authorID);
+    echo "8 ";
+    print 103;
 }
 
 
@@ -25,9 +74,9 @@ function savePhoto($authorID)
 
 
 
-function getBase64Src($array) {
+function getBase64Src($array, $dir) {
     foreach ($array as $key => $elem) {
-        $path = COMPRESSED_DIR.$elem['name'];
+        $path = $dir.$elem['name'];
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
@@ -40,8 +89,16 @@ function getBase64Src($array) {
 
 function getMyPhotoList($authorID, $first, $last)
 {
-    $result = getUserPhotoList($authorID, $first, $last);
-    $result = getBase64Src($result);
+    $result = selectUserPhotoList($authorID, $first, $last);
+    $result = getBase64Src($result, COMPRESSED_DIR);
+    $result = json_encode($result);
+    print $result;
+}
+
+function getPhotoList($first, $last)
+{
+    $result = selectPhotoList($first, $last);
+    $result = getBase64Src($result, COMPRESSED_DIR);
     $result = json_encode($result);
     print $result;
 }
@@ -72,8 +129,9 @@ if ($type == 'GET') {
     } else if ($list === 'FEATURED') {
         $max = $_POST['max'];
     } else if ($list === 'ALL') {
-        $first = $_POST['first'];
-        $last = $_POST['last'];
+        $first = intval($_POST['first']);
+        $last = intval($_POST['last']);
+        getPhotoList($first, $last);
     }
 }
 

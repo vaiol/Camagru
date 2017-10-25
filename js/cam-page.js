@@ -1,23 +1,26 @@
 //GET VIDEO FROM WEBCAM
-var video = null;
-var errorVideo = null;
-var canvas = null;
-var context = null;
-var moveX = 0;
-var moveY = 0;
-var isDragging = false;
-var prevX = 0;
-var prevY = 0;
-var uploadedImg = null;
-var maskImg = null;
-var maskFlag = false;
-var corsProxy = '/camagru/controller/fetch.php?url=';
-var prevCanvasWidth = -1;
-var vRender = null;
-var localStream = null;
-var maskSave = null;
-var arrMasks = ['img/effects/p1.png', 'img/effects/p2.png', 'img/effects/p3.png', 'img/effects/p4.png'];
+let video = null;
+let errorVideo = null;
+let canvas = null;
+let context = null;
+let moveX = 0;
+let moveY = 0;
+let isDragging = false;
+let prevX = 0;
+let prevY = 0;
+let uploadedImg = null;
+let maskImg = null;
+let maskFlag = false;
+let corsProxy = '/camagru/controller/fetch.php?url=';
+let prevCanvasWidth = -1;
+let vRender = null;
+let localStream = null;
+let maskSave = null;
+let arrMasks = ['img/effects/p1.png', 'img/effects/p2.png', 'img/effects/p3.png', 'img/effects/p4.png'];
 
+const maxImgSize = 2000;
+
+let HERMITE = new Hermite_class();
 
 
 navigator.getUserMedia = navigator.getUserMedia ||
@@ -55,12 +58,12 @@ function stopStream() {
 }
 
 function rangesInit() {
-    var event1 = document.createEvent('HTMLEvents');
+    let event1 = document.createEvent('HTMLEvents');
     event1.initEvent('input', true, false);
-    var ranges = document.querySelectorAll('input[type=range]');
+    let ranges = document.querySelectorAll('input[type=range]');
     ranges.forEach(function (currentRange) {
         currentRange.addEventListener('input', function(e) {
-            var min = e.target.min,
+            let min = e.target.min,
                 max = e.target.max,
                 val = e.target.value;
 
@@ -111,9 +114,10 @@ function changePageStyle() {
     document.getElementById('errText').style.lineHeight = document.getElementById('canvas').offsetHeight+'px';
 }
 
+
+
 function renderFrame() {
     changePageStyle();
-
     if (errorVideo !== null) {
         document.getElementById('errText').innerHTML = errorVideo;
         document.getElementById('overlay-canvas').style.backgroundColor = '#999999';
@@ -125,10 +129,11 @@ function renderFrame() {
         canvas.width = document.getElementById('video').offsetWidth;
         canvas.height = document.getElementById('video').offsetHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    } else {
-        //GET PICTURE FROM UPLOADED IMAGE
+    } else if (uploadedImg) {
         canvas.width = uploadedImg.width;
         canvas.height = uploadedImg.height;
+        console.log('width : ' + uploadedImg.width + '; height: ' + uploadedImg.height);
+        console.log();
         context.drawImage(uploadedImg, 0, 0, canvas.width, canvas.height);
     }
 
@@ -145,7 +150,7 @@ function renderFrame() {
         }
 
         //count shift to place mask in center of canvas:
-        var shiftX = canvas.width - maskImg.width;
+        let shiftX = canvas.width - maskImg.width;
         shiftX = shiftX > 0 ? shiftX / 2 : 0;
         //get size of mask after resize:
         const resize = parseInt(document.getElementById("resize").value);
@@ -169,19 +174,20 @@ function renderFrame() {
     }
 }
 
+
 //RENDER 40 FRAMES IN SECOND
 
 function renderPreviews() {
-    var previews = [];
-    var children = document.getElementById('previews').childNodes;
+    let previews = [];
+    let children = document.getElementById('previews').childNodes;
     children.forEach(function(currentValue) {
         if(currentValue.tagName === 'CANVAS'){
             previews.push(currentValue);
         }
     });
-    for (var i = previews.length - 1; i >= 0; i--) {
-        var currentContext = previews[i].getContext('2d');
-        var nextCanvas;
+    for (let i = previews.length - 1; i >= 0; i--) {
+        let currentContext = previews[i].getContext('2d');
+        let nextCanvas;
         if (i === 0) {
             nextCanvas = canvas;
         } else {
@@ -193,21 +199,21 @@ function renderPreviews() {
     }
 }
 
-var s = null;
-var sHeight = null;
+let s = null;
+let sHeight = null;
 
 function savePreviews() {
     if (!canvas) {
         return;
     }
     sHeight = canvas.offsetHeight+'px';
-    var previews = document.getElementById('previews');
+    let previews = document.getElementById('previews');
     if (previews) {
         s = [];
-        var children = document.getElementById('previews').childNodes;
+        let children = document.getElementById('previews').childNodes;
         children.forEach(function(currentValue) {
             if(currentValue.tagName === 'CANVAS') {
-                var img = new Image();
+                let img = new Image();
                 img.src = currentValue.toDataURL("image/png");
                 img.onload = function () {
                     s.push(img);
@@ -219,12 +225,12 @@ function savePreviews() {
 
 function restorePreviews() {
     if (s) {
-        var i = 0;
-        var children = document.getElementById('previews').childNodes;
+        let i = 0;
+        let children = document.getElementById('previews').childNodes;
 
         children.forEach(function(currentValue) {
             if(currentValue.tagName === 'CANVAS') {
-                var currentContext = currentValue.getContext('2d');
+                let currentContext = currentValue.getContext('2d');
                 currentValue.width = s[i].width;
                 currentValue.height = s[i].height;
                 currentContext.drawImage(s[i], 0, 0, s[i].width, s[i].height);
@@ -256,7 +262,7 @@ function maskMoveFinish() {
 }
 
 function maskMove() {
-    if( isDragging === true && maskImg !== null) {
+    if(isDragging === true && maskImg !== null) {
         if( prevX > 0 || prevY > 0) {
             moveX += event.pageX - prevX;
             moveY += event.pageY - prevY;
@@ -276,7 +282,7 @@ function handleStart(evt) {
 
 function handleMove(evt) {
     evt.preventDefault();
-    var touches = evt.changedTouches;
+    let touches = evt.changedTouches;
     if( isDragging === true && maskImg !== null) {
         if( prevX>0 || prevY>0) {
             moveX += touches[0].pageX - prevX;
@@ -291,8 +297,8 @@ function handleMove(evt) {
 function handleEnd(evt) {
     evt.preventDefault();
     isDragging = false;
-    prevX=0;
-    prevY=0;
+    prevX = 0;
+    prevY = 0;
 }
 
 /*
@@ -301,8 +307,8 @@ function handleEnd(evt) {
 
 
 function overBoxOpen() {
-    var overlay = document.getElementById("over-elem");
-    var overBox = document.getElementById("over-box");
+    let overlay = document.getElementById("over-elem");
+    let overBox = document.getElementById("over-box");
     overlay.classList.remove('hidden');
     overBox.classList.remove('hidden');
     overlay.style.display = "block";
@@ -317,8 +323,8 @@ function overBoxOpen() {
 }
 
 function overBoxClose() {
-    var overlay = document.getElementById("over-elem");
-    var overBox = document.getElementById("over-box");
+    let overlay = document.getElementById("over-elem");
+    let overBox = document.getElementById("over-box");
     overlay.classList.toggle('overlayOpen');
     overlay.classList.toggle('overlayClose');
     overBox.classList.toggle('overlayOpen');
@@ -353,7 +359,7 @@ function overBoxClose() {
 
 
 function createMaskImg(src) {
-    var img = new Image();
+    let img = new Image();
     img.src = src;
     img.setAttribute('crossOrigin', 'anonymous');
     img.onload = function () {
@@ -368,14 +374,14 @@ function createMaskImg(src) {
 
 
 function makePreviewMask(src) {
-    var div = document.getElementById("previewMask");
+    let div = document.getElementById("previewMask");
     if (!src) {
         div.addEventListener('click', function () {
             overBoxOpen();
         });
         return;
     }
-    var newElement = div.cloneNode(true);
+    let newElement = div.cloneNode(true);
     while (newElement.firstChild) {
         newElement.removeChild(newElement.firstChild);
     }
@@ -387,7 +393,7 @@ function makePreviewMask(src) {
 }
 
 function createMaskNode(src) {
-    var div = document.createElement('div');
+    let div = document.createElement('div');
     div.className = 'effect';
     div.onclick = function () {
         changeEffect(src);
@@ -397,11 +403,11 @@ function createMaskNode(src) {
 }
 
 function downloadMasks(arr) {
-    var effectsBlock = document.getElementById("effects");
-    for (var i = 0, len = arr.length; i < len; i++) {
+    let effectsBlock = document.getElementById("effects");
+    for (let i = 0, len = arr.length; i < len; i++) {
         effectsBlock.appendChild(createMaskNode(arr[i]));
     }
-    var prev = document.createElement('div');
+    let prev = document.createElement('div');
     prev.id = 'previewMask';
     prev.className = 'effect';
     prev.innerHTML = '<p>UPLOAD YOUR MASK</p>';
@@ -425,7 +431,7 @@ function downloadMasks(arr) {
 // <img src='dfgdfg'></img>
 
 function changeEffect(src, loaded) {
-    var newMask = new Image();
+    let newMask = new Image();
     newMask.onload = function () {
         maskFlag = true;
         maskImg = newMask;
@@ -443,10 +449,30 @@ function changeEffect(src, loaded) {
 }
 
 function changeImg(src) {
-    var img = document.createElement('img');
+    let img = new Image();
     img.onload = function () {
-        uploadedImg = img;
-        stopStream();
+        let resizeNeeded, width, height;
+        if (img.width > maxImgSize) {
+            resizeNeeded = true;
+            let ratio = img.width / maxImgSize;
+            height = img.height / ratio;
+            width = maxImgSize;
+        } else if (img.height > maxImgSize) {
+            resizeNeeded = true;
+            let ratio = img.height / maxImgSize;
+            width = img.width / ratio;
+            height = maxImgSize;
+        }
+        if (resizeNeeded) {
+            let newImg = HERMITE.resize_image(img, width, height, undefined, true);
+            newImg.onload = function () {
+                uploadedImg = newImg;
+                stopStream();
+            };
+        } else {
+            uploadedImg = img;
+            stopStream();
+        }
     };
     img.onerror = function () {
         uploadedImg = null;
@@ -467,7 +493,7 @@ function clearEffect() {
     prevCanvasWidth = -1;
     document.getElementById('rotat').value = '0';
     document.getElementById('resize').value = '0';
-    var event = document.createEvent('Event');
+    let event = document.createEvent('Event');
     event.initEvent('input', true, true);
     document.getElementById('rotat').dispatchEvent(event);
     document.getElementById('resize').dispatchEvent(event);
@@ -476,10 +502,11 @@ function clearEffect() {
 }
 
 function uploadImg() {
-    var file = document.getElementById("uploadImg").files[0];
-    var reader = new FileReader();
+    let file = document.getElementById("uploadImg").files[0];
+    let reader = new FileReader();
     reader.onloadend = function () {
         changeImg(reader.result);
+
         overBoxClose();
     };
     if (file) {
@@ -488,8 +515,8 @@ function uploadImg() {
 }
 
 function uploadMask() {
-    var file = document.getElementById("uploadMask").files[0];
-    var reader = new FileReader();
+    let file = document.getElementById("uploadMask").files[0];
+    let reader = new FileReader();
     reader.onloadend = function () {
         changeEffect(reader.result, true);
         overBoxClose();
@@ -500,7 +527,7 @@ function uploadMask() {
 }
 
 function sendLinkMask() {
-    var link = document.getElementById('linkMask').value;
+    let link = document.getElementById('linkMask').value;
     if (link) {
         changeEffect(corsProxy + link, true);
         overBoxClose();
@@ -508,7 +535,7 @@ function sendLinkMask() {
 }
 
 function sendLinkImg() {
-    var link = document.getElementById('linkImg').value;
+    let link = document.getElementById('linkImg').value;
     if (link) {
         changeImg(corsProxy + link);
         overBoxClose();
@@ -527,8 +554,8 @@ function saveImage() {
         toastIt('Some Error');
     }
 
-    var fd = new FormData(document.forms["form1"]);
-    var xhr = new XMLHttpRequest();
+    let fd = new FormData(document.forms["form1"]);
+    let xhr = new XMLHttpRequest();
     xhr.open('POST', 'controller/controller-photo.php', true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {

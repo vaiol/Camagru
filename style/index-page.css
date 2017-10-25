@@ -143,6 +143,10 @@ nav {
 
 /*PHOTO*/
 
+#laPhotos, #myPhotos, #fPhotos {
+    justify-content: flex-start;
+}
+
 .photo {
     overflow: hidden;
 }
@@ -171,7 +175,7 @@ nav {
 .photo {
     width: 31%;
     height: 234px;
-    margin: 1%;
+    margin: 1.167%;
 
     cursor: pointer;
     border-radius: 2px;
@@ -461,6 +465,7 @@ MEDIA
     .photo {
         height: 22.9vw;
         width: 48%;
+        margin: 1%;
     }
     #logo {
         display: block;
