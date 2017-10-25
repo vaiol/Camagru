@@ -1,13 +1,14 @@
 let userCache = null;
 let avatarCache = null;
+let photoListCache = null;
 
 function getCurrentUser() {
     if (userCache) {
         return userCache;
     }
     console.log("getCurrentUser()");
-    // userCache = "AUTHOR";
-    userCache = "admin";
+    userCache = "AUTHOR";
+    // userCache = "admin";
     return userCache;
 }
 
@@ -34,7 +35,9 @@ function getPhotoById(id) {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                resolve(JSON.parse(xhr.responseText));
+                let photo = JSON.parse(xhr.responseText);
+                addPhoto(photo);
+                resolve(photo);
             }
         };
         xhr.send(body);
@@ -142,6 +145,8 @@ function getCommentList(id, first, last) {
 }
 
 
+
+
 function getPhotoList(first, last) {
     return new Promise(function(resolve, reject) {
         console.log("getPhotoList("+first+", "+last+")");
@@ -151,7 +156,9 @@ function getPhotoList(first, last) {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                resolve(JSON.parse(xhr.responseText));
+                let list = JSON.parse(xhr.responseText);
+                addList(list);
+                resolve(list);
             }
         };
         xhr.send(body);
@@ -185,7 +192,9 @@ function getFeaturedPhotoList(max) {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                resolve(JSON.parse(xhr.responseText));
+                let list = JSON.parse(xhr.responseText);
+                addList(list);
+                resolve(list);
             }
         };
         xhr.send(body);
@@ -213,4 +222,53 @@ function makeDislike(id) {
 function sendComment(commentJSON) {
     console.log("sendComment()");
     //send
+}
+
+
+/*CACHE*/
+
+function addList(list) {
+    if (!photoListCache) {
+        photoListCache = list;
+        return;
+    }
+    for (let i = 0, len = list.length; i < len; i++) {
+        let flag = true;
+        for (let j = 0, len = photoListCache.length; j < len; j++) {
+            if (photoListCache[j].id === list[i].id) {
+                photoListCache[j] = list[i];
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            photoListCache.push(list[i]);
+        }
+    }
+}
+
+function getPhotoCacheByID(id) {
+    for (let i = 0, len = photoListCache.length; i < len; i++) {
+        if (photoListCache[i].id === id) {
+            console.log(id);
+            return photoListCache[i];
+        }
+    }
+    console.log(null);
+    return null;
+}
+
+function addPhoto(photo) {
+    if (!photoListCache) {
+        photoListCache = [];
+        photoListCache.push(photo)
+        return;
+    }
+    for (let j = 0, len = photoListCache.length; j < len; j++) {
+        if (photoListCache[j].id === photo.id) {
+            photoListCache[j] = photo;
+            return;
+        }
+    }
+    photoListCache.push(photo);
 }

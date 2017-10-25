@@ -62,6 +62,16 @@ function openPhotoPage(id) {
     document.body.classList.add('noscroll');
     overlay.scrollTop = 0;
     //PUT DATA
+    let photoCacheJSON = getPhotoCacheByID(id);
+    if (photoCacheJSON) {
+        photo.src = photoCacheJSON.src;
+        likeCount.innerHTML = photoCacheJSON.likeCount;
+        chatCount.innerHTML = photoCacheJSON.chatCount;
+        authorButt.firstElementChild.src = getUserAvatar(photoCacheJSON.user);
+        authorButt.lastElementChild.innerHTML = photoCacheJSON.user;
+    }
+
+
     getPhotoById(id).then((photoJSON) => {
         photo.src = photoJSON.src;
         likeCount.innerHTML = photoJSON.likeCount;
