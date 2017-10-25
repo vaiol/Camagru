@@ -111,6 +111,18 @@ function getFeaturedPhotoList($max)
     print $result;
 }
 
+function getPhotoByID($id) {
+    $result = selectPhotoByID($id);
+    $path = UPLOAD_DIR.$result['name'];
+    unset($result['name']);
+    $type = pathinfo($path, PATHINFO_EXTENSION);
+    $data = file_get_contents($path);
+    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    $result['src'] = $base64;
+    $result = json_encode($result);
+    print $result;
+}
+
 $type = $_POST['type'];
 $login = $_POST['login'];
 
@@ -130,6 +142,7 @@ if ($type == 'GET') {
     $list = $_POST['list'];
     if ($list === 'SINGLE') {
         $idPhoto = $_POST['id'];
+        getPhotoByID($idPhoto);
     } else if ($list === 'MYLIST') {
         $first = intval($_POST['first']);
         $last = intval($_POST['last']);

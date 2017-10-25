@@ -26,14 +26,19 @@ function getCurrentUserAvatar() {
 }
 
 function getPhotoById(id) {
-    console.log("getPhotoById("+id+")");
-    return {
-        "id": id,
-        "src": "img/i"+id+".jpg",
-        "likeCount": 134,
-        "chatCount": 32,
-        "user": "AUTHOR"
-    };
+    return new Promise(function(resolve, reject) {
+        console.log("getPhotoById("+id+")");
+        let body = 'type=GET&list=SINGLE&login='+getCurrentUser()+'&id='+id;
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'controller/controller-photo.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                resolve(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.send(body);
+    });
 }
 
 function isLiked() {

@@ -62,12 +62,14 @@ function openPhotoPage(id) {
     document.body.classList.add('noscroll');
     overlay.scrollTop = 0;
     //PUT DATA
-    var photoJSON = getPhotoById(id);
-    photo.src = photoJSON.src;
-    likeCount.innerHTML = photoJSON.likeCount;
-    chatCount.innerHTML = photoJSON.chatCount;
-    authorButt.firstElementChild.src = getUserAvatar(photoJSON.user);
-    authorButt.lastElementChild.innerHTML = photoJSON.user;
+    getPhotoById(id).then((photoJSON) => {
+        photo.src = photoJSON.src;
+        likeCount.innerHTML = photoJSON.likeCount;
+        chatCount.innerHTML = photoJSON.chatCount;
+        authorButt.firstElementChild.src = getUserAvatar(photoJSON.user);
+        authorButt.lastElementChild.innerHTML = photoJSON.user;
+    });
+
     likeTrigger = isLiked(id);
     if (likeTrigger) {
         likeButt.innerHTML = "favorite";
