@@ -38,6 +38,7 @@ function generateShowButtonPhoto(photoListNode, start, buttNext, genFunc, getFun
     button.className = "butt-next-button";
     button.innerHTML = "SHOW MORE";
     button.addEventListener("click", function () {
+        buttNext.removeChild(button);
         getFunc(start, start + photosInPage).then(function (myPhotoList) {
             showPhotos(photoListNode, myPhotoList, start + photosInPage, buttNext, genFunc, getFunc);
         });
@@ -52,9 +53,6 @@ function showPhotos(photoListNode, photoList, start, buttNext, genFunc, getFunc)
     }
     if (!getFunc) {
         getFunc = getPhotoList;
-    }
-    if (buttNext.firstChild) {
-        buttNext.removeChild(buttNext.firstChild);
     }
     for (let i = 0, len = photoList.length; i < len; i++) {
         photoListNode.appendChild(genFunc(photoList[i], photoListNode));

@@ -1,24 +1,24 @@
-var authorBlock = null;
-var endofdiv = null;
-var overlayContent = null;
-var commentBlock = null;
-var commentList = null;
-var likeButt = null;
-var chatButt = null;
-var authorButt = null;
-var likeCount = null;
-var chatCount = null;
-var overlay = null;
-var photo = null;
-var textareaComm = null;
-var openBtn = null;
-var backBtn = null;
+let authorBlock = null;
+let endofdiv = null;
+let overlayContent = null;
+let commentBlock = null;
+let commentList = null;
+let likeButt = null;
+let chatButt = null;
+let authorButt = null;
+let likeCount = null;
+let chatCount = null;
+let overlay = null;
+let photo = null;
+let textareaComm = null;
+let openBtn = null;
+let backBtn = null;
 
-var likeTrigger = false;
-var chatTrigger = false;
+let likeTrigger = false;
+let chatTrigger = false;
 
-var imgID = null;
-var openedPhoto = false;
+let imgID = null;
+let openedPhoto = false;
 
 const commentCount = 15;
 
@@ -48,6 +48,7 @@ function openPhotoPage(id) {
     authorButt.addEventListener("click", openAuthor);
     overlayContent.addEventListener('mouseover', mouseOverContent);
     overlayContent.addEventListener('mouseout', mouseOutContent);
+
 
     openedPhoto = true;
     imgID = id;
@@ -80,19 +81,23 @@ function openPhotoPage(id) {
         authorButt.lastElementChild.innerHTML = photoJSON.user;
     });
 
-    likeTrigger = isLiked(id);
-    if (likeTrigger) {
-        likeButt.innerHTML = "favorite";
-        likeButt.style.color = "#ef5350";
-    } else {
-        likeButt.innerHTML = "favorite_border";
-        likeButt.style.color = "#816d65";
-    }
-    chatTrigger = false;
-    if (window.matchMedia( "(max-width: 992px)" ).matches) {
-        openBtn.classList.add('none');
-        backBtn.classList.remove('none');
-    }
+    isLiked(id).then((isLiked) => {
+        likeTrigger = isLiked;
+        if (isLiked) {
+            likeButt.innerHTML = "favorite";
+            likeButt.style.color = "#ef5350";
+        } else {
+            likeButt.innerHTML = "favorite_border";
+            likeButt.style.color = "#816d65";
+        }
+        chatTrigger = false;
+        if (window.matchMedia( "(max-width: 992px)" ).matches) {
+            openBtn.classList.add('none');
+            backBtn.classList.remove('none');
+        }
+    });
+
+
 }
 
 /*EVENTS*/
@@ -100,7 +105,7 @@ function closePhotoPage(e, page1) {
     if (!openedPhoto) {
         return;
     }
-    var nextPage = page1 ? page1 : 'index';
+    let nextPage = page1 ? page1 : 'index';
     Router.navigate(nextPage);
     openedPhoto = false;
     overlay.classList.remove('overlayOpen');
@@ -123,8 +128,8 @@ function closePhotoPage(e, page1) {
     openBtn.classList.remove('none');
     backBtn.classList.add('none');
     imgID = null;
-    var opened = document.getElementsByClassName('openedPhoto');
-    for (var i = 0, len = opened.length; i < len; i++) {
+    let opened = document.getElementsByClassName('openedPhoto');
+    for (let i = 0, len = opened.length; i < len; i++) {
         opened[i].classList.remove('openedPhoto');
     }
 }
@@ -133,8 +138,8 @@ function likePhoto() {
     if (imgID === null) {
         return;
     }
-    var opened = document.getElementsByClassName('openedPhoto');
-    var likes = parseInt(likeCount.innerHTML);
+    let opened = document.getElementsByClassName('openedPhoto');
+    let likes = parseInt(likeCount.innerHTML);
     if (likeTrigger) {
         likeCount.innerHTML = likes - 1;
         likeButt.innerHTML = "favorite_border";
@@ -156,21 +161,21 @@ function likePhoto() {
 
 
 function generateCommentBlock(commentJSON) {
-    var commentAuthor = document.createElement('div');
+    let commentAuthor = document.createElement('div');
     commentAuthor.className = "comment-author";
     commentAuthor.innerHTML = commentJSON.user;
-    var commentText = document.createElement('div');
+    let commentText = document.createElement('div');
     commentText.className = "comment-text";
 
     commentText.innerHTML = "<pre>"+commentJSON.text+"</pre>";
 
-    var div = document.createElement('div');
+    let div = document.createElement('div');
     div.appendChild(commentAuthor);
     div.appendChild(commentText);
-    var img = document.createElement('img');
+    let img = document.createElement('img');
     img.src = getUserAvatar(commentJSON.user);
 
-    var comment = document.createElement('div');
+    let comment = document.createElement('div');
     comment.className = "comment";
     comment.appendChild(img);
     comment.appendChild(div);
@@ -179,7 +184,7 @@ function generateCommentBlock(commentJSON) {
 
 
 function generateShowButton(comentListNode, start, imgID) {
-    var button = document.createElement('div');
+    let button = document.createElement('div');
     button.className = "butt-next-button";
     button.innerHTML = "SHOW MORE";
     button.addEventListener("click", function () {
@@ -188,15 +193,15 @@ function generateShowButton(comentListNode, start, imgID) {
     return button;
 }
 
-function showComments(comentListNode, commentList, start, imgID) {
+function showComments(commentListNode, commentList, start, imgID) {
     if (start !== commentCount) {
-        comentListNode.removeChild(comentListNode.lastChild);
+        commentListNode.removeChild(commentListNode.lastChild);
     }
-    for (var i = 0, len = commentList.length; i < len; i++) {
-        comentListNode.appendChild(generateCommentBlock(commentList[i]));
+    for (let i = 0, len = commentList.length; i < len; i++) {
+        commentListNode.appendChild(generateCommentBlock(commentList[i]));
     }
     if (commentList.length >= commentCount) {
-        comentListNode.appendChild(generateShowButton(comentListNode, start, imgID));
+        commentListNode.appendChild(generateShowButton(commentListNode, start, imgID));
     }
 }
 
@@ -230,9 +235,9 @@ function openAuthor() {
 
 
 function addComment() {
-    var msg = textareaComm.value.trim();
+    let msg = textareaComm.value.trim();
     if (msg) {
-        var commentJSON = {
+        let commentJSON = {
             "user": getCurrentUser(),
             "text": msg,
             "img": imgID
@@ -250,7 +255,7 @@ function addComment() {
 
 /*HOVER OVER IMAGE PAGE WITH TIMEOUT*/
 
-var timeoutMouse;
+let timeoutMouse;
 
 function mouseOverContent() {
     authorBlock.style.marginTop = '-4px';

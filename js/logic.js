@@ -28,6 +28,12 @@ function getCurrentUserAvatar() {
     return avatarCache;
 }
 
+
+
+
+
+/*PHOTO FUNCTIONS*/
+
 function getPhotoById(id) {
     return new Promise(function(resolve, reject) {
         console.log("getPhotoById("+id+")");
@@ -46,10 +52,127 @@ function getPhotoById(id) {
     });
 }
 
-function isLiked() {
-    console.log("isLiked();");
+function getPhotoList(first, last) {
+    return new Promise(function(resolve, reject) {
+        let pLa = document.querySelector('#progress-la');
+        let pAll = document.querySelector('#progress-all');
+        if (pLa && pAll) {
+            toggleProgress(pLa.firstElementChild);
+            toggleProgress(pAll.firstElementChild);
+        }
+
+        console.log("getPhotoList("+first+", "+last+")");
+        let body = 'type=GET&list=ALL&login='+getCurrentUser()+'&first='+first+'&last='+last;
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'controller/controller-photo.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let list = JSON.parse(xhr.responseText);
+                addList(list);
+                if (pLa && pAll) {
+                    toggleProgress(pLa.firstElementChild);
+                    toggleProgress(pAll.firstElementChild);
+                }
+                resolve(list);
+            }
+        };
+        xhr.send(body);
+    });
+}
+
+
+function toggleProgress(progress, all) {
+    console.log('toggle');
+    progress.classList.toggle('determinate');
+    progress.classList.toggle('indeterminate');
+    if (all) {
+        progress.classList.toggle('width0');
+    } else {
+        progress.classList.toggle('width100');
+    }
+}
+
+function getMyPhotoList(first, last) {
+    return new Promise(function(resolve, reject) {
+        if (first === 0) {
+            deletedPhotoCount = 0;
+        } else {
+            first -= deletedPhotoCount;
+            last -= deletedPhotoCount;
+        }
+
+        console.log("getMyPhotoList("+first+", "+last+")");
+        let pMy = document.querySelector('#progress-my');
+        let pAll = document.querySelector('#progress-all');
+        if (pMy && pAll) {
+            toggleProgress(pMy.firstElementChild);
+            toggleProgress(pAll.firstElementChild);
+        }
+        let body = 'type=GET&list=MYLIST&login='+getCurrentUser()+'&first='+first+'&last='+last;
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'controller/controller-photo.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        console.log(event);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (pMy && pAll) {
+                    toggleProgress(pMy.firstElementChild);
+                    toggleProgress(pAll.firstElementChild);
+                }
+                resolve(JSON.parse(xhr.responseText));
+            }
+        };
+        xhr.send(body);
+
+    });
+}
+
+
+function getFeaturedPhotoList(max) {
+    return new Promise(function(resolve, reject) {
+        console.log("getFeaturedPhotoList("+max+")");
+        let progressBar = document.querySelector('#progress-f').firstElementChild;
+        toggleProgress(progressBar);
+        let body = 'type=GET&list=FEATURED&login='+getCurrentUser()+'&max='+max;
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'controller/controller-photo.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let list = JSON.parse(xhr.responseText);
+                addList(list);
+                toggleProgress(progressBar);
+                resolve(list);
+            }
+        };
+        xhr.send(body);
+    });
+}
+
+
+function deletePhoto(id) {
+    console.log("deletePhoto("+id+")");
+    let body = 'type=DELETE&login='+getCurrentUser()+'&id='+id;
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'controller/controller-photo.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            deletedPhotoCount++;
+        }
+    };
+    xhr.send(body);
     return false;
 }
+
+/*COMMENT FUNCTIONS*/
+
+function sendComment(commentJSON) {
+    console.log("sendComment()");
+    //send
+}
+
 
 function getCommentList(id, first, last) {
     console.log("getCommentList("+id+", "+first+", "+last+")");
@@ -146,107 +269,41 @@ function getCommentList(id, first, last) {
     ];
 }
 
-
-
-
-function getPhotoList(first, last) {
-    return new Promise(function(resolve, reject) {
-        console.log("getPhotoList("+first+", "+last+")");
-        let body = 'type=GET&list=ALL&login='+getCurrentUser()+'&first='+first+'&last='+last;
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller/controller-photo.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                let list = JSON.parse(xhr.responseText);
-                addList(list);
-                resolve(list);
-            }
-        };
-        xhr.send(body);
-    });
-}
-
-
-function getMyPhotoList(first, last) {
-    return new Promise(function(resolve, reject) {
-        if (first === 0) {
-            deletedPhotoCount = 0;
-        } else {
-            first -= deletedPhotoCount;
-            last -= deletedPhotoCount;
-        }
-
-        console.log("getMyPhotoList("+first+", "+last+")");
-        let body = 'type=GET&list=MYLIST&login='+getCurrentUser()+'&first='+first+'&last='+last;
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller/controller-photo.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        console.log(event);
-        xhr.onprogress = function(event) {
-            console.log( 'Получено с сервера ' + event.loaded + ' байт из ' + event.total );
-        };
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                resolve(JSON.parse(xhr.responseText));
-            }
-        };
-        xhr.send(body);
-    });
-}
-
-
-function getFeaturedPhotoList(max) {
-    return new Promise(function(resolve, reject) {
-        console.log("getFeaturedPhotoList("+max+")");
-        let body = 'type=GET&list=FEATURED&login='+getCurrentUser()+'&max='+max;
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller/controller-photo.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                let list = JSON.parse(xhr.responseText);
-                addList(list);
-                resolve(list);
-            }
-        };
-        xhr.send(body);
-    });
-}
-
-
-function deletePhoto(id) {
-    console.log("deletePhoto("+id+")");
-    let body = 'type=DELETE&login='+getCurrentUser()+'&id='+id;
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'controller/controller-photo.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            deletedPhotoCount++;
-        }
-    };
-    xhr.send(body);
-    return false;
-}
-
-
+/*LIKES FUNCTIONS*/
 
 function makeLike(id) {
     console.log("makeLike("+id+")");
-    return false;
+    let body = 'type=PUT&login='+getCurrentUser()+'&id='+id;
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'controller/controller-like.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(body);
 }
 
 function makeDislike(id) {
     console.log("makeDislike("+id+")");
-    return  false;
+    let body = 'type=DELETE&login='+getCurrentUser()+'&id='+id;
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'controller/controller-like.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(body);
 }
 
-function sendComment(commentJSON) {
-    console.log("sendComment()");
-    //send
+function isLiked(id) {
+    return new Promise(function(resolve, reject) {
+        console.log("isLiked("+id+")");
+        let body = 'type=GET&&login='+getCurrentUser()+'&id='+id;
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'controller/controller-like.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                resolve(xhr.responseText);
+            }
+        };
+        xhr.send(body);
+    });
 }
-
 
 /*CACHE*/
 

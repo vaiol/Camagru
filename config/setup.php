@@ -44,8 +44,7 @@ try {
                                   `id_user` int(11) NOT NULL,
                                   `id_image` int(11) NOT NULL
                                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
-    $pdo->query('ALTER TABLE `likes`
-                                  ADD KEY `id_user` (`id_user`,`id_image`);');
+    $pdo->query('ALTER TABLE `likes` ADD PRIMARY KEY( `id_user`, `id_image`);');
     //CREATE IMAGE TABLE
     $pdo->query('DROP TABLE IF EXISTS `image`');
     $pdo->query('CREATE TABLE `image` (

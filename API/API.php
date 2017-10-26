@@ -1,4 +1,5 @@
 <?php
 
 require_once "photo.php";
-require_once "user_functions.php";
+require_once "like.php";
+require_once "user.php";
