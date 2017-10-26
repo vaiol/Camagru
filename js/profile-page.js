@@ -41,6 +41,10 @@ function openProfilePage() {
     getMyPhotoList(0, photosInPage).then(function (myPhotoList) {
         showPhotos(myPhotoListNode, myPhotoList, photosInPage, buttNext, generateMyPhoto, getMyPhotoList);
     });
+    document.querySelector("#p-author > img").src = getCurrentUserAvatar();
+    document.querySelector("#p-author > div").innerHTML = getCurrentUser();
+
+
 }
 
 

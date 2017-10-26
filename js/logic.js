@@ -9,8 +9,9 @@ function getCurrentUser() {
         return userCache;
     }
     console.log("getCurrentUser()");
-    userCache = "AUTHOR";
-    // userCache = "admin";
+    // userCache = "AUTHOR";
+    userCache = "admin";
+    // userCache = "Diana";
     return userCache;
 }
 
@@ -210,11 +211,9 @@ function getPhotoCacheByID(id) {
     }
     for (let i = 0, len = photoListCache.length; i < len; i++) {
         if (photoListCache[i].id === id) {
-            console.log(id);
             return photoListCache[i];
         }
     }
-    console.log(null);
     return null;
 }
 

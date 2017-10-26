@@ -45,7 +45,6 @@ function openPhotoPage(id) {
     likeButt.addEventListener("click", likePhoto);
     overlay.addEventListener("click", closePhotoPage);
     chatButt.addEventListener("click", openChat);
-    // authorButt.addEventListener("click", openAuthor);
     overlayContent.addEventListener('mouseover', mouseOverContent);
     overlayContent.addEventListener('mouseout', mouseOutContent);
 
