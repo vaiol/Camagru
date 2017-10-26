@@ -182,6 +182,10 @@ function getMyPhotoList(first, last) {
         let xhr = new XMLHttpRequest();
         xhr.open('POST', 'controller/controller-photo.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        console.log(event);
+        xhr.onprogress = function(event) {
+            console.log( 'Получено с сервера ' + event.loaded + ' байт из ' + event.total );
+        };
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 resolve(JSON.parse(xhr.responseText));

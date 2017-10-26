@@ -18,6 +18,7 @@ function connectStyle(page) {
 
 function uploadPartials(page, loadScript) {
     if (!uploadedPartials[page]) {
+        connectStyle(page.substring(0, page.indexOf(".")));
         let xhr = new XMLHttpRequest();
         xhr.open("GET", "partials/"+page);
         xhr.responseType = "text";
@@ -26,7 +27,6 @@ function uploadPartials(page, loadScript) {
             content.innerHTML = this.response;
             uploadedPartials[page] = this.response;
             console.log('UPLOAD: partials/'+page);
-            connectStyle(page.substring(0, page.indexOf(".")));
             loadScript();
 
         };

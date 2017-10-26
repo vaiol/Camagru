@@ -109,6 +109,9 @@ function getPhotoList($first, $last)
     $result = selectPhotoList($first, $last);
     $result = getBase64Src($result, COMPRESSED_DIR);
     $result = json_encode($result);
+    $length = strlen($result);
+    header('Content-Length: '.$length."\r\n");
+    header('Accept-Ranges: bytes'."\r\n");
     print $result;
 }
 
