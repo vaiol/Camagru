@@ -1,13 +1,13 @@
-var uploadedPartials = [];
-var uploadedStyle = [];
-var content = document.getElementById('content');
+let uploadedPartials = [];
+let uploadedStyle = [];
+let content = document.getElementById('content');
 
 
 function connectStyle(page) {
     if (page === "index" || uploadedStyle.includes(page)) {
         return;
     }
-    var link = document.createElement('link');
+    let link = document.createElement('link');
     link.rel = "stylesheet";
     link.type = "text/css";
     link.href = "style/"+page+"-page.css";
@@ -18,7 +18,7 @@ function connectStyle(page) {
 
 function uploadPartials(page, loadScript) {
     if (!uploadedPartials[page]) {
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
         xhr.open("GET", "partials/"+page);
         xhr.responseType = "text";
         xhr.send();
@@ -52,7 +52,7 @@ function toggleActive(page) {
 
 Router.config({ mode: 'hash', root: '/camagru/'});
 
-var indexOpened = false;
+let indexOpened = false;
 
 
 Router
@@ -71,7 +71,7 @@ Router
     .add(/photo\/(.*)/, function() {
         sidebarClose();
         videoFinish();
-        var arg = arguments[0];
+        let arg = arguments[0];
         if (!indexOpened) {
             uploadPartials('index.htm', function() {
                 openIndexPage();
@@ -111,8 +111,8 @@ if (Router.getFragment() === '') {
     Router.check('index');
 }
 
-var author = document.getElementById('mySidebar').firstElementChild.lastElementChild;
-var authorImg = document.getElementById('mySidebar').firstElementChild.firstElementChild;
+let author = document.getElementById('mySidebar').firstElementChild.lastElementChild;
+let authorImg = document.getElementById('mySidebar').firstElementChild.firstElementChild;
 author.innerHTML = getCurrentUser();
 authorImg.src = getCurrentUserAvatar();
 

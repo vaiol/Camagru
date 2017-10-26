@@ -203,7 +203,17 @@ function getFeaturedPhotoList(max) {
 
 
 function deletePhoto(id) {
-    console.log('deletePhoto('+id+')');
+    console.log("deletePhoto("+id+")");
+    let body = 'type=DELETE&login='+getCurrentUser()+'&id='+id;
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'controller/controller-photo.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send(body);
     return false;
 }
 
@@ -248,6 +258,9 @@ function addList(list) {
 }
 
 function getPhotoCacheByID(id) {
+    if (!photoListCache) {
+        return null;
+    }
     for (let i = 0, len = photoListCache.length; i < len; i++) {
         if (photoListCache[i].id === id) {
             console.log(id);

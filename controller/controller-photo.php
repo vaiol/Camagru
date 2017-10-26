@@ -41,15 +41,10 @@ function crop_image($image) {
 
 function savePhoto($authorID)
 {
-    echo "1 ";
     $img = $_POST['file'];
-    echo "2 ";
     $img = str_replace('data:image/png;base64,', '', $img);
-    echo "3 ";
     $img = str_replace(' ', '+', $img);
-    echo "4 ";
     $data = base64_decode($img);
-    echo "5 ";
     $time = round(microtime(1) * 1000);
     $photoName = $authorID.$time.".jpg";
     $photoNameJPG = $authorID.$time.".jpg";
@@ -57,18 +52,32 @@ function savePhoto($authorID)
     //SAVE ORIGINAL PHOTO WITH SMALL COMPRESSION
     $image = imagecreatefromstring($data);
     imagejpeg($image, UPLOAD_DIR.$photoName, 90);
-    echo "6 ";
     //RESIZE CROP AND COMPRESS PHOTO
     $image = resize_image($image, 425, 425);
     $image = crop_image($image);
     imagejpeg($image, COMPRESSED_DIR.$photoNameJPG, 25);
-    echo "7 ";
     //SAVE PHOTO TO DB
     insertPhoto($photoName, $authorID);
-    echo "8 ";
-    print 103;
 }
 
+function removePhoto($authorID, $id) {
+    $photo = selectPhotoOwner($id);
+    if ($photo['id_user'] != $authorID) {
+        http_response_code(403);
+        return;
+    }
+    echo $photo['name'];
+    $path = realpath(UPLOAD_DIR.$photo['name']);
+    if (is_writable($path)) {
+        unlink($path);
+    }
+    $path = realpath(COMPRESSED_DIR.$photo['name']);
+    if (is_writable($path)) {
+        unlink($path);
+    }
+
+    deletePhoto($id, $authorID);
+}
 
 
 
@@ -155,6 +164,11 @@ if ($type == 'GET') {
         $last = intval($_POST['last']);
         getPhotoList($first, $last);
     }
+}
+
+if ($type == 'DELETE') {
+    $idPhoto = $_POST['id'];
+    removePhoto($authorID, $idPhoto);
 }
 
 

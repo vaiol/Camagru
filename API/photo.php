@@ -9,6 +9,29 @@ function insertPhoto($photoName, $authorID) {
     return true;
 }
 
+function selectPhotoOwner($id) {
+    try {
+        $sql = "SELECT `id_user`, `name` FROM `image` WHERE id = :id";
+        $stmt = DB::instance()->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+        $res = $stmt->fetch();
+        return $res;
+    } catch (PDOException $e) {
+        print $e;
+        return null;
+    }
+}
+
+function deletePhoto($id, $userID) {
+    try {
+        return DB::run("DELETE FROM `image` WHERE id = ? AND id_user = ?", [$id, $userID]);
+    } catch (PDOException $e) {
+        print $e;
+        return false;
+    }
+}
+
 function selectUserPhotoList($authorID, $first, $last) {
     try {
         $sql = "SELECT image.id, `user`.login as `user`, image.name,

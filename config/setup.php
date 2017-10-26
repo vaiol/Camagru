@@ -17,6 +17,7 @@ if (!is_dir(UPLOAD_DIR)) {
         copy($uDir.$file, UPLOAD_DIR.$file);
         copy($cDir.$file, COMPRESSED_DIR.$file);
     }
+    print "COPYING FILES COMPLETED SUCCESSFUL";
 }
 try {
 
@@ -134,6 +135,6 @@ try {
     echo 'ERROR!!!</p></div><br><div><p>'.$e->getMessage();
     exit();
 }
-echo "SETUP COMPLETED SUCCESFULL";
+echo "SETUP DB COMPLETED SUCCESSFUL";
 header( "refresh:3;url=../" );
 ?>
