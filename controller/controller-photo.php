@@ -42,7 +42,7 @@ function crop_image($image) {
 function savePhoto($authorID)
 {
     $img = $_POST['file'];
-    $img = str_replace('data:image/png;base64,', '', $img);
+    $img = str_replace('data:image/jpeg;base64,', '', $img);
     $img = str_replace(' ', '+', $img);
     $data = base64_decode($img);
     $time = round(microtime(1) * 1000);

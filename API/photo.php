@@ -51,12 +51,12 @@ function selectUserPhotoList($authorID, $first, $last) {
                 WHERE image.id_user = :id 
                 AND `user`.`id` = `image`.id_user
                 ORDER BY image.id DESC
-                LIMIT  :first, :last";
+                LIMIT  :first, :max";
 
         $stmt = DB::instance()->prepare($sql);
         $stmt->bindValue(':id', $authorID, PDO::PARAM_STR);
         $stmt->bindValue(':first', intval($first), PDO::PARAM_INT);
-        $stmt->bindValue(':last', intval($last), PDO::PARAM_INT);
+        $stmt->bindValue(':max', intval($last) - intval($first), PDO::PARAM_INT);
         $stmt->execute();
         $res = $stmt->fetchAll();
         return $res;
@@ -83,10 +83,10 @@ function selectPhotoList($first, $last) {
                     ON image.id = c.id_image
                 WHERE `user`.`id` = `image`.id_user
                 ORDER BY image.id DESC
-                LIMIT  :first, :last";
+                LIMIT  :first, :max";
         $stmt = DB::instance()->prepare($sql);
         $stmt->bindValue(':first', intval($first), PDO::PARAM_INT);
-        $stmt->bindValue(':last', intval($last), PDO::PARAM_INT);
+        $stmt->bindValue(':max', intval($last) - intval($first), PDO::PARAM_INT);
         $stmt->execute();
         $res = $stmt->fetchAll();
         return $res;

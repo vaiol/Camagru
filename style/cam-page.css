@@ -62,9 +62,15 @@ canvas {
 
 #canvas1, #canvas2, #canvas3, #canvas4 {
     width: 100%;
+
 }
 #canvas3, #canvas4 {
     display: none;
+}
+
+#previews > img {
+    width: 100%;
+    z-index: 1;
 }
 
 .effect, #previews, .butt, #canvas  {
@@ -436,6 +442,10 @@ input[type=range]::-moz-range-thumb {
         width: 100%;
     }
     #canvas1, #canvas2, #canvas3, #canvas4 {
+        width: 24.5%;
+        height: 17vw;
+    }
+    #previews > img {
         width: 24.5%;
         height: 17vw;
     }

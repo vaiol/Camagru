@@ -38,7 +38,7 @@ function generateShowButtonPhoto(photoListNode, start, buttNext, genFunc, getFun
     button.className = "butt-next-button";
     button.innerHTML = "SHOW MORE";
     button.addEventListener("click", function () {
-        getFunc(start, start + photosInPage - 1).then(function (myPhotoList) {
+        getFunc(start, start + photosInPage).then(function (myPhotoList) {
             showPhotos(photoListNode, myPhotoList, start + photosInPage, buttNext, genFunc, getFunc);
         });
 

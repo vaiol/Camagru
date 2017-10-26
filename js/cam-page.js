@@ -17,6 +17,7 @@ let vRender = null;
 let localStream = null;
 let maskSave = null;
 let arrMasks = ['img/effects/p1.png', 'img/effects/p2.png', 'img/effects/p3.png', 'img/effects/p4.png'];
+let previews = null;
 
 const maxImgSize = 2000;
 
@@ -81,6 +82,7 @@ function videoStart() {
     restorePreviews();
     makePreviewMask(maskSave);
 
+    previews = document.getElementById('previews')
     canvas = document.getElementById('canvas');
     context = canvas.getContext('2d');
     canvas.addEventListener("mousedown", maskMoveStart);
@@ -94,7 +96,6 @@ function videoStart() {
 
 function videoFinish() {
     stopStream();
-    savePreviews();
     canvas = null;
     context = null;
     if (vRender) {
@@ -105,15 +106,10 @@ function videoFinish() {
 
 }
 
-function changePageStyle() {
-    if (window.matchMedia( "(min-width: 601px)" ).matches) {
-        document.getElementById('previews').style.height = document.getElementById('canvas').offsetHeight+'px';
-    } else {
-        document.getElementById('previews').style.height= 'auto';
-    }
-    document.getElementById('errText').style.lineHeight = document.getElementById('canvas').offsetHeight+'px';
-}
 
+
+
+/*RENDERING*/
 
 
 function renderFrame() {
@@ -174,73 +170,48 @@ function renderFrame() {
     }
 }
 
+function changePageStyle() {
+    if (window.matchMedia( "(min-width: 601px)" ).matches) {
+        document.getElementById('previews').style.height = document.getElementById('canvas').offsetHeight+'px';
+    } else {
+        document.getElementById('previews').style.height= 'auto';
+    }
+    document.getElementById('errText').style.lineHeight = document.getElementById('canvas').offsetHeight+'px';
+}
 
-//RENDER 40 FRAMES IN SECOND
 
-function renderPreviews() {
-    let previews = [];
-    let children = document.getElementById('previews').childNodes;
-    children.forEach(function(currentValue) {
-        if(currentValue.tagName === 'CANVAS'){
-            previews.push(currentValue);
-        }
-    });
-    for (let i = previews.length - 1; i >= 0; i--) {
-        let currentContext = previews[i].getContext('2d');
-        let nextCanvas;
-        if (i === 0) {
-            nextCanvas = canvas;
-        } else {
-            nextCanvas = previews[i - 1];
-        }
-        previews[i].width = nextCanvas.width;
-        previews[i].height = nextCanvas.height;
-        currentContext.drawImage(nextCanvas, 0, 0, nextCanvas.width, nextCanvas.height);
+/*PREVIEWS*/
+
+function insertAfter(elem, newElem) {
+    let next = elem.nextSibling;
+    if (next) {
+        previews.insertBefore(newElem, next);
+    } else {
+        previews.appendChild(newElem);
+    }
+    if (previews.childElementCount > 10) {
+        previews.removeChild(previews.lastElementChild);
     }
 }
 
-let s = null;
-let sHeight = null;
+function renderPreviews(imageSrc) {
+    let img = new Image();
+    img.src = imageSrc;
+    insertAfter(previews.firstElementChild, img);
 
-function savePreviews() {
-    if (!canvas) {
-        return;
-    }
-    sHeight = canvas.offsetHeight+'px';
-    let previews = document.getElementById('previews');
-    if (previews) {
-        s = [];
-        let children = document.getElementById('previews').childNodes;
-        children.forEach(function(currentValue) {
-            if(currentValue.tagName === 'CANVAS') {
-                let img = new Image();
-                img.src = currentValue.toDataURL("image/png");
-                img.onload = function () {
-                    s.push(img);
-                };
-            }
-        });
-    }
+
 }
 
 function restorePreviews() {
-    if (s) {
-        let i = 0;
-        let children = document.getElementById('previews').childNodes;
-
-        children.forEach(function(currentValue) {
-            if(currentValue.tagName === 'CANVAS') {
-                let currentContext = currentValue.getContext('2d');
-                currentValue.width = s[i].width;
-                currentValue.height = s[i].height;
-                currentContext.drawImage(s[i], 0, 0, s[i].width, s[i].height);
-                i++;
+    getMyPhotoList(0, 6).then(function (list) {
+        if (list) {
+            for (let i = 0, len = list.length; i < len; i++) {
+                let img = new Image();
+                img.src = list[i].src;
+                insertAfter(previews.firstElementChild, img);
             }
-        });
-        document.getElementById('previews').style.height = sHeight;
-        document.getElementById('canvas').height = sHeight;
-    }
-    s = null;
+        }
+    });
 }
 
 
@@ -544,29 +515,24 @@ function sendLinkImg() {
 
 
 
+/*
+* SAVE IMAGE
+* */
+
 function saveImage() {
-    renderPreviews();
+    let imageSrc = document.getElementById('canvas').toDataURL("image/jpeg");
     try {
-        document.getElementById('f-file').value = document.getElementById('canvas1').toDataURL("image/png");
+        document.getElementById('f-file').value = imageSrc;
         document.getElementById('f-login').value = getCurrentUser();
         document.getElementById('f-type').value = 'PUT';
     } catch (error) {
-        toastIt('Some Error');
+        toastIt('Some error occurred');
+        return;
     }
-
+    renderPreviews(imageSrc);
     let fd = new FormData(document.forms["form1"]);
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'controller/controller-photo.php', true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            // console.log(xhr.getAllResponseHeaders());
-            console.log(xhr.responseText);
-            // console.log('DONE - stache', xhr.status);
-        }
-    };
-    xhr.onload = function () {
-        console.log('DONE', xhr.status);
-    };
     xhr.send(fd);
 }
 

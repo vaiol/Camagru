@@ -2,6 +2,8 @@ let userCache = null;
 let avatarCache = null;
 let photoListCache = null;
 
+let deletedPhotoCount = 0;
+
 function getCurrentUser() {
     if (userCache) {
         return userCache;
@@ -168,6 +170,13 @@ function getPhotoList(first, last) {
 
 function getMyPhotoList(first, last) {
     return new Promise(function(resolve, reject) {
+        if (first === 0) {
+            deletedPhotoCount = 0;
+        } else {
+            first -= deletedPhotoCount;
+            last -= deletedPhotoCount;
+        }
+
         console.log("getMyPhotoList("+first+", "+last+")");
         let body = 'type=GET&list=MYLIST&login='+getCurrentUser()+'&first='+first+'&last='+last;
         let xhr = new XMLHttpRequest();
@@ -210,7 +219,7 @@ function deletePhoto(id) {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText);
+            deletedPhotoCount++;
         }
     };
     xhr.send(body);
