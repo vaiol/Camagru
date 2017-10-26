@@ -101,8 +101,6 @@ function getMyPhotoList($authorID, $first, $last)
     $result = selectUserPhotoList($authorID, $first, $last);
     $result = getBase64Src($result, COMPRESSED_DIR);
     $result = json_encode($result);
-    $length = strlen($result);
-    header('Content-type: application/json');
     print $result;
 }
 
@@ -111,8 +109,7 @@ function getPhotoList($first, $last)
     $result = selectPhotoList($first, $last);
     $result = getBase64Src($result, COMPRESSED_DIR);
     $result = json_encode($result);
-    $length = strlen($result);
-    header('Content-type: application/json');
+
     print $result;
 }
 
@@ -121,7 +118,6 @@ function getFeaturedPhotoList($max)
     $result = selectFeaturedPhotoList($max);
     $result = getBase64Src($result, COMPRESSED_DIR);
     $result = json_encode($result);
-    header('Content-type: application/json');
     print $result;
 }
 
@@ -134,7 +130,6 @@ function getPhotoByID($id) {
     $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
     $result['src'] = $base64;
     $result = json_encode($result);
-    header('Content-type: application/json');
     print $result;
 }
 

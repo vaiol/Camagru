@@ -49,10 +49,6 @@
     z-index: 5;
     box-shadow: 0 3px 4px 0 rgba(0,0,0,0.4);
     background-size: contain;
-
-    /*width: 150px;*/
-    /*height: 150px;*/
-
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
     transition: all .3s ease-in-out;

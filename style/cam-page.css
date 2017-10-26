@@ -241,49 +241,7 @@ canvas {
 }
 
 
-form {
-    display: flex;
-    justify-content: space-between;
-}
 
-form > input {
-    height: 40px;
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    width: 78%;
-    border: 1px solid #816d65;
-    box-sizing: border-box;
-    font-size: 16px;
-    color: #816d65;
-}
-
-form > input[type='submit'] {
-    width: 20%;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-
-
-    -webkit-transition: all 0.3s ease;;
-    -moz-transition: all 0.3s ease;;
-    -o-transition: all 0.3s ease;;
-    transition: all 0.3s ease;
-    font-size: 16px;
-
-    background-color: inherit;
-    color: #816d65;
-    letter-spacing: 2px;
-}
-
-
-
-
-form > input[type='submit']:hover {
-    background-color: #816d65;
-    color: white;
-    letter-spacing: 4px;
-}
 
 
 
@@ -372,15 +330,7 @@ input[type=range]::-moz-range-thumb {
     #over-box .butt {
         font-size: .95vw;
     }
-    form > input {
-        width: 68%;
-        font-size: .95vw;
-    }
 
-    form > input[type='submit'] {
-        width: 30%;
-        font-size: .95vw;
-    }
 }
 
 @media (max-width: 992px) {
@@ -425,15 +375,7 @@ input[type=range]::-moz-range-thumb {
         left:15%;
         width:70%;
     }
-    form > input {
-        width: 68%;
-        font-size: 13px;
-    }
 
-    form > input[type='submit'] {
-        width: 30%;
-        font-size: 13px;
-    }
 }
 
 @media (max-width: 600px) {
@@ -495,13 +437,5 @@ input[type=range]::-moz-range-thumb {
         left:7.5%;
         width:85%;
     }
-    form > input {
-        width: 58%;
-        font-size: 12px;
-    }
 
-    form > input[type='submit'] {
-        width: 40%;
-        font-size: 12px;
-    }
 }

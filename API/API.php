@@ -3,3 +3,4 @@
 require_once "photo.php";
 require_once "like.php";
 require_once "user.php";
+require_once "comment.php";

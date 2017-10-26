@@ -14,7 +14,7 @@ let maskFlag = false;
 let corsProxy = '/camagru/controller/fetch.php?url=';
 let prevCanvasWidth = -1;
 let vRender = null;
-let localStream = null;
+let localStream = [];
 let maskSave = null;
 let arrMasks = ['img/effects/p1.png', 'img/effects/p2.png', 'img/effects/p3.png', 'img/effects/p4.png'];
 let previews = null;
@@ -23,22 +23,28 @@ const maxImgSize = 2000;
 
 let HERMITE = new Hermite_class();
 
-
 navigator.getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia;
 
 
+
+let openedCam = false;
+
+setInterval(stopStream, 20);
+
 function startStream() {
-    if (!video) {
+    if (!video && openedCam) {
         video = document.getElementById('video');
         video.onloadedmetadata = function(e) {
             video.play();
         };
         navigator.getUserMedia({ video: true },
             function(stream) {
-                localStream = stream;
-                video.src = window.URL.createObjectURL(localStream);
+                localStream.push(stream);
+                if (video) {
+                    video.src = window.URL.createObjectURL(stream);
+                }
                 errorVideo = null;
             },
             function(err) {
@@ -49,12 +55,17 @@ function startStream() {
 }
 
 function stopStream() {
-    if (video) {
+    if (!openedCam && video) {
         video.src = "";
         video.mozSrcObject = null;
         video = null;
-        localStream.getTracks()[0].stop();
-        localStream = null;
+    }
+    if (!openedCam) {
+        for (let i = 0, len = localStream.length; i < len; i++) {
+            localStream[i].getTracks()[0].stop();
+            localStream.splice(i, 1);
+        }
+
     }
 }
 
@@ -76,6 +87,7 @@ function rangesInit() {
 
 
 function videoStart() {
+    openedCam = true;
     startStream();
     rangesInit();
     downloadMasks(arrMasks);
@@ -95,15 +107,14 @@ function videoStart() {
 }
 
 function videoFinish() {
-    stopStream();
-    canvas = null;
-    context = null;
+    openedCam = false;
     if (vRender) {
         clearInterval(vRender);
         vRender = null;
     }
+    canvas = null;
+    context = null;
     maskFlag = false;
-
 }
 
 

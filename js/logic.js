@@ -28,28 +28,46 @@ function getCurrentUserAvatar() {
     return avatarCache;
 }
 
+function ajax_post(type, address, otherBody, onloadFunc) {
+    let body = 'login='+getCurrentUser()+'&type='+type;
+    for (let prop in otherBody) {
+        body += '&'+prop+'='+otherBody[prop];
+    }
 
-
-
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'controller/controller-'+address+'.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    if (onloadFunc) {
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                onloadFunc(xhr.responseText);
+            }
+        };
+    }
+    xhr.send(body);
+}
 
 /*PHOTO FUNCTIONS*/
 
 function getPhotoById(id) {
     return new Promise(function(resolve, reject) {
         console.log("getPhotoById("+id+")");
-        let body = 'type=GET&list=SINGLE&login='+getCurrentUser()+'&id='+id;
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller/controller-photo.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                let photo = JSON.parse(xhr.responseText);
-                addPhoto(photo);
-                resolve(photo);
-            }
-        };
-        xhr.send(body);
+        ajax_post('GET', 'photo', {"list":"SINGLE", "id":id}, (response) => {
+            let photo = JSON.parse(response);
+            addPhoto(photo);
+            resolve(photo);
+        });
     });
+}
+
+function toggleProgress(progress, all) {
+    progress.classList.toggle('determinate');
+    progress.classList.toggle('indeterminate');
+    if (all) {
+        progress.classList.toggle('width0');
+    } else {
+        progress.classList.toggle('width100');
+    }
 }
 
 function getPhotoList(first, last) {
@@ -62,35 +80,16 @@ function getPhotoList(first, last) {
         }
 
         console.log("getPhotoList("+first+", "+last+")");
-        let body = 'type=GET&list=ALL&login='+getCurrentUser()+'&first='+first+'&last='+last;
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller/controller-photo.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                let list = JSON.parse(xhr.responseText);
-                addList(list);
-                if (pLa && pAll) {
-                    toggleProgress(pLa.firstElementChild);
-                    toggleProgress(pAll.firstElementChild);
-                }
-                resolve(list);
+        ajax_post('GET', 'photo', {"list":"ALL", "first":first, "last":last}, (response) => {
+            let list = JSON.parse(response);
+            addList(list);
+            if (pLa && pAll) {
+                toggleProgress(pLa.firstElementChild);
+                toggleProgress(pAll.firstElementChild);
             }
-        };
-        xhr.send(body);
+            resolve(list);
+        });
     });
-}
-
-
-function toggleProgress(progress, all) {
-    console.log('toggle');
-    progress.classList.toggle('determinate');
-    progress.classList.toggle('indeterminate');
-    if (all) {
-        progress.classList.toggle('width0');
-    } else {
-        progress.classList.toggle('width100');
-    }
 }
 
 function getMyPhotoList(first, last) {
@@ -102,206 +101,84 @@ function getMyPhotoList(first, last) {
             last -= deletedPhotoCount;
         }
 
-        console.log("getMyPhotoList("+first+", "+last+")");
         let pMy = document.querySelector('#progress-my');
         let pAll = document.querySelector('#progress-all');
         if (pMy && pAll) {
             toggleProgress(pMy.firstElementChild);
             toggleProgress(pAll.firstElementChild);
         }
-        let body = 'type=GET&list=MYLIST&login='+getCurrentUser()+'&first='+first+'&last='+last;
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller/controller-photo.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        console.log(event);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                if (pMy && pAll) {
-                    toggleProgress(pMy.firstElementChild);
-                    toggleProgress(pAll.firstElementChild);
-                }
-                resolve(JSON.parse(xhr.responseText));
-            }
-        };
-        xhr.send(body);
 
+        console.log("getMyPhotoList("+first+", "+last+")");
+        ajax_post('GET', 'photo', {"list":"MYLIST", "first":first, "last":last}, (response) => {
+            if (pMy && pAll) {
+                toggleProgress(pMy.firstElementChild);
+                toggleProgress(pAll.firstElementChild);
+            }
+            resolve(JSON.parse(response));
+        });
     });
 }
 
 
 function getFeaturedPhotoList(max) {
     return new Promise(function(resolve, reject) {
-        console.log("getFeaturedPhotoList("+max+")");
         let progressBar = document.querySelector('#progress-f').firstElementChild;
         toggleProgress(progressBar);
-        let body = 'type=GET&list=FEATURED&login='+getCurrentUser()+'&max='+max;
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller/controller-photo.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                let list = JSON.parse(xhr.responseText);
-                addList(list);
-                toggleProgress(progressBar);
-                resolve(list);
-            }
-        };
-        xhr.send(body);
+
+        console.log("getFeaturedPhotoList("+max+")");
+        ajax_post('GET', 'photo', {"list":"FEATURED", "max":max}, (response) => {
+            let list = JSON.parse(response);
+            addList(list);
+            toggleProgress(progressBar);
+            resolve(list);
+        });
     });
 }
 
 
 function deletePhoto(id) {
     console.log("deletePhoto("+id+")");
-    let body = 'type=DELETE&login='+getCurrentUser()+'&id='+id;
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'controller/controller-photo.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            deletedPhotoCount++;
-        }
-    };
-    xhr.send(body);
-    return false;
+    ajax_post('DELETE', 'photo', {"id":id}, (response) => {
+        deletedPhotoCount++;
+    });
 }
 
 /*COMMENT FUNCTIONS*/
 
 function sendComment(commentJSON) {
     console.log("sendComment()");
-    //send
+    ajax_post('PUT', 'comment', commentJSON);
 }
 
 
 function getCommentList(id, first, last) {
-    console.log("getCommentList("+id+", "+first+", "+last+")");
-    if (first > 20) {
-        return [
-            {
-                "user": getCurrentUser(),
-                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-                "img": id
-            },
-            {
-                "user": getCurrentUser(),
-                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-                "img": id
-            }
-        ];
-    }
-    return [
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": "Diana",
-            "text": "AUTHOR - БOT!!!!",
-            "img": id
-        },
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": "Diana",
-            "text": "AUTHOR - БOT!!!!",
-            "img": id
-        },
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": "Diana",
-            "text": "AUTHOR - БOT!!!!",
-            "img": id
-        },
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": "Diana",
-            "text": "AUTHOR - БOT!!!!",
-            "img": id
-        },
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": getCurrentUser(),
-            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
-            "img": id
-        },
-        {
-            "user": "Diana",
-            "text": "AUTHOR - БOT!!!!",
-            "img": id
-        }
-    ];
+    return new Promise(function(resolve, reject) {
+        console.log("getCommentList("+id+", "+first+", "+last+")");
+        ajax_post('GET', 'comment', {"img":id, "first":first, "last":last}, (response) => {
+            resolve(JSON.parse(response));
+        });
+    });
 }
 
 /*LIKES FUNCTIONS*/
 
 function makeLike(id) {
     console.log("makeLike("+id+")");
-    let body = 'type=PUT&login='+getCurrentUser()+'&id='+id;
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'controller/controller-like.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(body);
+    ajax_post('PUT', 'like', {"id":id});
+
 }
 
 function makeDislike(id) {
     console.log("makeDislike("+id+")");
-    let body = 'type=DELETE&login='+getCurrentUser()+'&id='+id;
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'controller/controller-like.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(body);
+    ajax_post('DELETE', 'like', {"id":id});
 }
 
 function isLiked(id) {
     return new Promise(function(resolve, reject) {
         console.log("isLiked("+id+")");
-        let body = 'type=GET&&login='+getCurrentUser()+'&id='+id;
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'controller/controller-like.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                resolve(xhr.responseText);
-            }
-        };
-        xhr.send(body);
+        ajax_post('GET', 'like', {"id":id}, (response) => {
+            resolve(response);
+        });
     });
 }
 

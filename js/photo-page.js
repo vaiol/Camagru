@@ -45,7 +45,7 @@ function openPhotoPage(id) {
     likeButt.addEventListener("click", likePhoto);
     overlay.addEventListener("click", closePhotoPage);
     chatButt.addEventListener("click", openChat);
-    authorButt.addEventListener("click", openAuthor);
+    // authorButt.addEventListener("click", openAuthor);
     overlayContent.addEventListener('mouseover', mouseOverContent);
     overlayContent.addEventListener('mouseout', mouseOutContent);
 
@@ -160,6 +160,9 @@ function likePhoto() {
 }
 
 
+
+/*COMMENTS*/
+
 function generateCommentBlock(commentJSON) {
     let commentAuthor = document.createElement('div');
     commentAuthor.className = "comment-author";
@@ -183,12 +186,14 @@ function generateCommentBlock(commentJSON) {
 }
 
 
-function generateShowButton(comentListNode, start, imgID) {
+function generateShowButton(commentListNode, start, imgID) {
     let button = document.createElement('div');
     button.className = "butt-next-button";
     button.innerHTML = "SHOW MORE";
     button.addEventListener("click", function () {
-        showComments(comentListNode, getCommentList(imgID, start, start + commentCount - 1), start + commentCount, imgID);
+        getCommentList(imgID, start, start + commentCount).then((list) => {
+            showComments(commentListNode, list, start + commentCount, imgID);
+        });
     });
     return button;
 }
@@ -224,15 +229,12 @@ function openChat() {
         commentBlock.classList.toggle('none');
         endofdiv.classList.toggle('none');
         chatTrigger = true;
-        showComments(commentList, getCommentList(imgID, 0, 14), 15, imgID);
+        getCommentList(imgID, 0, commentCount).then((list) => {
+            showComments(commentList, list, commentCount, imgID);
+        });
+
     }
 }
-
-function openAuthor() {
-    //do something
-}
-
-
 
 function addComment() {
     let msg = textareaComm.value.trim();
@@ -243,7 +245,7 @@ function addComment() {
             "img": imgID
         };
         chatCount.innerHTML = parseInt(chatCount.innerHTML) + 1;
-        sendComment(sendComment);
+        sendComment(commentJSON);
         commentList.insertBefore(generateCommentBlock(commentJSON), commentList.firstChild);
         callDiana(commentList);
     }
