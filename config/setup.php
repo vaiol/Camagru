@@ -8,7 +8,7 @@ $opt  = array(
 if (!is_dir(UPLOAD_DIR)) {
     mkdir(UPLOAD_DIR, 0770);
     mkdir(COMPRESSED_DIR, 0770);
-    $uDir = '../img/photos/';
+    $uDir = '../img/photos-f/';
     $cDir = $uDir.'compressed/';
     $i = 1;
 
