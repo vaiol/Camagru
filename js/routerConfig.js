@@ -114,6 +114,10 @@ if (Router.getFragment() === '') {
 let author = document.getElementById('mySidebar').firstElementChild.lastElementChild;
 let authorImg = document.getElementById('mySidebar').firstElementChild.firstElementChild;
 author.innerHTML = getCurrentUser();
-authorImg.src = getCurrentUserAvatar();
+
+getCurrentUserAvatar().then((ava) => {
+    authorImg.src = ava
+});
+
 
 

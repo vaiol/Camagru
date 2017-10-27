@@ -41,7 +41,9 @@ function openProfilePage() {
     getMyPhotoList(0, photosInPage).then(function (myPhotoList) {
         showPhotos(myPhotoListNode, myPhotoList, photosInPage, buttNext, generateMyPhoto, getMyPhotoList);
     });
-    document.querySelector("#p-author > img").src = getCurrentUserAvatar();
+    getCurrentUserAvatar().then((ava) => {
+        document.querySelector("#p-author > img").src = ava;
+    });
     document.querySelector("#p-author > div").innerHTML = getCurrentUser();
 
 
@@ -57,7 +59,18 @@ function uploadAva() {
         let file = this.files[0];
         let reader = new FileReader();
         reader.onloadend = function () {
-            document.getElementById('p-author').firstElementChild.src = this.result;
+            let img = new Image();
+            img.onload = () => {
+                let newImg = HERMITE.resize_image(img, 100, 100, undefined, false);
+                newImg.onload = () => {
+                    document.getElementById('p-author').firstElementChild.src = newImg.src;
+                };
+
+
+            };
+            img.src = this.result;
+
+
         };
         if (file) {
             reader.readAsDataURL(file);

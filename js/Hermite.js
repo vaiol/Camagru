@@ -87,13 +87,15 @@ function Hermite_class() {
         };
 
         //resize
-        if (multi_core === undefined || multi_core === true) {
-            this.resample(temp_canvas, width, height, true, on_finish);
-        }
-        else {
-            this.resample_single(temp_canvas, width, height, true);
-            on_finish();
-        }
+        // if (multi_core === undefined || multi_core === true) {
+        //     this.resample(temp_canvas, width, height, true, on_finish);
+        // }
+        // else {
+        //     this.resample_single(temp_canvas, width, height, true);
+        //     on_finish();
+        // }
+        this.resample_single_cut(temp_canvas, width, height);
+        on_finish();
         return newImg;
     };
 
@@ -378,5 +380,29 @@ function Hermite_class() {
 
         //draw
         ctx.putImageData(img2, 0, 0);
+    };
+
+    this.resample_single_cut = function (canvas, width, height) {
+        width = Math.round(width);
+        height = Math.round(height);
+        let width_source = canvas.width;
+        let height_source = canvas.height;
+
+
+        let ctx = canvas.getContext("2d");
+        let img = ctx.getImageData(0, 0, width_source, height_source);
+
+
+        let shiftHeight = 0;
+        let shiftWidth = 0;
+        if ()
+        canvas.width = width_source;
+        canvas.height = width_source;
+
+
+
+
+        //draw
+        ctx.putImageData(img, 0, 0);
     };
 }

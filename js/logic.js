@@ -4,29 +4,47 @@ let photoListCache = null;
 
 let deletedPhotoCount = 0;
 
+
+function setCookie(name, value, time) {
+    let d = new Date();
+    if (!time) {
+        time = 2;
+    }
+    d.setTime(d.getTime() + (time * 24 * 60 * 60 * 1000));
+    let expires = "expires="+d.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
 function getCurrentUser() {
     if (userCache) {
         return userCache;
     }
     console.log("getCurrentUser()");
+
     // userCache = "AUTHOR";
     userCache = "admin";
     // userCache = "Diana";
+    setCookie('name', userCache);
     return userCache;
 }
 
 function getUserAvatar(userName) {
-    console.log("getUserAvatar("+userName+")");
-    return "img/ava/"+userName+".jpg"
+    return new Promise((resolve, reject) => {
+        if (avatarCache && avatarCache[userName]) {
+            resolve(avatarCache[userName]);
+            return;
+        }
+        console.log("getUserAvatar("+userName+")");
+        ajax_post('GET', 'user', {"user":userName}, (response) => {
+            cacheAvatar(userName, response);
+            resolve(response);
+        });
+
+    });
 }
 
 function getCurrentUserAvatar() {
-    if (avatarCache) {
-        return avatarCache;
-    }
-    console.log("getUserAvatar()");
-    avatarCache = "img/ava/"+getCurrentUser()+".jpg";
-    return avatarCache;
+    return getUserAvatar(getCurrentUser());
 }
 
 function ajax_post(type, address, otherBody, onloadFunc) {
@@ -55,7 +73,7 @@ function getPhotoById(id) {
         console.log("getPhotoById("+id+")");
         ajax_post('GET', 'photo', {"list":"SINGLE", "id":id}, (response) => {
             let photo = JSON.parse(response);
-            addPhoto(photo);
+            cachePhoto(photo);
             resolve(photo);
         });
     });
@@ -83,7 +101,7 @@ function getPhotoList(first, last) {
         console.log("getPhotoList("+first+", "+last+")");
         ajax_post('GET', 'photo', {"list":"ALL", "first":first, "last":last}, (response) => {
             let list = JSON.parse(response);
-            addList(list);
+            cacheList(list);
             if (pLa && pAll) {
                 toggleProgress(pLa.firstElementChild);
                 toggleProgress(pAll.firstElementChild);
@@ -129,7 +147,7 @@ function getFeaturedPhotoList(max) {
         console.log("getFeaturedPhotoList("+max+")");
         ajax_post('GET', 'photo', {"list":"FEATURED", "max":max}, (response) => {
             let list = JSON.parse(response);
-            addList(list);
+            cacheList(list);
             toggleProgress(progressBar);
             resolve(list);
         });
@@ -185,7 +203,16 @@ function isLiked(id) {
 
 /*CACHE*/
 
-function addList(list) {
+function cacheAvatar(userLogin, src) {
+    if (!avatarCache) {
+        avatarCache = {};
+    }
+    if (!avatarCache[userLogin]) {
+        avatarCache[userLogin] = src;
+    }
+}
+
+function cacheList(list) {
     if (!photoListCache) {
         photoListCache = list;
         return;
@@ -217,10 +244,10 @@ function getPhotoCacheByID(id) {
     return null;
 }
 
-function addPhoto(photo) {
+function cachePhoto(photo) {
     if (!photoListCache) {
         photoListCache = [];
-        photoListCache.push(photo)
+        photoListCache.push(photo);
         return;
     }
     for (let j = 0, len = photoListCache.length; j < len; j++) {

@@ -145,7 +145,9 @@ if (empty($authorID)) {
 }
 
 if ($type == 'PUT') {
+    echo 'SERVER SIDE COOKIE: '.$_COOKIE["name"];
     savePhoto($authorID);
+
 }
 
 if ($type == 'GET') {

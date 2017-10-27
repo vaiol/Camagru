@@ -9,3 +9,4 @@ DEFINE('DB_PASSWORD', '123456');
 
 DEFINE('UPLOAD_DIR', '../photos/');
 DEFINE('COMPRESSED_DIR', UPLOAD_DIR.'compressed/');
+DEFINE('AVA_DIR', UPLOAD_DIR.'ava/');

@@ -67,7 +67,9 @@ function openPhotoPage(id) {
         photo.src = photoCacheJSON.src;
         likeCount.innerHTML = photoCacheJSON.likeCount;
         chatCount.innerHTML = photoCacheJSON.chatCount;
-        authorButt.firstElementChild.src = getUserAvatar(photoCacheJSON.user);
+        getUserAvatar(photoCacheJSON.user).then((ava) => {
+            authorButt.firstElementChild.src = ava;
+        });
         authorButt.lastElementChild.innerHTML = photoCacheJSON.user;
     }
 
@@ -76,7 +78,9 @@ function openPhotoPage(id) {
         photo.src = photoJSON.src;
         likeCount.innerHTML = photoJSON.likeCount;
         chatCount.innerHTML = photoJSON.chatCount;
-        authorButt.firstElementChild.src = getUserAvatar(photoJSON.user);
+        getUserAvatar(photoJSON.user).then((ava) => {
+            authorButt.firstElementChild.src = ava;
+        });
         authorButt.lastElementChild.innerHTML = photoJSON.user;
     });
 
@@ -175,8 +179,9 @@ function generateCommentBlock(commentJSON) {
     div.appendChild(commentAuthor);
     div.appendChild(commentText);
     let img = document.createElement('img');
-    img.src = getUserAvatar(commentJSON.user);
-
+    getUserAvatar(commentJSON.user).then((ava) => {
+        img.src = ava;
+    });
     let comment = document.createElement('div');
     comment.className = "comment";
     comment.appendChild(img);

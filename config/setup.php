@@ -8,16 +8,23 @@ $opt  = array(
 if (!is_dir(UPLOAD_DIR)) {
     mkdir(UPLOAD_DIR, 0770);
     mkdir(COMPRESSED_DIR, 0770);
+    mkdir(AVA_DIR, 0770);
+
     $uDir = '../img/photos-f/';
     $cDir = $uDir.'compressed/';
+    $aDir = $uDir.'ava/';
     $i = 1;
 
     for (;$i <= 18; $i++) {
         $file = 'i'.$i.'.jpg';
         copy($uDir.$file, UPLOAD_DIR.$file);
         copy($cDir.$file, COMPRESSED_DIR.$file);
+        $file = $i.'.jpg';
+        if (file_exists($aDir.$file)) {
+            copy($aDir.$file, AVA_DIR.$file);
+        }
     }
-    print "COPYING FILES COMPLETED SUCCESSFUL";
+    print "COPYING FILES COMPLETED SUCCESSFUL<br>";
 }
 try {
 
@@ -72,6 +79,8 @@ try {
 
     $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES ('1', 'vaiol.ans@gmail.com', 'admin', '123456', '1');");
     $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES ('2', 'alexander.stepano@gmail.com', 'AUTHOR', '123456', '1');");
+    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES ('3', 'astepano@student.unit.ua', 'Diana', '123456', '1');");
+
     $pdo->query("INSERT INTO `likes` (`id_user`, `id_image`) VALUES ('1', '1');");
     $pdo->query("INSERT INTO `likes` (`id_user`, `id_image`) VALUES ('1', '2');");
     $pdo->query("INSERT INTO `likes` (`id_user`, `id_image`) VALUES ('1', '3');");
@@ -109,8 +118,6 @@ try {
     $pdo->query("INSERT INTO `likes` (`id_user`, `id_image`) VALUES ('2', '17');");
     $pdo->query("INSERT INTO `likes` (`id_user`, `id_image`) VALUES ('2', '18');");
 
-//                    $pdo->query('');
-    $pdo->query("INSERT INTO `comment` (`id`, `id_user`, `id_image`, `comment`) VALUES ('1', '1', '5', 'sfgdfghfghdghdfgh dg fgh f gdddh ');");
     $pdo->query("INSERT INTO `image` (`id`, `id_user`, `name`) VALUES ('1', '1', 'i1.jpg')");
     $pdo->query("INSERT INTO `image` (`id`, `id_user`, `name`) VALUES ('2', '1', 'i2.jpg')");
     $pdo->query("INSERT INTO `image` (`id`, `id_user`, `name`) VALUES ('3', '1', 'i3.jpg')");
@@ -129,6 +136,8 @@ try {
     $pdo->query("INSERT INTO `image` (`id`, `id_user`, `name`) VALUES ('16', '1', 'i16.jpg')");
     $pdo->query("INSERT INTO `image` (`id`, `id_user`, `name`) VALUES ('17', '1', 'i17.jpg')");
     $pdo->query("INSERT INTO `image` (`id`, `id_user`, `name`) VALUES ('18', '1', 'i18.jpg')");
+
+    $pdo->query("INSERT INTO `comment` (`id`, `id_user`, `id_image`, `comment`) VALUES ('1', '1', '5', 'sfgdfghfghdghdfgh dg fgh f gdddh ');");
     $pdo = null;
 } catch (PDOException $e) {
     echo 'ERROR!!!</p></div><br><div><p>'.$e->getMessage();
