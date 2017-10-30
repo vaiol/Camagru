@@ -21,8 +21,8 @@ function getCurrentUser() {
     }
     console.log("getCurrentUser()");
 
-    // userCache = "AUTHOR";
-    userCache = "admin";
+    userCache = "AUTHOR";
+    // userCache = "admin";
     // userCache = "Diana";
     setCookie('name', userCache);
     return userCache;
@@ -200,6 +200,13 @@ function isLiked(id) {
         });
     });
 }
+
+/*AVA*/
+
+function sendAva(imgSrc) {
+    ajax_post('PUT', 'user', {"file":imgSrc});
+}
+
 
 /*CACHE*/
 

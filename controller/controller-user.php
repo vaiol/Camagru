@@ -13,7 +13,17 @@ if (empty($authorID)) {
 }
 
 if ($type == 'PUT') {
+    $img = $_POST['file'];
+    $img = str_replace('data:image/jpeg;base64,', '', $img);
+    $img = str_replace(' ', '+', $img);
+    $data = base64_decode($img);
 
+    $photoName = $authorID.".jpg";
+
+    $image = imagecreatefromstring($data);
+//    $image = resize_image($image, 200, 200);
+//    $image = crop_image($image);
+    imagejpeg($image, AVA_DIR.$photoName, 90);
 }
 
 if ($type == 'GET') {

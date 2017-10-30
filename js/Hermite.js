@@ -56,14 +56,30 @@ function Hermite_class() {
      * @param {int} height optional.
      * @param {int} percentages optional.
      * @param {string} multi_core optional.
+     * @param {boolean} square optional.
+     * @param {boolean} jpeg optional.
      */
-    this.resize_image = function (img, width, height, percentages, multi_core) {
+    this.resize_image = function (img, width, height, percentages, multi_core, square, jpeg) {
         let newImg = new Image();
         //create temp canvas
         let temp_canvas = document.createElement("canvas");
         temp_canvas.width = img.width;
         temp_canvas.height = img.height;
         let temp_ctx = temp_canvas.getContext("2d");
+        if (jpeg) {
+            let img = temp_ctx.getImageData(0, 0, temp_canvas.width, temp_canvas.height);
+            //WHITE BACKGROUND
+            let data = img.data;
+            for(let i = 0; i < data.length; i += 4){
+                if(data[i + 3] < 255){
+                    data[i] = 255;
+                    data[i + 1] = 255;
+                    data[i + 2] = 255;
+                    data[i + 3] = 255;
+                }
+            }
+            temp_ctx.putImageData(img, 0, 0);
+        }
         temp_ctx.drawImage(img, 0, 0);
 
         //prepare size
@@ -78,26 +94,33 @@ function Hermite_class() {
         width = Math.round(width);
         height = Math.round(height);
 
+
+
         let on_finish = function () {
             newImg.width = width;
             newImg.height = height;
-            newImg.src = temp_canvas.toDataURL();
+            if (jpeg) {
+                newImg.src = temp_canvas.toDataURL("image/jpeg");
+            } else {
+                newImg.src = temp_canvas.toDataURL();
+            }
+
 
             temp_canvas = null;
         };
-
-        //resize
-        // if (multi_core === undefined || multi_core === true) {
-        //     this.resample(temp_canvas, width, height, true, on_finish);
-        // }
-        // else {
-        //     this.resample_single(temp_canvas, width, height, true);
-        //     on_finish();
-        // }
-        this.resample_single_cut(temp_canvas, width, height);
-        on_finish();
+        if (square === true) {
+            this.resample_square(temp_canvas);
+        }
+        if (multi_core === undefined || multi_core === true) {
+            this.resample(temp_canvas, width, height, true, on_finish);
+        }
+        else {
+            this.resample_single(temp_canvas, width, height, true);
+            on_finish();
+        }
         return newImg;
     };
+
 
     /**
      * Hermite resize, multicore version - fast image resize/resample using Hermite filter.
@@ -382,27 +405,24 @@ function Hermite_class() {
         ctx.putImageData(img2, 0, 0);
     };
 
-    this.resample_single_cut = function (canvas, width, height) {
-        width = Math.round(width);
-        height = Math.round(height);
+    this.resample_square = function (canvas) {
         let width_source = canvas.width;
         let height_source = canvas.height;
-
-
         let ctx = canvas.getContext("2d");
         let img = ctx.getImageData(0, 0, width_source, height_source);
 
 
         let shiftHeight = 0;
         let shiftWidth = 0;
-        if ()
-        canvas.width = width_source;
-        canvas.height = width_source;
+        if (width_source > height_source) {
+            shiftWidth = (width_source - height_source) / 2;
+            canvas.width = height_source;
+        } else if (width_source < height_source) {
+            shiftHeight = (height_source - width_source) / 2;
+            canvas.height = width_source;
+        }
 
 
-
-
-        //draw
-        ctx.putImageData(img, 0, 0);
+        ctx.putImageData(img, -shiftWidth, -shiftHeight);
     };
 }

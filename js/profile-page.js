@@ -45,8 +45,6 @@ function openProfilePage() {
         document.querySelector("#p-author > img").src = ava;
     });
     document.querySelector("#p-author > div").innerHTML = getCurrentUser();
-
-
 }
 
 
@@ -61,12 +59,11 @@ function uploadAva() {
         reader.onloadend = function () {
             let img = new Image();
             img.onload = () => {
-                let newImg = HERMITE.resize_image(img, 100, 100, undefined, false);
+                let newImg = HERMITE.resize_image(img, 200, 200, undefined, false, true, true);
                 newImg.onload = () => {
                     document.getElementById('p-author').firstElementChild.src = newImg.src;
                 };
-
-
+                sendAva(img.src);
             };
             img.src = this.result;
 
