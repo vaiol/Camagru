@@ -1,5 +1,5 @@
 function toastIt(message) {
-    var t = document.getElementById('toast');
+    let t = document.getElementById('toast');
     t.innerHTML = message;
     t.classList.toggle('show');
     setTimeout(function() {

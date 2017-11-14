@@ -205,10 +205,8 @@ function insertAfter(elem, newElem) {
     }
 }
 
-function renderPreviews(imageSrc) {
-    let img = new Image();
-    img.src = imageSrc;
-    insertAfter(previews.firstElementChild, img);
+function renderPreviews(image) {
+    insertAfter(previews.firstElementChild, image);
 
 
 }
@@ -323,22 +321,6 @@ function overBoxClose() {
 
 
 /*PREVIEW DOWNLOADED MASK*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function createMaskImg(src) {
     let img = new Image();
@@ -531,19 +513,26 @@ function sendLinkImg() {
 * */
 
 function saveImage() {
-    let imageSrc = document.getElementById('canvas').toDataURL("image/jpeg");
-    try {
-        document.getElementById('f-file').value = imageSrc;
-        document.getElementById('f-login').value = getCurrentUser();
-        document.getElementById('f-type').value = 'PUT';
-    } catch (error) {
-        toastIt('Some error occurred');
-        return;
-    }
-    renderPreviews(imageSrc);
-    let fd = new FormData(document.forms["form1"]);
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'controller/controller-photo.php', true);
-    xhr.send(fd);
+    let imageSrc = document.getElementById('canvas').toDataURL("image/png");
+    let img = new Image();
+    img.onload = function () {
+        let newImg = HERMITE.pngToJPG(img);
+        newImg.onload = function () {
+            try {
+                document.getElementById('f-file').value = newImg.src;
+                document.getElementById('f-login').value = getCurrentUser();
+                document.getElementById('f-type').value = 'PUT';
+            } catch (error) {
+                toastIt('Some error occurred');
+                return;
+            }
+            renderPreviews(newImg);
+            let fd = new FormData(document.forms["form1"]);
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'controller/controller-photo.php', true);
+            xhr.send(fd);
+        };
+    };
+    img.src = imageSrc;
 }
 

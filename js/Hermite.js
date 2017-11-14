@@ -104,8 +104,6 @@ function Hermite_class() {
             } else {
                 newImg.src = temp_canvas.toDataURL();
             }
-
-
             temp_canvas = null;
         };
         if (square === true) {
@@ -118,6 +116,31 @@ function Hermite_class() {
             this.resample_single(temp_canvas, width, height, true);
             on_finish();
         }
+        return newImg;
+    };
+
+
+    this.pngToJPG = function (img) {
+        //create temp canvas
+        let temp_canvas = document.createElement("canvas");
+        temp_canvas.width = img.width;
+        temp_canvas.height = img.height;
+        let temp_ctx = temp_canvas.getContext("2d");
+        let img1 = temp_ctx.getImageData(0, 0, temp_canvas.width, temp_canvas.height);
+        //WHITE BACKGROUND
+        let data = img1.data;
+        for(let i = 0; i < data.length; i += 4){
+            if(data[i + 3] < 255){
+                data[i] = 255;
+                data[i + 1] = 255;
+                data[i + 2] = 255;
+                data[i + 3] = 255;
+            }
+        }
+        temp_ctx.putImageData(img1, 0, 0);
+        temp_ctx.drawImage(img, 0, 0);
+        let newImg = new Image();
+        newImg.src = temp_canvas.toDataURL("image/jpeg");
         return newImg;
     };
 

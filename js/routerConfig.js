@@ -111,8 +111,8 @@ if (Router.getFragment() === '') {
     Router.check('index');
 }
 
-let author = document.getElementById('mySidebar').firstElementChild.lastElementChild;
-let authorImg = document.getElementById('mySidebar').firstElementChild.firstElementChild;
+let author = document.querySelector("#mySidebar > div > div");
+let authorImg = document.querySelector("#mySidebar > div > img");
 author.innerHTML = getCurrentUser();
 
 getCurrentUserAvatar().then((ava) => {

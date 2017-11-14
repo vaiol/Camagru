@@ -204,7 +204,9 @@ function isLiked(id) {
 /*AVA*/
 
 function sendAva(imgSrc) {
-    ajax_post('PUT', 'user', {"file":imgSrc});
+    ajax_post('PUT', 'user', {"file":imgSrc}, function (e) {
+        console.log(e);
+    });
 }
 
 

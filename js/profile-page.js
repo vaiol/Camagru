@@ -48,32 +48,35 @@ function openProfilePage() {
 }
 
 
-function uploadAva() {
-    let input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/x-png,image/gif,image/jpeg';
-    input.value = "";
-    input.onchange = function () {
-        let file = this.files[0];
-        let reader = new FileReader();
-        reader.onloadend = function () {
-            let img = new Image();
-            img.onload = () => {
-                let newImg = HERMITE.resize_image(img, 200, 200, undefined, false, true, true);
-                newImg.onload = () => {
-                    document.getElementById('p-author').firstElementChild.src = newImg.src;
-                };
-                sendAva(img.src);
+let input = document.createElement('input');
+input.type = 'file';
+input.accept = 'image/x-png,image/gif,image/jpeg';
+input.value = "";
+input.addEventListener("change", function() {
+    let reader = new FileReader();
+    reader.onloadend = function () {
+        let img = new Image();
+        img.onload = () => {
+            let newImg = HERMITE.resize_image(img, 200, 200, undefined, false, true, true);
+            newImg.onload = () => {
+                document.querySelector("#p-author > img").src = newImg.src;
+                avatarCache = newImg.src;
+                authorImg.src = newImg.src;
+                sendAva(newImg.src);
             };
-            img.src = this.result;
-
-
         };
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-        this.value = null;
-        return false;
+        img.src = this.result;
     };
+    let file = input.files[0];
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+    input.value = null;
+    return false;
+});
+
+
+
+function uploadAva() {
     input.click();
 }

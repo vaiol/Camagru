@@ -1,11 +1,11 @@
-var opened = false;
+let opened = false;
 
 function sidebarOpen() {
     if (opened) {
         return;
     }
-    var overlay = document.getElementById("myOverlay");
-    var sidebar = document.getElementById("mySidebar");
+    let overlay = document.getElementById("myOverlay");
+    let sidebar = document.getElementById("mySidebar");
     overlay.classList.remove('hidden');
     sidebar.classList.remove('hidden');
     overlay.style.display = "block";
@@ -25,8 +25,8 @@ function sidebarClose() {
     if (!opened) {
         return;
     }
-    var overlay = document.getElementById("myOverlay");
-    var sidebar = document.getElementById("mySidebar");
+    let overlay = document.getElementById("myOverlay");
+    let sidebar = document.getElementById("mySidebar");
     overlay.classList.remove('overlayOpen');
     overlay.classList.add('overlayClose');
     sidebar.classList.remove('sidebarOpen');
