@@ -380,20 +380,6 @@ function downloadMasks(arr) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// <img src='dfgdfg'></img>
-
 function changeEffect(src, loaded) {
     let newMask = new Image();
     newMask.onload = function () {
