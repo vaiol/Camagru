@@ -14,7 +14,7 @@
                     <input size="400" id="linkMask">
                     <input type="submit" value="SEND LINK">
                 </form>
-                <div class="butt" onclick="document.getElementById('uploadMask').click();">
+                <div class="butt" onclick="uploadMask();">
                     UPLOAD MASK
                 </div>
             </div>
@@ -40,13 +40,15 @@
     <input name="login" id="f-login" type="hidden">
 </form>
 <input type='file' id='uploadImg' class="none" name="upImg" onchange="uploadImg();this.value=null;return false;">
-<input type='file' id='uploadMask' class="none" name="upMask" onchange="uploadMask();this.value=null;return false;">
+<!--<input type='file' id='uploadMask' class="none" name="upMask" onchange="uploadMask();this.value=null;return false;">-->
 
 
 <div class="main-text">
     <div class="container">
         CAM
-        <div class="line"></div>
+        <div class="progress" id="progress-cam">
+            <div class="determinate width100"></div>
+        </div>
     </div>
 </div>
 <video id="video" autoplay></video>

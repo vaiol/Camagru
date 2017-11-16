@@ -18,6 +18,7 @@ let localStream = [];
 let maskSave = null;
 let arrMasks = ['img/effects/p1.png', 'img/effects/p2.png', 'img/effects/p3.png', 'img/effects/p4.png'];
 let previews = null;
+let pcam = null;
 
 const maxImgSize = 2000;
 
@@ -104,6 +105,7 @@ function videoStart() {
     window.addEventListener("mousemove", maskMove);
     canvas.addEventListener("touchmove", handleMove, false);
     vRender = setInterval(renderFrame, 25);
+    pcam = document.querySelector("#progress-cam > div");
 }
 
 function videoFinish() {
@@ -115,6 +117,7 @@ function videoFinish() {
     canvas = null;
     context = null;
     maskFlag = false;
+    pcam = null;
 }
 
 
@@ -287,6 +290,7 @@ function handleEnd(evt) {
 
 
 function overBoxOpen() {
+    console.log("overbox open");
     let overlay = document.getElementById("over-elem");
     let overBox = document.getElementById("over-box");
     overlay.classList.remove('hidden');
@@ -303,6 +307,7 @@ function overBoxOpen() {
 }
 
 function overBoxClose() {
+    console.log("overbox close");
     let overlay = document.getElementById("over-elem");
     let overBox = document.getElementById("over-box");
     overlay.classList.toggle('overlayOpen');
@@ -376,53 +381,42 @@ function downloadMasks(arr) {
     prev.className = 'effect';
     prev.innerHTML = '<p>UPLOAD YOUR MASK</p>';
     effectsBlock.appendChild(prev);
-
 }
 
 
-function changeEffect(src, loaded) {
-    let newMask = new Image();
-    newMask.onload = function () {
-        maskFlag = true;
-        maskImg = newMask;
-        if (loaded) {
-            maskSave = newMask.src;
-            makePreviewMask(maskSave);
-        }
 
-    };
-    newMask.onerror = function () {
-        toastIt('MASK IS BROKEN');
-    };
-    newMask.src = src;
-    document.getElementById('eff-control').style.display = 'flex';
+function resizeImage(img, onloadFunc) {
+    let resizeNeeded, width, height;
+    if (img.width > maxImgSize) {
+        resizeNeeded = true;
+        let ratio = img.width / maxImgSize;
+        height = img.height / ratio;
+        width = maxImgSize;
+    } else if (img.height > maxImgSize) {
+        resizeNeeded = true;
+        let ratio = img.height / maxImgSize;
+        width = img.width / ratio;
+        height = maxImgSize;
+    }
+    if (resizeNeeded) {
+        let newImg = HERMITE.resize_image(img, width, height, undefined, true);
+        newImg.onload = onloadFunc(newImg);
+    } else {
+        onloadFunc();
+    }
 }
 
 function changeImg(src) {
     let img = new Image();
     img.onload = function () {
-        let resizeNeeded, width, height;
-        if (img.width > maxImgSize) {
-            resizeNeeded = true;
-            let ratio = img.width / maxImgSize;
-            height = img.height / ratio;
-            width = maxImgSize;
-        } else if (img.height > maxImgSize) {
-            resizeNeeded = true;
-            let ratio = img.height / maxImgSize;
-            width = img.width / ratio;
-            height = maxImgSize;
-        }
-        if (resizeNeeded) {
-            let newImg = HERMITE.resize_image(img, width, height, undefined, true);
-            newImg.onload = function () {
+        resizeImage(img, function (newImg) {
+            if (newImg) {
                 uploadedImg = newImg;
-                stopStream();
-            };
-        } else {
-            uploadedImg = img;
+            } else {
+                uploadedImg = img;
+            }
             stopStream();
-        }
+        });
     };
     img.onerror = function () {
         uploadedImg = null;
@@ -456,24 +450,58 @@ function uploadImg() {
     let reader = new FileReader();
     reader.onloadend = function () {
         changeImg(reader.result);
-
-        overBoxClose();
     };
     if (file) {
         reader.readAsDataURL(file);
     }
+    overBoxClose();
 }
 
-function uploadMask() {
-    let file = document.getElementById("uploadMask").files[0];
+/*MASK CHANGING*/
+
+function changeEffect(src, loaded) {
+    let newMask = new Image();
+    newMask.onload = function () {
+        console.log("newMask");
+        maskFlag = true;
+        maskImg = newMask;
+        if (loaded) {
+            maskSave = newMask.src;
+            makePreviewMask(maskSave);
+        }
+    };
+    newMask.onerror = function () {
+        toastIt('MASK IS BROKEN');
+    };
+    newMask.src = src;
+}
+
+let maskUploader = new ImageUploader();
+
+let inputMask = document.createElement('input');
+inputMask.type = 'file';
+inputMask.accept = 'image/x-png,image/gif,image/jpeg';
+inputMask.value = "";
+inputMask.addEventListener("change", function() {
+    overBoxClose();
+    toggleProgress(pcam);
+    let file = inputMask.files[0];
     let reader = new FileReader();
-    reader.onloadend = function () {
-        changeEffect(reader.result, true);
-        overBoxClose();
+    reader.onloadend = function (evt) {
+        changeEffect(evt.target.result, true);
+        toggleProgress(pcam);
     };
     if (file) {
         reader.readAsDataURL(file);
+    } else {
+        toggleProgress(pcam);
     }
+});
+
+function uploadMask() {
+    maskUploader.load();
+    overBoxClose();
+    // inputMask.click();
 }
 
 function sendLinkMask() {
