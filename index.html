@@ -29,7 +29,6 @@
 <header>
     <nav>
         <button id="open-btn" class="nav-btn" onclick="sidebarOpen()" ><i class="material-icons">menu</i></button>
-        <!--<button id="back-btn" class="nav-btn none" onclick="closePhotoPage()" ><i class="material-icons">arrow_back</i></button>-->
         <div id="logo" onclick='Router.navigate("index")'>
             <img src="img/logo.png" alt="logo">
         </div>
@@ -40,19 +39,8 @@
             <div>Logout</div>
         </div>
     </nav>
-    <!--<div id="mySidebar" class="hidden sidebarClose">-->
-        <!--<div onclick='Router.navigate("profile");sidebarClose()'>-->
-            <!--<img>-->
-            <!--<div></div>-->
-        <!--</div>-->
-        <!--<a onclick='Router.navigate("index");sidebarClose()'><i class="material-icons">home</i>Home</a>-->
-        <!--<a onclick='Router.navigate("cam");sidebarClose()'><i class="material-icons">photo_camera</i>Cam</a>-->
-        <!--<a onclick='Router.navigate("profile");sidebarClose()'><i class="material-icons">dashboard</i>My Feed</a>-->
-        <!--<a onclick='sidebarClose()'><i class="material-icons">highlight_off</i>Logout</a>-->
-    <!--</div>-->
-    <!--<div id="myOverlay" class="hidden overlayClose" onclick="sidebarClose()"></div>-->
-    <section id="sideOverlay" class="overlayClose hidden">
-        <div id='sideOverlay-content' onclick="stopBubble(event)">
+    <section id="myOverlay" class="overlayClose hidden"  onclick="sidebarClose()">
+        <div id='mySidebar' class="hidden sidebarClose" onclick="stopBubble(event)">
             <div onclick='Router.navigate("profile");sidebarClose()'>
                 <img>
                 <div></div>
@@ -63,14 +51,6 @@
             <a onclick='sidebarClose()'><i class="material-icons">highlight_off</i>Logout</a>
         </div>
     </section>
-    <div class="main-text">
-        <div class="container">
-            FEATURED PHOTOS
-            <div class="progress" id="progress-f">
-                <div class="determinate width100"></div>
-            </div>
-        </div>
-    </div>
 </header>
 
 <div id="content">

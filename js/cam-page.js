@@ -266,8 +266,6 @@ function handleEnd(evt) {
 
 /* UPLOAD TOOLS */
 
-
-
 function overBoxOpen() {
     let overlay = document.getElementById("over-elem");
     let overBox = document.getElementById("over-box");
@@ -282,10 +280,10 @@ function overBoxOpen() {
     overlay.classList.toggle('overlayClose');
     overBox.classList.toggle('overlayOpen');
     overBox.classList.toggle('overlayClose');
-    if (document.body.offsetHeight > window.innerHeight) {
-        document.body.classList.toggle('noscroll');
+    if (document.body.offsetWidth < window.innerWidth) {
+        document.body.classList.add('noscroll15');
     }
-
+    document.body.classList.add('noscroll');
 }
 
 function overBoxClose() {
@@ -306,9 +304,8 @@ function overBoxClose() {
     setTimeout(function() {
         overlay.style.display = "none";
         overBox.style.display = "none";
-        if (document.body.offsetHeight > window.innerHeight) {
-            document.body.classList.toggle('noscroll');
-        }
+        document.body.classList.remove('noscroll15');
+        document.body.classList.remove('noscroll');
     }, 200);
 }
 

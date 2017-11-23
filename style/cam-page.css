@@ -196,8 +196,9 @@ canvas {
     right:0;
     bottom:0;
     background-color:rgba(0,0,0,0.5);
-    z-index:100;
+    z-index:2;
     cursor: pointer;
+    overflow-y: scroll;
 }
 
 #over-box {
@@ -309,11 +310,10 @@ canvas {
         z-index: 2;
     }
     #over-box {
-        height: 100%;
         background-color: #f6f4f1;
-        /*position: fixed;*/
-        top:55px;
+        min-height: 100%;
         left: 0;
+        top: 0;
         width:100%;
         border-radius: 0;
         z-index: 3;
@@ -325,13 +325,12 @@ canvas {
         background-color: #f6f4f1;
     }
     #over-box .main-text {
-        /*margin: auto;*/
         text-align: center;
 
     }
-    /*#over-box .butt {*/
-        /*border-radius: 1px;*/
-    /*}*/
+    #over-box > div {
+        margin: 84px auto 2% auto;
+    }
 
 }
 

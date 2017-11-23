@@ -1,39 +1,41 @@
-<div id="over-elem" class="hidden overlayClose" onclick="overBoxClose()"></div>
-<div id="over-box" class="hidden overlayClose">
-    <div>
-        <div class="main-text">
-            UPLOAD TOOLS
-            <div class="line"></div>
-        </div>
-        <div id='over-grid-input' class="flex column between">
-            <div>
-                <div class="sub-text">
-                    MASK
-                </div>
-                <form onsubmit="sendLinkMask(); return false;">
-                    <input size="400" id="linkMask">
-                    <input type="submit" value="SEND LINK">
-                </form>
-                <div class="butt" onclick="uploadMask();">
-                    UPLOAD MASK
-                </div>
+<section id="over-elem" class="overlayClose hidden" onclick="overBoxClose()">
+    <div id='over-box' class="hidden overlayClose" onclick="stopBubble(event)">
+        <div>
+            <div class="main-text">
+                UPLOAD TOOLS
+                <div class="line"></div>
             </div>
-            <div class="sub-text st-input"><div class="line"></div></div>
-            <div>
-                <div class="sub-text">
-                    IMAGE
+            <div id='over-grid-input' class="flex column between">
+                <div>
+                    <div class="sub-text">
+                        MASK
+                    </div>
+                    <form onsubmit="sendLinkMask(); return false;">
+                        <input size="400" id="linkMask">
+                        <input type="submit" value="SEND LINK">
+                    </form>
+                    <div class="butt" onclick="uploadMask();">
+                        UPLOAD MASK
+                    </div>
                 </div>
-                <form onsubmit="sendLinkImg(); return false;">
-                    <input size="400" id="linkImg">
-                    <input type="submit" value="SEND LINK">
-                </form>
-                <div class="butt" onclick="uploadImg();">
-                    UPLOAD IMAGE
+                <div class="sub-text st-input"><div class="line"></div></div>
+                <div>
+                    <div class="sub-text">
+                        IMAGE
+                    </div>
+                    <form onsubmit="sendLinkImg(); return false;">
+                        <input size="400" id="linkImg">
+                        <input type="submit" value="SEND LINK">
+                    </form>
+                    <div class="butt" onclick="uploadImg();">
+                        UPLOAD IMAGE
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
 <form method="post" accept-charset="utf-8" name="form1">
     <input name="file" id='f-file' type="hidden"/>
     <input name="type" id="f-type" type="hidden">

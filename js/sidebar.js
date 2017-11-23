@@ -6,7 +6,13 @@ function sidebarOpen() {
     }
     let overlay = document.getElementById("myOverlay");
     let sidebar = document.getElementById("mySidebar");
+    overlay.addEventListener("click", closePhotoPage);
+
     overlay.classList.remove('hidden');
+    overlay.classList.add('overlayOpen');
+    overlay.classList.remove('overlayClose');
+
+
     sidebar.classList.remove('hidden');
     overlay.style.display = "block";
     sidebar.style.display = "block";
@@ -14,6 +20,7 @@ function sidebarOpen() {
     overlay.classList.remove('overlayClose');
     sidebar.classList.add('sidebarOpen');
     sidebar.classList.remove('sidebarClose');
+
     if (document.body.offsetWidth < window.innerWidth) {
         document.body.classList.add('noscroll15');
     }
