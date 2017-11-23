@@ -145,6 +145,7 @@ form > input[type='submit'] {
     font-size: 16px;
 
     background-color: inherit;
+    border-radius: 1px;
     color: #816d65;
     letter-spacing: 2px;
 }
@@ -157,6 +158,11 @@ form > input[type='submit']:hover {
     color: white;
     letter-spacing: 4px;
 }
+
+
+
+
+/* ---=== COMMON ===---  */
 
 
 
@@ -261,6 +267,7 @@ nav {
     -webkit-box-sizing: border-box;
     border-bottom: 2px #816d65 solid;
     background-color: #bdb1ad;
+    cursor: pointer;
     color: #fff
 }
 
@@ -269,6 +276,10 @@ nav {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border-bottom: 2px #816d65 solid;
+}
+
+#navigation > div {
+    cursor: pointer;
 }
 
 #navigation > div:hover {
@@ -282,12 +293,14 @@ nav {
     height: inherit;
     line-height: 92px;
     width: 185px;
+    cursor: pointer;
 }
 
 #logo > img {
     display: inline-block;
     width: 100%;
     cursor: pointer;
+    z-index: 100;
 }
 
 
@@ -574,6 +587,14 @@ butt-next
 
 
 
+img {
+    pointer-events: none;
+}
+
+
+.evnone {
+    pointer-events:none;
+}
 
 /**
 MEDIA
@@ -595,7 +616,7 @@ MEDIA
 
     form > input[type='submit'] {
         width: 30%;
-        font-size: .95vw;
+        /*font-size: .95vw;*/
     }
 }
 
@@ -615,7 +636,7 @@ MEDIA
 
     form > input[type='submit'] {
         width: 30%;
-        font-size: 13px;
+        font-size: 14px;
     }
     .photo:hover > .likes {
        visibility: hidden;

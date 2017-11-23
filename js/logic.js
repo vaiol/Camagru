@@ -267,3 +267,19 @@ function cachePhoto(photo) {
     }
     photoListCache.push(photo);
 }
+
+
+
+/*GENERATE*/
+
+function generateBackButton(evt) {
+    let i = document.createElement("i");
+    i.innerHTML = "arrow_back";
+    i.className = "material-icons";
+    let button = document.createElement("button");
+    button.id = "back-btn";
+    button.className = "nav-btn";
+    button.appendChild(i);
+    button.onclick = evt;
+    return button;
+}

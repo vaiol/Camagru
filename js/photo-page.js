@@ -12,7 +12,6 @@ let overlay = null;
 let photo = null;
 let textareaComm = null;
 let openBtn = null;
-let backBtn = null;
 
 let likeTrigger = false;
 let chatTrigger = false;
@@ -40,7 +39,7 @@ function openPhotoPage(id) {
     photo = document.getElementById('image-full');
     textareaComm = document.getElementById('add-comment').firstElementChild.firstElementChild;
     openBtn = document.getElementById('open-btn');
-    backBtn = document.getElementById('back-btn');
+
 
     likeButt.addEventListener("click", likePhoto);
     overlay.addEventListener("click", closePhotoPage);
@@ -84,6 +83,10 @@ function openPhotoPage(id) {
         authorButt.lastElementChild.innerHTML = photoJSON.user;
     });
 
+    chatTrigger = false;
+    openBtn.classList.add('none');
+    openBtn.parentNode.insertBefore(generateBackButton(closePhotoPage), openBtn);
+
     isLiked(id).then((isLiked) => {
         likeTrigger = isLiked;
         if (isLiked) {
@@ -92,11 +95,6 @@ function openPhotoPage(id) {
         } else {
             likeButt.innerHTML = "favorite_border";
             likeButt.style.color = "#816d65";
-        }
-        chatTrigger = false;
-        if (window.matchMedia( "(max-width: 992px)" ).matches) {
-            openBtn.classList.add('none');
-            backBtn.classList.remove('none');
         }
     });
 
@@ -129,7 +127,10 @@ function closePhotoPage(e, page1) {
     }
     commentList.innerHTML = "";
     openBtn.classList.remove('none');
-    backBtn.classList.add('none');
+    let backBtn = document.querySelector("#back-btn");
+    if (backBtn) {
+        backBtn.parentNode.removeChild(backBtn);
+    }
     imgID = null;
     let opened = document.getElementsByClassName('openedPhoto');
     for (let i = 0, len = opened.length; i < len; i++) {
@@ -172,7 +173,7 @@ function generateCommentBlock(commentJSON) {
     commentAuthor.innerHTML = commentJSON.user;
     let commentText = document.createElement('div');
     commentText.className = "comment-text";
-
+    commentJSON.text = commentJSON.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     commentText.innerHTML = "<pre>"+commentJSON.text+"</pre>";
 
     let div = document.createElement('div');

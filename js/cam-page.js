@@ -20,9 +20,6 @@ let arrMasks = ['img/effects/p1.png', 'img/effects/p2.png', 'img/effects/p3.png'
 let previews = null;
 let pcam = null;
 
-const maxImgSize = 2000;
-
-let HERMITE = new Hermite_class();
 
 navigator.getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
@@ -95,7 +92,7 @@ function videoStart() {
     restorePreviews();
     makePreviewMask(maskSave);
 
-    previews = document.getElementById('previews')
+    previews = document.getElementById('previews');
     canvas = document.getElementById('canvas');
     context = canvas.getContext('2d');
     canvas.addEventListener("mousedown", maskMoveStart);
@@ -123,8 +120,7 @@ function videoFinish() {
 
 
 
-/*RENDERING*/
-
+/* RENDERING */
 
 function renderFrame() {
     changePageStyle();
@@ -138,6 +134,8 @@ function renderFrame() {
         //GET PICTURE FROM WEBCAM
         canvas.width = document.getElementById('video').offsetWidth;
         canvas.height = document.getElementById('video').offsetHeight;
+        context.translate(canvas.width, 0);
+        context.scale(-1, 1);
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
     } else if (uploadedImg) {
         canvas.width = uploadedImg.width;
@@ -171,8 +169,27 @@ function renderFrame() {
         //change moveXY if canvas.width was changed
         const moveRatio = prevCanvasWidth > 0 ? prevCanvasWidth / canvas.width : 1;
         //get new coordinate for mask:
-        const nextMoveX = shiftX + (moveX / moveRatio) - resizeX / 2;
-        const nextMoveY = (moveY / moveRatio) - resizeY / 4;
+        let sX = moveX;
+        let nextMoveX = shiftX - (moveX / moveRatio) - resizeX / 2;
+        let nextMoveY = (moveY / moveRatio) - resizeY / 4;
+        //border for moving:
+        if (nextMoveY > (canvas.height - imgHeight / 2)) {
+            nextMoveY = (canvas.height - imgHeight / 2);
+            moveY = (nextMoveY + resizeY / 4) * moveRatio;
+        }
+        if (nextMoveY < (0 - imgHeight / 2)) {
+            nextMoveY = (0 - imgHeight / 2);
+            moveY = (nextMoveY + resizeY / 4) * moveRatio;
+        }
+
+        if (nextMoveX > (canvas.width - imgWidth / 2)) {
+            nextMoveX = (canvas.width - imgWidth / 2);
+            moveX = -(nextMoveX - shiftX + resizeX / 2) * moveRatio;
+        }
+        if (nextMoveX < (0 - imgWidth / 2)) {
+            nextMoveX = (0 - imgWidth / 2);
+            moveX = -(nextMoveX - shiftX + resizeX / 2) * moveRatio;
+        }
         //draw mask:
         context.save();
         context.translate(nextMoveX + imgWidth / 2, nextMoveY + imgHeight / 3);
@@ -193,44 +210,7 @@ function changePageStyle() {
     document.getElementById('errText').style.lineHeight = document.getElementById('canvas').offsetHeight+'px';
 }
 
-
-/*PREVIEWS*/
-
-function insertAfter(elem, newElem) {
-    let next = elem.nextSibling;
-    if (next) {
-        previews.insertBefore(newElem, next);
-    } else {
-        previews.appendChild(newElem);
-    }
-    if (previews.childElementCount > 10) {
-        previews.removeChild(previews.lastElementChild);
-    }
-}
-
-function renderPreviews(image) {
-    insertAfter(previews.firstElementChild, image);
-
-
-}
-
-function restorePreviews() {
-    getMyPhotoList(0, 6).then(function (list) {
-        if (list) {
-            for (let i = 0, len = list.length; i < len; i++) {
-                let img = new Image();
-                img.src = list[i].src;
-                insertAfter(previews.firstElementChild, img);
-            }
-        }
-    });
-}
-
-
-
-/*
- * MASK MOVING
- */
+/* MASK MOVING */
 
 function maskMoveStart() {
     isDragging = true;
@@ -284,15 +264,16 @@ function handleEnd(evt) {
     prevY = 0;
 }
 
-/*
- * UPLOAD TOOLS
- */
+/* UPLOAD TOOLS */
+
 
 
 function overBoxOpen() {
-    console.log("overbox open");
     let overlay = document.getElementById("over-elem");
     let overBox = document.getElementById("over-box");
+    let openBtn = document.getElementById('open-btn');
+    openBtn.classList.add('none');
+    openBtn.parentNode.insertBefore(generateBackButton(overBoxClose), openBtn);
     overlay.classList.remove('hidden');
     overBox.classList.remove('hidden');
     overlay.style.display = "block";
@@ -304,12 +285,19 @@ function overBoxOpen() {
     if (document.body.offsetHeight > window.innerHeight) {
         document.body.classList.toggle('noscroll');
     }
+
 }
 
 function overBoxClose() {
-    console.log("overbox close");
     let overlay = document.getElementById("over-elem");
     let overBox = document.getElementById("over-box");
+    let openBtn = document.getElementById('open-btn');
+    let backBtn = document.getElementById('back-btn');
+    openBtn.classList.remove('none');
+    if (backBtn) {
+        backBtn.parentNode.removeChild(backBtn);
+    }
+
     overlay.classList.toggle('overlayOpen');
     overlay.classList.toggle('overlayClose');
     overBox.classList.toggle('overlayOpen');
@@ -324,8 +312,7 @@ function overBoxClose() {
     }, 200);
 }
 
-
-/*PREVIEW DOWNLOADED MASK*/
+/* SET DOWNLOADED MASK */
 
 function createMaskImg(src) {
     let img = new Image();
@@ -340,7 +327,6 @@ function createMaskImg(src) {
     };
     return img;
 }
-
 
 function makePreviewMask(src) {
     let div = document.getElementById("previewMask");
@@ -360,6 +346,8 @@ function makePreviewMask(src) {
     });
     div.parentNode.replaceChild(newElement, div);
 }
+
+/* LOAD DEFAULT MASKS */
 
 function createMaskNode(src) {
     let div = document.createElement('div');
@@ -383,46 +371,72 @@ function downloadMasks(arr) {
     effectsBlock.appendChild(prev);
 }
 
+/* UPLOAD BACKGROUND IMAGE */
 
+let imageUploader = new ImageUploader(10, 2000, 2000);
+imageUploader.onerror = () => toastIt("Some Error Occurred");
+imageUploader.onSizeError = () => toastIt("Maximum file size is 10 MB!");
+imageUploader.onTypeError = () => toastIt("Only image type file supported");
+imageUploader.onFileError = () => toastIt("File empty or broken");
+imageUploader.onImageError = () => toastIt("Image is broken!");
+imageUploader.onloadend = () => overBoxClose();
+imageUploader.onload = (newImg) => {
+    uploadedImg = newImg;
+    stopStream();
+    toastIt("File uploaded successful");
+};
 
-function resizeImage(img, onloadFunc) {
-    let resizeNeeded, width, height;
-    if (img.width > maxImgSize) {
-        resizeNeeded = true;
-        let ratio = img.width / maxImgSize;
-        height = img.height / ratio;
-        width = maxImgSize;
-    } else if (img.height > maxImgSize) {
-        resizeNeeded = true;
-        let ratio = img.height / maxImgSize;
-        width = img.width / ratio;
-        height = maxImgSize;
-    }
-    if (resizeNeeded) {
-        let newImg = HERMITE.resize_image(img, width, height, undefined, true);
-        newImg.onload = onloadFunc(newImg);
-    } else {
-        onloadFunc();
+function uploadImg() {
+    imageUploader.load();
+}
+
+function sendLinkImg() {
+    let link = document.getElementById('linkImg').value;
+    if (link) {
+        let img = new Image();
+        img.onload = function () {
+            ImageUploader.resize(img, 2000, 2000, function (newImg) {
+                uploadedImg = newImg;
+                stopStream();
+            });
+        };
+        img.onerror = function () {
+            uploadedImg = null;
+            toastIt('IMAGE IS BROKEN!1');
+        };
+        img.src = corsProxy + link;
+        overBoxClose();
     }
 }
 
-function changeImg(src) {
-    let img = new Image();
-    img.onload = function () {
-        resizeImage(img, function (newImg) {
-            if (newImg) {
-                uploadedImg = newImg;
-            } else {
-                uploadedImg = img;
-            }
-            stopStream();
-        });
-    };
-    img.onerror = function () {
-        uploadedImg = null;
-        toastIt('IMAGE IS BROKEN!1');
-    };
-    img.src = src;
+/* UPLOAD MASK */
+
+let maskUploader = new ImageUploader();
+maskUploader.onerror = () => toastIt("Some Error Occurred");
+maskUploader.onSizeError = () => toastIt("Maximum file size is 6 MB!");
+maskUploader.onTypeError = () => toastIt("Only image type file supported");
+maskUploader.onFileError = () => toastIt("File empty or broken");
+maskUploader.onImageError = () => toastIt("Image is broken!");
+maskUploader.onloadend = () => overBoxClose();
+maskUploader.onload = (newMask) => {
+    maskFlag = true;
+    maskImg = newMask;
+    maskSave = newMask.src;
+    makePreviewMask(maskSave);
+    document.getElementById('eff-control').style.display = 'flex';
+    toastIt("File uploaded successful");
+};
+
+function uploadMask() {
+    maskUploader.load();
+}
+
+function sendLinkMask() {
+    let link = document.getElementById('linkMask').value;
+    if (link) {
+        changeEffect(corsProxy + link, true);
+        overBoxClose();
+    }
 }
 
 function clearEffect() {
@@ -445,30 +459,16 @@ function clearEffect() {
     startStream();
 }
 
-function uploadImg() {
-    let file = document.getElementById("uploadImg").files[0];
-    let reader = new FileReader();
-    reader.onloadend = function () {
-        changeImg(reader.result);
-    };
-    if (file) {
-        reader.readAsDataURL(file);
-    }
-    overBoxClose();
-}
-
-/*MASK CHANGING*/
-
 function changeEffect(src, loaded) {
     let newMask = new Image();
     newMask.onload = function () {
-        console.log("newMask");
         maskFlag = true;
         maskImg = newMask;
         if (loaded) {
             maskSave = newMask.src;
             makePreviewMask(maskSave);
         }
+        document.getElementById('eff-control').style.display = 'flex';
     };
     newMask.onerror = function () {
         toastIt('MASK IS BROKEN');
@@ -476,61 +476,39 @@ function changeEffect(src, loaded) {
     newMask.src = src;
 }
 
-let maskUploader = new ImageUploader();
+/* RESTORE PREVIEWS */
 
-let inputMask = document.createElement('input');
-inputMask.type = 'file';
-inputMask.accept = 'image/x-png,image/gif,image/jpeg';
-inputMask.value = "";
-inputMask.addEventListener("change", function() {
-    overBoxClose();
-    toggleProgress(pcam);
-    let file = inputMask.files[0];
-    let reader = new FileReader();
-    reader.onloadend = function (evt) {
-        changeEffect(evt.target.result, true);
-        toggleProgress(pcam);
-    };
-    if (file) {
-        reader.readAsDataURL(file);
+function restorePreviews() {
+    getMyPhotoList(0, 6).then(function (list) {
+        if (list) {
+            for (let i = 0, len = list.length; i < len; i++) {
+                let img = new Image();
+                img.src = list[i].src;
+                previews.appendChild(img);
+            }
+        }
+    });
+}
+
+/* SAVE IMAGE */
+
+function insertAfter(elem, newElem) {
+    let next = elem.nextSibling;
+    if (next) {
+        previews.insertBefore(newElem, next);
     } else {
-        toggleProgress(pcam);
+        previews.appendChild(newElem);
     }
-});
-
-function uploadMask() {
-    maskUploader.load();
-    overBoxClose();
-    // inputMask.click();
-}
-
-function sendLinkMask() {
-    let link = document.getElementById('linkMask').value;
-    if (link) {
-        changeEffect(corsProxy + link, true);
-        overBoxClose();
+    if (previews.childElementCount > 10) {
+        previews.removeChild(previews.lastElementChild);
     }
 }
-
-function sendLinkImg() {
-    let link = document.getElementById('linkImg').value;
-    if (link) {
-        changeImg(corsProxy + link);
-        overBoxClose();
-    }
-}
-
-
-
-/*
-* SAVE IMAGE
-* */
 
 function saveImage() {
     let imageSrc = document.getElementById('canvas').toDataURL("image/png");
     let img = new Image();
     img.onload = function () {
-        let newImg = HERMITE.pngToJPG(img);
+        let newImg = new ImageProcessing(img).toJPG().getImage();
         newImg.onload = function () {
             try {
                 document.getElementById('f-file').value = newImg.src;
@@ -540,7 +518,7 @@ function saveImage() {
                 toastIt('Some error occurred');
                 return;
             }
-            renderPreviews(newImg);
+            insertAfter(previews.firstElementChild, newImg);
             let fd = new FormData(document.forms["form1"]);
             let xhr = new XMLHttpRequest();
             xhr.open('POST', 'controller/controller-photo.php', true);

@@ -47,36 +47,23 @@ function openProfilePage() {
     document.querySelector("#p-author > div").innerHTML = getCurrentUser();
 }
 
-
-let input = document.createElement('input');
-input.type = 'file';
-input.accept = 'image/x-png,image/gif,image/jpeg';
-input.value = "";
-input.addEventListener("change", function() {
-    let reader = new FileReader();
-    reader.onloadend = function () {
-        let img = new Image();
-        img.onload = () => {
-            let newImg = HERMITE.resize_image(img, 200, 200, undefined, false, true, true);
-            newImg.onload = () => {
-                document.querySelector("#p-author > img").src = newImg.src;
-                avatarCache = newImg.src;
-                authorImg.src = newImg.src;
-                sendAva(newImg.src);
-            };
-        };
-        img.src = this.result;
+let avaUploader = new ImageUploader();
+avaUploader.onerror = () => toastIt("Some Error Occurred");
+avaUploader.onSizeError = () => toastIt("Maximum file size is 6 MB!");
+avaUploader.onTypeError = () => toastIt("Only image type file supported");
+avaUploader.onFileError = () => toastIt("File empty or broken");
+avaUploader.onImageError = () => toastIt("Image is broken!");
+avaUploader.onload = (loadedImg) => {
+    let newImg = new ImageProcessing(loadedImg).squarify().cut(200, 200).toJPG().getImage();
+    newImg.onload = () => {
+        document.querySelector("#p-author > img").src = newImg.src;
+        avatarCache = newImg.src;
+        authorImg.src = newImg.src;
+        sendAva(newImg.src);
     };
-    let file = input.files[0];
-    if (file) {
-        reader.readAsDataURL(file);
-    }
-    input.value = null;
-    return false;
-});
-
-
+    toastIt("Ava changed successful");
+};
 
 function uploadAva() {
-    input.click();
+    avaUploader.load();
 }
