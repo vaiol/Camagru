@@ -1,0 +1,29 @@
+<div class="container flex" id="signFlex">
+    <div>
+        <div class="top-align">
+            <h1>AUTHORIZATION</h1>
+            <div class="line"></div>
+        </div>
+        <form onsubmit="loginProcc(); return false;" id="loginForm" class="signForm">
+            <h3>Login or email:</h3>
+            <input size="70" type="text" name="user">
+            <h3>Password:</h3>
+            <input size="70" type="password" name="pass">
+            <input type="submit" value="SIGN IN">
+        </form>
+    </div>
+    <div>
+        <div class="top-align">
+            <h1>OTHER</h1>
+            <div class="line"></div>
+        </div>
+        <form onsubmit="restorePass(); return false;" id="restoreForm" class="signForm none">
+            <h3>Login or email:</h3>
+            <input size="70" type="text" name="user">
+            <input type="submit" value="RESTORE">
+        </form>
+        <div id="restButt" class="butt logBtn" onclick="openRestore();">RESTORE PASS</div>
+        <div class="butt logBtn" onclick="Router.navigate('signup')">SIGN UP</div>
+    </div>
+
+</div>

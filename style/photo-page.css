@@ -32,10 +32,6 @@
 
 .img {
     background-size: contain;
-
-    /*width: 150px;*/
-    /*height: 150px;*/
-
     -webkit-transition: all .9s ease-in-out;
     -moz-transition: all .9s ease-in-out;
     transition: all .9s ease-in-out;
@@ -182,6 +178,7 @@
     resize: none;
     width: 78%;
     color: #816d65;
+    border: solid 1px #816d65;
 }
 
 /*COMMENT*/
@@ -190,12 +187,12 @@
     position: relative;
 }
 
-#comment-list .butt-next-button {
+#comment-list .nextBtn {
     width: 100%;
     letter-spacing: 2px;
 }
 
-#comment-list .butt-next-button:hover {
+#comment-list .nextBtn:hover {
     width: 100%;
     letter-spacing: 4px;
 }
@@ -258,15 +255,23 @@
     width: 100%;
 }
 
+#add-comment input[type="submit"] {
+    font-size: 15px;
+}
+
 
 @media (max-width: 1920px) {
     #overlay-main > div {
         margin: 15px 14.85vw;
         width: auto;
     }
+    #add-comment input[type="submit"] {
+        font-size: 11px;
+    }
 }
 
 @media (max-width: 992px) {
+
     #author-block img {
         width: 20%;
     }
@@ -276,9 +281,9 @@
 
     }
     #comment-block input[type='submit'] {
-        font-size: 2.4vw;
         letter-spacing: 0;
         width: 30%;
+        font-size: 15px;
     }
     #comment-block input[type='submit']:hover {
         letter-spacing: 1px;
@@ -297,6 +302,9 @@
 }
 
 @media (max-width: 600px) {
+    #comment-block input[type='submit'] {
+        font-size: 10px;
+    }
     #author-block > div:first-child {
         width: 71.5%;
     }

@@ -1,8 +1,17 @@
-function toastIt(message) {
+function toastIt(message, time) {
     let t = document.getElementById('toast');
     t.innerHTML = message;
-    t.classList.toggle('show');
+    t.classList.remove('hide');
+    t.classList.add('show');
+    if (time) {
+        time = time * 1000;
+    } else {
+        time = 3000;
+    }
     setTimeout(function() {
-        t.classList.toggle('show');
-    }, 3000);
+        t.classList.remove('show');
+    }, time);
+    setTimeout(function() {
+        t.classList.add('hide');
+    }, time - 500);
 }

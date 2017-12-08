@@ -134,15 +134,8 @@ function getPhotoByID($id) {
 }
 
 $type = $_POST['type'];
-$login = $_POST['login'];
+$authorID = selectSession($_COOKIE["name"], $_COOKIE["sessionID"]);
 
-
-$authorID = getUserId($login);
-
-if (empty($authorID)) {
-    http_response_code(403);
-    return;
-}
 
 if ($type == 'PUT') {
     echo 'SERVER SIDE COOKIE: '.$_COOKIE["name"];
@@ -156,6 +149,10 @@ if ($type == 'GET') {
         $idPhoto = $_POST['id'];
         getPhotoByID($idPhoto);
     } else if ($list === 'MYLIST') {
+        if (empty($authorID)) {
+            http_response_code(403);
+            return;
+        }
         $first = intval($_POST['first']);
         $last = intval($_POST['last']);
         getMyPhotoList($authorID, $first, $last);

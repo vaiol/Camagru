@@ -35,7 +35,7 @@ function generatePhoto(photoJSON) {
 
 function generateShowButtonPhoto(photoListNode, start, buttNext, genFunc, getFunc) {
     let button = document.createElement('div');
-    button.className = "butt-next-button";
+    button.className = "butt nextBtn";
     button.innerHTML = "SHOW MORE";
     button.addEventListener("click", function () {
         button.style.visibility = "hidden";

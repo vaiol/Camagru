@@ -2,10 +2,9 @@
 require_once __DIR__.'/../API/API.php';
 
 $type = $_POST['type'];
-$login = $_POST['login'];
 $id = $_POST['id'];
 
-$authorID = getUserId($login);
+$authorID = selectSession($_COOKIE["name"], $_COOKIE["sessionID"]);
 
 if (empty($authorID)) {
     http_response_code(403);

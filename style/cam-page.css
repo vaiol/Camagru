@@ -125,31 +125,25 @@ canvas {
     margin-bottom: 45px;
 }
 
-.butt {
-    display: inline-block;
-    width: 33%;
-    line-height: 80px;
-    text-align: center;
-    cursor: pointer;
+#control > .butt {
+    margin: 0;
+    width: 32.5%;
+    height: 75px;
+    line-height: 75px;
 
     font-size: 23px;
     letter-spacing: 4px;
-
-    -webkit-transition: all 0.3s ease;;
-    -moz-transition: all 0.3s ease;;
-    -o-transition: all 0.3s ease;;
-    transition: all 0.3s ease;
-
-    box-sizing: border-box;
-    border: 1px solid #816d65;
-    color: #816d65;
 }
 
-.butt:hover {
-    background-color: #816d65;
-    color: #f6f4f1;
+#control > .butt:hover {
     letter-spacing: 5px;
 }
+
+
+#control .material-icons {
+    font-size: 37px;
+}
+
 
 #previews p {
     margin: 1% 0 0 1%;
@@ -202,15 +196,17 @@ canvas {
 }
 
 #over-box {
-    position: absolute;
-    width:70%;
+    position: relative;
+    width:1344px;
     background-color: white;
     top: 100px;
-    left:15%;
+    /*left:300px;*/
+    margin: auto;
     opacity: 1;
     z-index:100;
     border-radius: 3px;
     color: #816d65;
+    padding: 20px 0 30px 0;
 }
 
 #over-box p {
@@ -267,6 +263,11 @@ canvas {
     .effect > p {
         font-size: 1.2vw;
     }
+    #over-box {
+        width:70%;
+        left:15%;
+        margin: 0;
+    }
 }
 
 @media (max-width: 992px) {
@@ -292,14 +293,7 @@ canvas {
         line-height: 10vw;
         font-size: 1.4vw;
     }
-    .butt {
-        font-size: 15px;
-        letter-spacing: 3px;
-        line-height: 60px;
-    }
-    .butt:hover {
-        letter-spacing: 4px;
-    }
+
     #control {
         height: 60px;
     }
@@ -317,11 +311,13 @@ canvas {
         width:100%;
         border-radius: 0;
         z-index: 3;
+        padding: 0;
+        position: absolute;
     }
     #over-box .butt {
         margin-top: 20px;
     }
-    #over-box input {
+    #over-box input[type="url"] {
         background-color: #f6f4f1;
     }
     #over-box .main-text {
@@ -331,6 +327,21 @@ canvas {
     #over-box > div {
         margin: 84px auto 2% auto;
     }
+
+
+    #control > .butt {
+        height: 60px;
+        line-height: 60px;
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+    #control .material-icons {
+        font-size: 24px;
+    }
+    #control > .butt:hover {
+        letter-spacing: 3px;
+    }
+
 
 }
 
@@ -362,12 +373,6 @@ canvas {
     #control {
         height: 50px;
     }
-    .butt {
-        line-height: 50px;
-    }
-    .butt:hover {
-        letter-spacing: 0;
-    }
     #overlay-canvas p {
         font-size: 3vw;
     }
@@ -377,11 +382,6 @@ canvas {
     .effect, #previews, #canvas  {
         border-radius: 0;
     }
-    .butt {
-        font-size: 12px;
-        letter-spacing: 0;
-        line-height: 50px;
-    }
     #control {
         height: 50px;
     }
@@ -390,6 +390,17 @@ canvas {
     }
     #over-box .sub-text {
         margin-top: 15px;
+    }
+
+    #control strong {
+        display: none;
+    }
+    #control > .butt {
+        height: 50px;
+        line-height: 50px;
+    }
+    #control .material-icons {
+        font-size: 27px;
     }
 }
 

@@ -23,6 +23,7 @@
     <script src="js/photo-page.js"></script>
     <script src="js/index-page.js"></script>
     <script src="js/profile-page.js"></script>
+    <script src="js/login-page.js"></script>
     <script src="js/toast.js"></script>
 </head>
 <body class="Site">
@@ -34,9 +35,6 @@
         </div>
         <div id="navigation">
             <a onclick='Router.navigate("index")' class="active" id="indexPage"><i class="material-icons">home</i>Home</a>
-            <a onclick='Router.navigate("cam")' id="camPage"><i class="material-icons">photo_camera</i>Cam</a>
-            <a onclick='Router.navigate("profile")' id="profilePage"><i class="material-icons">dashboard</i>My Feed</a>
-            <div>Logout</div>
         </div>
     </nav>
     <section id="myOverlay" class="overlayClose hidden"  onclick="sidebarClose()">
@@ -46,9 +44,6 @@
                 <div></div>
             </div>
             <a onclick='Router.navigate("index");sidebarClose()'><i class="material-icons">home</i>Home</a>
-            <a onclick='Router.navigate("cam");sidebarClose()'><i class="material-icons">photo_camera</i>Cam</a>
-            <a onclick='Router.navigate("profile");sidebarClose()'><i class="material-icons">dashboard</i>My Feed</a>
-            <a onclick='sidebarClose()'><i class="material-icons">highlight_off</i>Logout</a>
         </div>
     </section>
 </header>

@@ -4,6 +4,7 @@ let photoListCache = null;
 
 let deletedPhotoCount = 0;
 
+/*COOKIE FUNCTIONS*/
 
 function setCookie(name, value, time) {
     let d = new Date();
@@ -15,16 +16,92 @@ function setCookie(name, value, time) {
     document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function deleteCookie(name) {
+    setCookie(name, "", {
+        expires: -1
+    })
+}
+
+/*AUTH FUNCTIONS*/
+
+function restorePass(user) {
+    return new Promise((resolve, reject) => {
+        ajax_post('PUT', 'session', {"user":user, "pass":pass}, (response) => {
+            let res = JSON.parse(response);
+            if (res.status === "200") {
+
+            } else if (res.status === "300") {
+                reject(300);
+            } else {
+                reject(403);
+            }
+        });
+    });
+}
+
+function signup(login, email, pass1, pass2) {
+    return new Promise((resolve, reject) => {
+        ajax_post('PUT', 'user', {"login":login, "email":email, "pass1":pass1, "pass2":pass2}, (response) => {
+            console.log(response);
+            resolve(parseInt(response));
+        });
+    });
+}
+
+function login(user, pass) {
+    return new Promise((resolve, reject) => {
+        ajax_post('PUT', 'session', {"user":user, "pass":pass}, (response) => {
+            let res = JSON.parse(response);
+            if (res.status === "200") {
+                setCookie("sessionID", res.sessionID);
+                setCookie('name', res.user);
+                userCache = res.user;
+                resolve(res.user);
+            } else if (res.status === "300") {
+                reject(300);
+            } else {
+                reject(403);
+            }
+        });
+    });
+}
+
+function logout() {
+    userCache = undefined;
+    deleteCookie("name");
+    deleteCookie("sessionID");
+}
+
+
+
+/*ADDITIONAL FUNCTIONS */
+
+let requstedLogin = false;
 function getCurrentUser() {
     if (userCache) {
         return userCache;
     }
-    console.log("getCurrentUser()");
-
-    userCache = "AUTHOR";
-    // userCache = "admin";
-    // userCache = "Diana";
-    setCookie('name', userCache);
+    if (requstedLogin) {
+        userCache = getCookie("name");
+        return userCache;
+    }
+    ajax_post('GET', 'session', null, (response) => {
+        console.log("getCurrentUser()");
+        requstedLogin = true;
+        if (response === '') {
+            userCache = undefined;
+        } else {
+            userCache = response;
+        }
+        updateActiveElement();
+    });
     return userCache;
 }
 
@@ -35,7 +112,7 @@ function getUserAvatar(userName) {
             return;
         }
         console.log("getUserAvatar("+userName+")");
-        ajax_post('GET', 'user', {"user":userName}, (response) => {
+        ajax_post('GET', 'ava', {"user":userName}, (response) => {
             cacheAvatar(userName, response);
             resolve(response);
         });
@@ -48,9 +125,11 @@ function getCurrentUserAvatar() {
 }
 
 function ajax_post(type, address, otherBody, onloadFunc) {
-    let body = 'login='+getCurrentUser()+'&type='+type;
-    for (let prop in otherBody) {
-        body += '&'+prop+'='+otherBody[prop];
+    let body = 'type='+type;
+    if (otherBody) {
+        for (let prop in otherBody) {
+            body += '&' + prop + '=' + otherBody[prop];
+        }
     }
 
     let xhr = new XMLHttpRequest();

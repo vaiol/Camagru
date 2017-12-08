@@ -12,6 +12,7 @@ let overlay = null;
 let photo = null;
 let textareaComm = null;
 let openBtn = null;
+let addCommentField = null;
 
 let likeTrigger = false;
 let chatTrigger = false;
@@ -39,7 +40,7 @@ function openPhotoPage(id) {
     photo = document.getElementById('image-full');
     textareaComm = document.getElementById('add-comment').firstElementChild.firstElementChild;
     openBtn = document.getElementById('open-btn');
-
+    addCommentField = document.getElementById("add-comment");
 
     likeButt.addEventListener("click", likePhoto);
     overlay.addEventListener("click", closePhotoPage);
@@ -87,18 +88,21 @@ function openPhotoPage(id) {
     openBtn.classList.add('none');
     openBtn.parentNode.insertBefore(generateBackButton(closePhotoPage), openBtn);
 
-    isLiked(id).then((isLiked) => {
-        likeTrigger = isLiked;
-        if (isLiked) {
-            likeButt.innerHTML = "favorite";
-            likeButt.style.color = "#ef5350";
-        } else {
-            likeButt.innerHTML = "favorite_border";
-            likeButt.style.color = "#816d65";
-        }
-    });
-
-
+    if (getCurrentUser()) {
+        isLiked(id).then((isLiked) => {
+            likeTrigger = isLiked;
+            if (isLiked) {
+                likeButt.innerHTML = "favorite";
+                likeButt.style.color = "#ef5350";
+            } else {
+                likeButt.innerHTML = "favorite_border";
+                likeButt.style.color = "#816d65";
+            }
+        });
+    } else {
+        likeButt.innerHTML = "favorite";
+        likeButt.style.color = "#ef5350";
+    }
 }
 
 /*EVENTS*/
@@ -139,7 +143,7 @@ function closePhotoPage(e, page1) {
 }
 
 function likePhoto() {
-    if (imgID === null) {
+    if (imgID === null || !getCurrentUser()) {
         return;
     }
     let opened = document.getElementsByClassName('openedPhoto');
@@ -228,16 +232,25 @@ function openChat() {
         chatTrigger = false;
         commentList.innerHTML = "";
     } else {
-        authorBlock.classList.toggle('author-hover');
-        commentBlock.classList.toggle('comm-hidden');
-        commentBlock.classList.toggle('comm-visible');
-        commentBlock.classList.toggle('none');
-        endofdiv.classList.toggle('none');
-        chatTrigger = true;
+        if (getCurrentUser()) {
+            addCommentField.classList.remove("none");
+            addCommentField.nextElementSibling.classList.remove("none");
+        } else {
+            addCommentField.classList.add("none");
+            addCommentField.nextElementSibling.classList.add("none");
+        }
         getCommentList(imgID, 0, commentCount).then((list) => {
+            if (list.length === 0 && !getCurrentUser()) {
+                return;
+            }
+            authorBlock.classList.toggle('author-hover');
+            commentBlock.classList.toggle('comm-hidden');
+            commentBlock.classList.toggle('comm-visible');
+            commentBlock.classList.toggle('none');
+            endofdiv.classList.toggle('none');
+            chatTrigger = true;
             showComments(commentList, list, commentCount, imgID);
         });
-
     }
 }
 

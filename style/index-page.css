@@ -47,7 +47,7 @@
     width: 100%
 }
 .width0 {
-    width: 0%
+    width: 0
 }
 
 #progress-all {
@@ -157,6 +157,21 @@ form > input[type='submit']:hover {
     background-color: #816d65;
     color: white;
     letter-spacing: 4px;
+}
+
+input[type='text'] {
+    padding: 0 15px;
+}
+
+input[type='password'] {
+    padding: 0 15px;
+}
+
+input[type='url'] {
+    padding: 0 15px;
+}
+input[type='email'] {
+    padding: 0 15px;
 }
 
 
@@ -375,6 +390,7 @@ nav {
 
 
 
+
 /*
 FOOTER
 */
@@ -426,7 +442,13 @@ footer .container {
 }
 
 
-
+h1 {
+    color: #816d65;
+    font-size: 35px;
+    letter-spacing: 2px;
+    margin: auto;
+    text-align: center;
+}
 
 /*BASIC*/
 
@@ -558,32 +580,58 @@ sub-text
 /**
 butt-next
  */
-#butt-next > .container {
-    color: #816d65;
-    font-size: 25px;
-    justify-content: center;
-    padding: 20px 0 30px 0;
-}
 
-.butt-next-button {
+.butt {
+    width: 100%;
+    margin: auto;
+    height: 30px;
+    line-height: 30px;
+    font-size: 10px;
+
     cursor: pointer;
     text-align: center;
-    width: 50%;
-    padding: 7px 0;
     -webkit-transition: all 0.3s ease;;
     -moz-transition: all 0.3s ease;;
     -o-transition: all 0.3s ease;;
     transition: all 0.3s ease;
     display: inline-block;
     border-radius: 3px;
+    letter-spacing: 2px;
     box-sizing: border-box;
+    box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.2);
+    background-color: #fff;
+    color: #816d65;
+}
+.butt:hover {
+    background-color: #816d65;
+    color: #f6f4f1;
+    box-shadow: none
+}
+
+
+
+#butt-next > .container {
+    padding: 20px 0 30px 0;
+}
+
+.nextBtn {
+    width: 50%;
+    height: 48px;
+    line-height: 48px;
+    font-size: 25px;
+}
+
+
+.flat-butt {
+    background-color: inherit;
+    box-shadow: none;
     border: 1px solid #816d65;
 }
 
-.butt-next-button:hover {
-    background-color: #816d65;
-    color: #f6f4f1;
-}
+
+
+
+
 
 
 
@@ -689,7 +737,7 @@ MEDIA
     .main-text > .container {
         justify-content: center;
     }
-    .butt-next-button {
+    .nextBtn {
         width: 100%;
     }
 }
@@ -718,9 +766,10 @@ MEDIA
     .social {
         width: 14%;
     }
-    .butt-next-button {
+    .nextBtn {
         width: 100%;
     }
+
 }
 
 

@@ -1,0 +1,33 @@
+<div class="container flex" id="signFlex">
+    <div>
+        <div class="top-align">
+            <h1>REGISTRATION</h1>
+            <div class="line"></div>
+        </div>
+        <form onsubmit="regProcc(); return false;" id="regForm" class="signForm">
+            <h3>Login:</h3>
+            <input size="70" type="text" name="login">
+            <h3>Email:</h3>
+            <input size="70" type="email" name="email">
+            <h3>Password:</h3>
+            <input size="70" type="password" name="pass1">
+            <h3>Repeat password:</h3>
+            <input size="70" type="password" name="pass2">
+            <input type="submit" value="SIGN UP">
+        </form>
+    </div>
+    <div>
+        <div class="top-align">
+            <h1>OTHER</h1>
+            <div class="line"></div>
+        </div>
+        <form onsubmit="restoreProcc(); return false;" id="restoreForm" class="signForm none">
+            <h3>Login or email:</h3>
+            <input size="70" type="text" name="user">
+            <input type="submit" value="RESTORE">
+        </form>
+        <div id="restButt" class="butt logBtn" onclick="openRestore();">RESTORE PASS</div>
+        <div class="butt logBtn" onclick="Router.navigate('login')">LOG IN</div>
+    </div>
+
+</div>

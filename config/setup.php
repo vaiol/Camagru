@@ -28,6 +28,8 @@ if (!is_dir(UPLOAD_DIR)) {
 }
 try {
 
+
+
     $pdo = new PDO('mysql:host='.DB_HOST.';port='.DB_PORT.';dbname=;charset='.DB_CHARSET, DB_USER, DB_PASSWORD, $opt);
     $pdo->query('CREATE DATABASE IF NOT EXISTS '.DB_NAME);
     $pdo->query('USE '.DB_NAME);
@@ -76,10 +78,19 @@ try {
     $pdo->query('ALTER TABLE `comment`
                                   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;');
 
+    $pdo->query('CREATE TABLE `session` (
+                              `userID` int(11) NOT NULL,
+                              `sessionID` varchar(20) NOT NULL
+                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+    $pdo->query('ALTER TABLE `session`
+                            ADD PRIMARY KEY (`userID`);
+                            COMMIT;');
 
-    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES ('1', 'vaiol.ans@gmail.com', 'admin', '123456', '1');");
-    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES ('2', 'alexander.stepano@gmail.com', 'AUTHOR', '123456', '1');");
-    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES ('3', 'astepano@student.unit.ua', 'Diana', '123456', '1');");
+
+
+    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES ('1', 'vaiol.ans@gmail.com', 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1');");
+    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES ('2', 'alexander.stepano@gmail.com', 'AUTHOR', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1');");
+    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`) VALUES ('3', 'astepano@student.unit.ua', 'Diana', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1');");
 
     $pdo->query("INSERT INTO `likes` (`id_user`, `id_image`) VALUES ('1', '1');");
     $pdo->query("INSERT INTO `likes` (`id_user`, `id_image`) VALUES ('1', '2');");
