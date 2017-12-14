@@ -1,9 +1,9 @@
 <?php
 require_once "DB.php";
 
-function add_user($email, $login, $pass) {
+function add_user($email, $login, $pass, $code) {
 	try {
-		DB::run("INSERT INTO `user` VALUES (?, ?, ?, ?, ?)", [NULL, $email, $login, hash('sha256', $pass), 0]);
+		DB::run("INSERT INTO `user` VALUES (?, ?, ?, ?, ?, ?)", [NULL, $email, $login, hash('sha256', $pass), 0, $code]);
 	} catch (PDOException $e) {
 		return false;
 	}
@@ -15,6 +15,22 @@ function checkUserByEmail($email) {
         $id = DB::run("SELECT `id` FROM `user` WHERE `email` = ? AND", [$email])->fetch();
         if ($id) {
             return true;
+        }
+        return false;
+    } catch (PDOException $e) {
+        return false;
+    }
+}
+
+
+function activateUser($code) {
+    try {
+        $id = DB::run("SELECT `id` FROM `user` WHERE `activation_code` = ? AND `activated` = ?", [$code, 0])->fetch();
+        if ($id) {
+            $stmt = DB::run("UPDATE `user` SET `activation_code` = ?, `activated` = ? WHERE `id` = ?", ["empty", 1, $id]);
+            if ($stmt->rowCount() > 0)
+                return true;
+            return false;
         }
         return false;
     } catch (PDOException $e) {

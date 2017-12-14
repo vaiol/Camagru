@@ -316,6 +316,10 @@ function updateActiveElement() {
     if (Router.getFragment() === '') {
         Router.check('index');
     }
+    console.log(window.location.hash);
+    if (window.location.hash === "#activated") {
+        toastIt("Your account has been activated, now you can log in", 8);
+    }
 }
 
 // updateActiveElement();

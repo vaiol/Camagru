@@ -36,12 +36,13 @@ try {
     //CREATE USER TABLE
     $pdo->query('DROP TABLE IF EXISTS `user`');
     $pdo->query('CREATE TABLE `user` (
-                                  `id` int(11) NOT NULL,
-                                  `email` varchar(254) NOT NULL,
-                                  `login` varchar(16) NOT NULL,
-                                  `password` varchar(254) NOT NULL,
-                                  `activated` tinyint(1) NOT NULL
-                                ) ENGINE=InnoDB DEFAULT CHARSET=utf8');
+                              `id` int(11) NOT NULL,
+                              `email` varchar(254) NOT NULL,
+                              `login` varchar(22) NOT NULL,
+                              `password` varchar(254) NOT NULL,
+                              `activated` tinyint(1) NOT NULL,
+                              `activation_code` varchar(10) NOT NULL
+                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
     $pdo->query('ALTER TABLE `user`
                                   ADD PRIMARY KEY (`id`),
                                   ADD UNIQUE KEY `email` (`email`);');
@@ -78,13 +79,16 @@ try {
     $pdo->query('ALTER TABLE `comment`
                                   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;');
 
+    $pdo->query('DROP TABLE IF EXISTS `session`');
     $pdo->query('CREATE TABLE `session` (
+                              `id` int(11) NOT NULL,
                               `userID` int(11) NOT NULL,
                               `sessionID` varchar(20) NOT NULL
                             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
     $pdo->query('ALTER TABLE `session`
-                            ADD PRIMARY KEY (`userID`);
-                            COMMIT;');
+                               ADD PRIMARY KEY (`id`);');
+    $pdo->query('ALTER TABLE `session`
+                                  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;');
 
 
 
