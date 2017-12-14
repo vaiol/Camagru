@@ -103,7 +103,7 @@
 }
 
 @media (max-width: 1400px) {
-    #loginForm input, .signForm h3, #restoreForm input, #regForm input {
+    #loginForm input, .signForm > h3, #restoreForm input, #regForm input {
         width: 60%;
     }
 }
@@ -115,13 +115,13 @@
     #signFlex > div:first-child, #signFlex > div:last-child {
         width: 100%;
     }
-    #loginForm input, .signForm h3, #restoreForm input, #regForm input {
+    #loginForm input, .signForm > h3, #restoreForm input, #regForm input {
         width: 75%;
     }
 }
 
 @media (max-width: 600px) {
-    #loginForm input, .signForm h3, #restoreForm input, #regForm input {
+    #loginForm input, .signForm > h3, #restoreForm input, #regForm input {
         width: 85%;
     }
 }

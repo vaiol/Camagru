@@ -30,6 +30,110 @@ function loginProcc() {
     }
 }
 
+
+
+let logF = false;
+let emaF = false;
+let passF = false;
+
+
+function addErrToElem(elem, textErr) {
+    elem.classList.add('badInput');
+    elem.previousElementSibling.lastElementChild.innerHTML = textErr;
+}
+
+function removeErrToElem(elem) {
+    elem.classList.remove('badInput');
+    elem.previousElementSibling.lastElementChild.innerHTML = "";
+}
+
+function loginCheck(elem) {
+    let val = elem.value;
+    val = val.replace(/[^a-z0-9]/gi,'');
+    elem.value = val;
+
+    if (val.length < 4) {
+        addErrToElem(elem, "minimum 4 symbols");
+        logF = false;
+    } else if (val.length > 20) {
+        addErrToElem(elem, "maximum 20 symbols");
+        logF = false;
+    } else {
+        removeErrToElem(elem);
+        logF = true;
+    }
+    if (val === '') {
+        removeErrToElem(elem);
+    }
+}
+
+
+function emailCheck(elem) {
+    let val = elem.value;
+    elem.value = val.trim();
+
+    let re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (!re.test(val)) {
+        addErrToElem(elem, "not valid email");
+        emaF = false;
+    } else {
+        removeErrToElem(elem);
+        emaF = true;
+    }
+    if (val === '') {
+        removeErrToElem(elem);
+    }
+}
+
+function passCheck(elem) {
+    let val = elem.value;
+    if (val.length < 7) {
+        addErrToElem(elem, "minimum 7 symbols");
+    } else if (val.length > 100) {
+        addErrToElem(elem, "maximum 100 symbols");
+    } else {
+        removeErrToElem(elem);
+    }
+    if (val === '') {
+        removeErrToElem(elem);
+    }
+    pass2Check(elem.nextElementSibling.nextElementSibling);
+}
+
+function pass2Check(elem) {
+    let val = elem.value;
+    let prevInput = elem.previousElementSibling.previousElementSibling;
+    if (val !== prevInput.value) {
+        addErrToElem(elem, "pass don't match");
+        passF = false;
+    } else if (val.length < 7) {
+        addErrToElem(elem, "minimum 7 symbols");
+        passF = false;
+    } else if (val.length > 100) {
+        addErrToElem(elem, "maximum 100 symbols");
+        passF = false;
+    } else {
+        passF = true;
+        removeErrToElem(elem);
+    }
+    if (prevInput.value === '' || val === '') {
+        removeErrToElem(elem);
+    }
+}
+
+
+function formRegCheck(elem) {
+    let allIsGood = logF && emaF && passF;
+    if (allIsGood) {
+        elem.lastElementChild.classList.remove('inactiveButt');
+        elem.lastElementChild.disabled = false;
+    } else {
+        elem.lastElementChild.classList.add('inactiveButt');
+        elem.lastElementChild.disabled = true;
+    }
+    console.log(elem.lastElementChild);
+}
+
 function regProcc() {
     let regForm = document.querySelector('#regForm');
     let formData = new FormData(regForm);

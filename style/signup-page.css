@@ -11,7 +11,7 @@
     margin-bottom: 24px;
 }
 
-#loginForm input, .signForm h3, #restoreForm input, #regForm input {
+#loginForm input, .signForm > div, #restoreForm input, #regForm input {
     width: 50%;
     margin: auto;
     color: #816d65;
@@ -76,13 +76,47 @@
 
 
 
+#regForm input[type="submit"].inactiveButt {
+    background-color: #777777;
+    /*display: none;*/
+}
+
+#regForm input[type="submit"].inactiveButt:hover {
+    box-shadow: 1px 1px 3px 1px rgba(0,0,0,0.2);
+}
+
+
+
+#regForm div {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+#regForm h4 {
+    margin: 0;
+    color: #ef5350;
+    font-size: 13px;
+}
+
+#regForm h3 {
+    margin: 0;
+}
 
 
 
 
+.badInput {
+    border: solid 2px #ef5350;
+    border-radius: 2px;
+}
 
-
-
+.badInput:focus {
+    box-shadow: 0 0 5px #ef5350;
+    /*margin: 5px 1px 3px 0px;*/
+    border: 2px solid #ef5350;
+    outline: none;
+}
 
 
 
@@ -103,7 +137,7 @@
 }
 
 @media (max-width: 1400px) {
-    #loginForm input, .signForm h3, #restoreForm input, #regForm input {
+    #loginForm input, .signForm > div, #restoreForm input, #regForm input {
         width: 60%;
     }
 }
@@ -115,13 +149,13 @@
     #signFlex > div:first-child, #signFlex > div:last-child {
         width: 100%;
     }
-    #loginForm input, .signForm h3, #restoreForm input, #regForm input {
+    #loginForm input, .signForm > div, #restoreForm input, #regForm input {
         width: 75%;
     }
 }
 
 @media (max-width: 600px) {
-    #loginForm input, .signForm h3, #restoreForm input, #regForm input {
+    #loginForm input, .signForm > div, #restoreForm input, #regForm input {
         width: 85%;
     }
 }

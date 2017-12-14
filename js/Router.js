@@ -3,9 +3,9 @@ var Router = {
     mode: null,
     root: '/',
     config: function(options) {
-        this.mode = options && options.mode && options.mode === 'history'
-        && !!(history.pushState) ? 'history' : 'hash';
+        this.mode = options && options.mode && options.mode === 'history' && !!(history.pushState) ? 'history' : 'hash';
         this.root = options && options.root ? '/' + this.clearSlashes(options.root) + '/' : '/';
+        console.log("Router: " + this.root);
         return this;
     },
     getFragment: function() {
@@ -13,7 +13,7 @@ var Router = {
         if(this.mode === 'history') {
             fragment = this.clearSlashes(decodeURI(location.pathname + location.search));
             fragment = fragment.replace(/\?(.*)$/, '');
-            fragment = this.root !== '/' ? fragment.replace(this.root, '') : fragment;
+            fragment = this.root !== '/' ? fragment.replace(this.clearSlashes(this.root), '') : fragment;
         } else {
             var match = window.location.href.match(/#(.*)$/);
             fragment = match ? match[1] : '';
@@ -48,9 +48,9 @@ var Router = {
         return this;
     },
     check: function(f) {
-        var fragment = f || this.getFragment();
-        for(var i=0; i<this.routes.length; i++) {
-            var match = fragment.match(this.routes[i].re);
+        let fragment = f || this.getFragment();
+        for(let i=0; i < this.routes.length; i++) {
+            let match = fragment.match(this.routes[i].re);
             if(match) {
                 match.shift();
                 this.routes[i].handler.apply({}, match);

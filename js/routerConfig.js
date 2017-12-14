@@ -60,13 +60,14 @@ function toggleActive(page) {
 }
 
 
-Router.config({ mode: 'hash', root: '/camagru/'});
+Router.config({ mode: 'history', root: '/camagru/'});
 
 let indexOpened = false;
 
 
 Router
     .add(/index/, function() {
+        closePhotoPage(event, 'index');
         if (indexOpened) {
             return;
         }
@@ -310,6 +311,7 @@ function updateActiveElement() {
     getCurrentUserAvatar().then((ava) => {
         authorImg.src = ava
     });
+    console.log('Router: ' + Router.getFragment());
     Router.check(Router.getFragment());
     if (Router.getFragment() === '') {
         Router.check('index');
