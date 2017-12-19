@@ -12,7 +12,7 @@ function add_user($email, $login, $pass, $code) {
 
 function checkUserByEmail($email) {
     try {
-        $id = DB::run("SELECT `id` FROM `user` WHERE `email` = ? AND", [$email])->fetch();
+        $id = DB::run("SELECT `id` FROM `user` WHERE `email` = ?", [$email])->fetch();
         if ($id) {
             return true;
         }
@@ -25,16 +25,16 @@ function checkUserByEmail($email) {
 
 function activateUser($code) {
     try {
-        $id = DB::run("SELECT `id` FROM `user` WHERE `activation_code` = ? AND `activated` = ?", [$code, 0])->fetch();
+        $id = DB::run("SELECT `id` FROM `user` WHERE `activation_code` = ? AND `activated` = ?", [$code, 0])->fetch()['id'];
         if ($id) {
             $stmt = DB::run("UPDATE `user` SET `activation_code` = ?, `activated` = ? WHERE `id` = ?", ["empty", 1, $id]);
             if ($stmt->rowCount() > 0)
                 return true;
-            return false;
+            return $id;
         }
-        return false;
+        return "ac";
     } catch (PDOException $e) {
-        return false;
+        return "ad";
     }
 }
 

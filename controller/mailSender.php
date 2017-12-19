@@ -1,10 +1,17 @@
 <?php
 require_once __DIR__.'/../API/API.php';
 function registerSend($email, $code) {
-    $actual_link = 'http://'. " _ ".$_SERVER['HTTP_HOST']." _ ".$_SERVER['PHP_SELF'];
-    sendMail($email, "Confirm registration on Camagru", "Heloo Yopta!\n
-    Looks like you try to register on Camagru project!\n
-     It's great! But, you need to confirm your decision checking this link: ".$actual_link."?r=".$code);
+    $arr = explode('/', $_SERVER['PHP_SELF']);
+    if(!empty($arr[count($arr)-1])) {
+        unset($arr[count($arr)-1]);
+    }
+    $file = implode('/',$arr);
+    $file .= '/confirm.php';
+    $actual_link = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER['HTTP_HOST'].$file;
+    sendMail($email, "Confirm registration on Camagru", "Heloo Yopta!<br>
+    Looks like you try to register on Camagru project!<br>
+    It's great! But, you need to confirm your decision checking this link: ".$actual_link."?r=".$code
+    ."<br>".$_SERVER['PHP_SELF']);
 }
 
 function sendMail($mail_to, $mail_subject, $mail_message) {
@@ -34,18 +41,3 @@ function sendMail($mail_to, $mail_subject, $mail_message) {
     // Send mail
     mail($mail_to, $mail_subject, $mail_message, $header);
 }
-
-
-
-registerSend("vaiol.ans@gmail.com", "123");
-
-
-$code = $_GET['r'];
-$res = activateUser($code);
-if ($res === true) {
-    header('Location: ../#activated');
-} else {
-    echo "Error activate user!";
-}
-header('Location: ../#activated');
-//header('Location: ../');

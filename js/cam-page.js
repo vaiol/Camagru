@@ -95,6 +95,7 @@ function videoStart() {
     previews = document.getElementById('previews');
     canvas = document.getElementById('canvas');
     context = canvas.getContext('2d');
+
     canvas.addEventListener("mousedown", maskMoveStart);
     canvas.addEventListener("touchstart", handleStart, false);
     window.addEventListener("mouseup", maskMoveFinish);

@@ -60,7 +60,10 @@ function toggleActive(page) {
 }
 
 
-Router.config({ mode: 'history', root: '/camagru/'});
+let res = window.location.pathname.split("/");
+let currURLRoot = "/"+res[1]+"/";
+
+Router.config({ mode: 'history', root: currURLRoot});
 
 let indexOpened = false;
 

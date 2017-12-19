@@ -183,9 +183,9 @@ function regProcc() {
         if (status === 200) {
             Router.navigate("index");
             toastIt("Please confirm your email! And log in!", 8);
-        } else if (status === 301) {
-            toastIt("User with the same login exist!", 5);
         } else if (status === 302) {
+            toastIt("User with the same login exist!", 5);
+        } else if (status === 301) {
             toastIt("User with the same email exist!", 5);
         } else {
             toastIt("Unexpected error!", 5);
