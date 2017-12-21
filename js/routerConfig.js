@@ -11,7 +11,6 @@ function connectStyle(page) {
     link.rel = "stylesheet";
     link.type = "text/css";
     link.href = "style/"+page+"-page.css";
-    console.log("UPLOAD: style/"+page+"-page.css");
     uploadedStyle.push(page);
     document.head.appendChild(link);
 }
@@ -26,7 +25,6 @@ function uploadPartials(page, loadScript) {
         xhr.onload = function () {
             content.innerHTML = this.response;
             uploadedPartials[page] = this.response;
-            console.log('UPLOAD: partials/'+page);
             loadScript();
 
         };
@@ -58,106 +56,6 @@ function toggleActive(page) {
     }
 
 }
-
-
-let res = window.location.pathname.split("/");
-let currURLRoot = "/"+res[1]+"/";
-
-Router.config({ mode: 'history', root: currURLRoot});
-
-let indexOpened = false;
-
-
-Router
-    .add(/index/, function() {
-        closePhotoPage(event, 'index');
-        if (indexOpened) {
-            return;
-        }
-        videoFinish();
-        sidebarClose();
-        uploadPartials('index.htm', function() {
-            openIndexPage();
-            indexOpened = true;
-        });
-        toggleActive('index');
-    })
-    .add(/photo\/(.*)/, function() {
-        sidebarClose();
-        videoFinish();
-        let arg = arguments[0];
-        if (!indexOpened) {
-            uploadPartials('index.htm', function() {
-                openIndexPage();
-                indexOpened = true;
-                openPhotoPage(arg);
-            });
-            toggleActive('index');
-        } else {
-            openPhotoPage(arg);
-        }
-    })
-    .add(/cam/, function() {
-        closePhotoPage(event, 'cam');
-        sidebarClose();
-        if (!getCurrentUser()) {
-            toastIt("Not Authorized!");
-            Router.navigate("login");
-            return;
-        }
-        uploadPartials('cam.htm', function() {
-            videoStart();
-            indexOpened = false;
-        });
-        toggleActive('cam');
-
-    })
-    .add(/profile/, function() {
-        closePhotoPage(event, 'profile');
-        sidebarClose();
-        if (!getCurrentUser()) {
-            toastIt("Not Authorized!");
-            Router.navigate("login");
-            return;
-        }
-        videoFinish();
-        uploadPartials('profile.htm', function() {
-            indexOpened = false;
-            openProfilePage();
-        });
-        toggleActive('profile');
-    })
-    .add(/login/, function() {
-        closePhotoPage(event, 'login');
-        sidebarClose();
-        if (getCurrentUser()) {
-            Router.navigate("index");
-            return;
-        }
-        uploadPartials('login.htm', function() {
-            indexOpened = false;
-        });
-        toggleActive('');
-    })
-    .add(/signup/, function() {
-        closePhotoPage(event, 'signup');
-        sidebarClose();
-        if (getCurrentUser()) {
-            Router.navigate("index");
-            return;
-        }
-        uploadPartials('signup.htm', function() {
-            indexOpened = false;
-        });
-        toggleActive('');
-    })
-    .listen();
-
-
-
-
-
-
 
 /* SEC */
 
@@ -314,19 +212,120 @@ function updateActiveElement() {
     getCurrentUserAvatar().then((ava) => {
         authorImg.src = ava
     });
-    console.log('Router: ' + Router.getFragment());
     Router.check(Router.getFragment());
     if (Router.getFragment() === '') {
         Router.check('index');
     }
-    console.log(window.location.hash);
     if (window.location.hash === "#activated") {
         toastIt("Your account has been activated, now you can log in", 8);
     }
 }
 
-// updateActiveElement();
-getCurrentUser();
+
+
+/*START POINT*/
+getRoot().then(function (root) {
+    Router.config({ mode: 'history', root: root});
+    let indexOpened = false;
+    Router
+        .add(/index/, function() {
+            closePhotoPage(event, 'index');
+            if (indexOpened) {
+                return;
+            }
+            videoFinish();
+            sidebarClose();
+            uploadPartials('index.htm', function() {
+                openIndexPage();
+                indexOpened = true;
+            });
+            toggleActive('index');
+        })
+        .add(/photo\/(.*)/, function() {
+            sidebarClose();
+            videoFinish();
+            let arg = arguments[0];
+            if (!indexOpened) {
+                uploadPartials('index.htm', function() {
+                    openIndexPage();
+                    indexOpened = true;
+                    openPhotoPage(arg);
+                });
+                toggleActive('index');
+            } else {
+                openPhotoPage(arg);
+            }
+        })
+        .add(/cam/, function() {
+            closePhotoPage(event, 'cam');
+            sidebarClose();
+            if (!getCurrentUser()) {
+                toastIt("Not Authorized!");
+                Router.navigate("login");
+                return;
+            }
+            uploadPartials('cam.htm', function() {
+                videoStart();
+                indexOpened = false;
+            });
+            toggleActive('cam');
+
+        })
+        .add(/profile/, function() {
+            closePhotoPage(event, 'profile');
+            sidebarClose();
+            if (!getCurrentUser()) {
+                toastIt("Not Authorized!");
+                Router.navigate("login");
+                return;
+            }
+            videoFinish();
+            uploadPartials('profile.htm', function() {
+                indexOpened = false;
+                openProfilePage();
+            });
+            toggleActive('profile');
+        })
+        .add(/login/, function() {
+            closePhotoPage(event, 'login');
+            sidebarClose();
+            if (getCurrentUser()) {
+                Router.navigate("index");
+                return;
+            }
+            uploadPartials('login.htm', function() {
+                indexOpened = false;
+            });
+            toggleActive('');
+        })
+        .add(/signup/, function() {
+            closePhotoPage(event, 'signup');
+            sidebarClose();
+            if (getCurrentUser()) {
+                Router.navigate("index");
+                return;
+            }
+            uploadPartials('signup.htm', function() {
+                indexOpened = false;
+            });
+            toggleActive('');
+        })
+        .add(/restore/, function() {
+            closePhotoPage(event, 'restore');
+            sidebarClose();
+            if (getCurrentUser()) {
+                Router.navigate("profile");
+                return;
+            }
+            uploadPartials('restore.htm', function() {
+                indexOpened = false;
+            });
+            toggleActive('');
+        })
+        .listen();
+    getCurrentUser();
+});
+
 
 
 

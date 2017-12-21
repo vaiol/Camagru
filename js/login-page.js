@@ -1,6 +1,7 @@
 function openRestore() {
-    document.querySelector("#restoreForm").classList.remove("none");
-    document.querySelector("#restButt").classList.add("none");
+    // document.querySelector("#restoreForm").classList.remove("none");
+    // document.querySelector("#restButt").classList.add("none");
+    let email =
 }
 
 
@@ -131,7 +132,6 @@ function formRegCheck(elem) {
         elem.lastElementChild.classList.add('inactiveButt');
         elem.lastElementChild.disabled = true;
     }
-    console.log(elem.lastElementChild);
 }
 
 function regProcc() {
@@ -194,6 +194,17 @@ function regProcc() {
 }
 
 function restoreProcc() {
+    restorePass(login).then(function (status) {
+        if (status === 200) {
+            toastIt("Check your email to restore pass!", 8);
+        } else if (status === 300) {
+            toastIt("User not found", 5);
+        }
+    });
+}
+
+function restoreProccPh2() {
+    let activation_code = window.location.hash;
 
 }
 

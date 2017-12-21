@@ -14,6 +14,20 @@ function registerSend($email, $code) {
     ."<br>".$_SERVER['PHP_SELF']);
 }
 
+function restoreSend($email, $code) {
+    $arr = explode('/', $_SERVER['PHP_SELF']);
+    if(!empty($arr[count($arr)-1])) {
+        unset($arr[count($arr)-1]);
+    }
+    $file = implode('/',$arr);
+    $file .= '/confirm.php';
+    $actual_link = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER['HTTP_HOST'].$file;
+    sendMail($email, "Confirm registration on Camagru", "Heloo Yopta!<br>
+    Looks like you try to register on Camagru project!<br>
+    It's great! But, you need to confirm your decision checking this link: ".$actual_link."?r=".$code
+        ."<br>".$_SERVER['PHP_SELF']);
+}
+
 function sendMail($mail_to, $mail_subject, $mail_message) {
     $encoding = "utf-8";
 

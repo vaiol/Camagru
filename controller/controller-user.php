@@ -43,4 +43,20 @@ if ($type == 'PUT') {
     }
     registerSend($email, $code);
     print "200";
+} elseif ($type == "GET") {
+    $code = generateRandomString();
+    $email = restorePassPhase1($_POST['user'], $code);
+    if (!$email) {
+        print 300;
+        return;
+    }
+} elseif ($type == "POST") {
+    $code = $_POST['code'];
+    $pass1 = $_POST['pass1'];
+    $pass2 = $_POST['pass1'];
+    $email = restorePassPhase1($_POST['user'], $code);
+    if (!$email) {
+        print 300;
+        return;
+    }
 }

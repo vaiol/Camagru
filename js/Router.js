@@ -5,7 +5,6 @@ var Router = {
     config: function(options) {
         this.mode = options && options.mode && options.mode === 'history' && !!(history.pushState) ? 'history' : 'hash';
         this.root = options && options.root ? '/' + this.clearSlashes(options.root) + '/' : '/';
-        console.log("Router: " + this.root);
         return this;
     },
     getFragment: function() {

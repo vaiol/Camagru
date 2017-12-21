@@ -80,6 +80,22 @@ function auth($user, $password) {
 	}
 }
 
+function restorePassPhase1($user, $code) {
+    try {
+        $stmt = DB::run("SELECT `id`, `email` FROM `user` WHERE `activated` = ? AND (`email` = ? OR `login` = ?)", [1, $user, $user]);
+        $stmt->rowCount();
+        if ($stmt->rowCount() <= 0)
+            return false;
+        $result = $stmt->fetch();
+        $stmt = DB::run("UPDATE `user` SET `activation_code` = ? WHERE `id` = ?", [$code, $result['id']]);
+        if ($stmt->rowCount() <= 0)
+            return false;
+        return $result['email'];
+    } catch (PDOException $e) {
+        return false;
+    }
+}
+
 function getUserId($login) {
     try {
         $id = DB::run("SELECT `id` FROM `user` WHERE `login` = ? AND `activated` = ?", [$login, 1])->fetch()['id'];

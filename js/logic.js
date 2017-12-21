@@ -32,16 +32,12 @@ function deleteCookie(name) {
 /*AUTH FUNCTIONS*/
 
 function restorePass(user) {
+    if (!user) {
+        user = getCurrentUser();
+    }
     return new Promise((resolve, reject) => {
-        ajax_post('PUT', 'session', {"user":user, "pass":pass}, (response) => {
-            let res = JSON.parse(response);
-            if (res.status === "200") {
-
-            } else if (res.status === "300") {
-                reject(300);
-            } else {
-                reject(403);
-            }
+        ajax_post('GET', 'user', {"user":user}, (response) => {
+            resolve(parseInt(response));
         });
     });
 }
@@ -49,7 +45,6 @@ function restorePass(user) {
 function signup(login, email, pass1, pass2) {
     return new Promise((resolve, reject) => {
         ajax_post('PUT', 'user', {"login":login, "email":email, "pass1":pass1, "pass2":pass2}, (response) => {
-            console.log(response);
             resolve(parseInt(response));
         });
     });
@@ -93,7 +88,6 @@ function getCurrentUser() {
         return userCache;
     }
     ajax_post('GET', 'session', null, (response) => {
-        console.log("getCurrentUser()");
         requstedLogin = true;
         if (response === '') {
             userCache = undefined;
@@ -105,13 +99,25 @@ function getCurrentUser() {
     return userCache;
 }
 
+function getRoot() {
+    return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', 'controller/get-root.php', true);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                resolve(xhr.responseText);
+            }
+        };
+        xhr.send();
+    });
+}
+
 function getUserAvatar(userName) {
     return new Promise((resolve, reject) => {
         if (avatarCache && avatarCache[userName]) {
             resolve(avatarCache[userName]);
             return;
         }
-        console.log("getUserAvatar("+userName+")");
         ajax_post('GET', 'ava', {"user":userName}, (response) => {
             cacheAvatar(userName, response);
             resolve(response);
@@ -147,9 +153,14 @@ function ajax_post(type, address, otherBody, onloadFunc) {
 
 /*PHOTO FUNCTIONS*/
 
+function uploadPhotoRes(fd) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'controller/controller-photo.php', true);
+    xhr.send(fd);
+}
+
 function getPhotoById(id) {
     return new Promise(function(resolve, reject) {
-        console.log("getPhotoById("+id+")");
         ajax_post('GET', 'photo', {"list":"SINGLE", "id":id}, (response) => {
             let photo = JSON.parse(response);
             cachePhoto(photo);
@@ -176,8 +187,6 @@ function getPhotoList(first, last) {
             toggleProgress(pLa.firstElementChild);
             toggleProgress(pAll.firstElementChild);
         }
-
-        console.log("getPhotoList("+first+", "+last+")");
         ajax_post('GET', 'photo', {"list":"ALL", "first":first, "last":last}, (response) => {
             let list = JSON.parse(response);
             cacheList(list);
@@ -205,8 +214,6 @@ function getMyPhotoList(first, last) {
             toggleProgress(pMy.firstElementChild);
             toggleProgress(pAll.firstElementChild);
         }
-
-        console.log("getMyPhotoList("+first+", "+last+")");
         ajax_post('GET', 'photo', {"list":"MYLIST", "first":first, "last":last}, (response) => {
             if (pMy && pAll) {
                 toggleProgress(pMy.firstElementChild);
@@ -222,8 +229,6 @@ function getFeaturedPhotoList(max) {
     return new Promise(function(resolve, reject) {
         let progressBar = document.querySelector('#progress-f').firstElementChild;
         toggleProgress(progressBar);
-
-        console.log("getFeaturedPhotoList("+max+")");
         ajax_post('GET', 'photo', {"list":"FEATURED", "max":max}, (response) => {
             let list = JSON.parse(response);
             cacheList(list);
@@ -235,7 +240,6 @@ function getFeaturedPhotoList(max) {
 
 
 function deletePhoto(id) {
-    console.log("deletePhoto("+id+")");
     ajax_post('DELETE', 'photo', {"id":id}, (response) => {
         deletedPhotoCount++;
     });
@@ -244,14 +248,12 @@ function deletePhoto(id) {
 /*COMMENT FUNCTIONS*/
 
 function sendComment(commentJSON) {
-    console.log("sendComment()");
     ajax_post('PUT', 'comment', commentJSON);
 }
 
 
 function getCommentList(id, first, last) {
     return new Promise(function(resolve, reject) {
-        console.log("getCommentList("+id+", "+first+", "+last+")");
         ajax_post('GET', 'comment', {"img":id, "first":first, "last":last}, (response) => {
             resolve(JSON.parse(response));
         });
@@ -261,19 +263,16 @@ function getCommentList(id, first, last) {
 /*LIKES FUNCTIONS*/
 
 function makeLike(id) {
-    console.log("makeLike("+id+")");
     ajax_post('PUT', 'like', {"id":id});
 
 }
 
 function makeDislike(id) {
-    console.log("makeDislike("+id+")");
     ajax_post('DELETE', 'like', {"id":id});
 }
 
 function isLiked(id) {
     return new Promise(function(resolve, reject) {
-        console.log("isLiked("+id+")");
         ajax_post('GET', 'like', {"id":id}, (response) => {
             resolve(response);
         });
@@ -284,7 +283,6 @@ function isLiked(id) {
 
 function sendAva(imgSrc) {
     ajax_post('PUT', 'user', {"file":imgSrc}, function (e) {
-        console.log(e);
     });
 }
 

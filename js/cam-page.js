@@ -518,9 +518,7 @@ function saveImage() {
             }
             insertAfter(previews.firstElementChild, newImg);
             let fd = new FormData(document.forms["form1"]);
-            let xhr = new XMLHttpRequest();
-            xhr.open('POST', 'controller/controller-photo.php', true);
-            xhr.send(fd);
+            uploadPhotoRes(fd);
         };
     };
     img.src = imageSrc;
