@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/../API/API.php';
-
+require_once "mailSender.php";
 
 $type = $_POST['type'];
 $photoID = $_POST['img'];
@@ -27,6 +27,9 @@ if ($type == 'GET') {
 
 function putComment($photoID, $authorID, $comment) {
     insertComment($photoID, $authorID, $comment);
+    $e = getPhotoEmail($photoID);
+    $n = getUserName($authorID);
+    commentSend($e, $photoID, $n, $comment);
 }
 
 function getCommentList($photoID, $first, $last) {

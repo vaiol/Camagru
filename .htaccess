@@ -1,8 +1,13 @@
-AddDefaultCharset cp-1251
-ErrorDocument 404 /
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} -s [OR]
-RewriteCond %{REQUEST_FILENAME} -l [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^.*$ - [L]
-RewriteRule ^.*$ index.html [L]
+#AddDefaultCharset cp-1251
+#ErrorDocument 404 /
+#RewriteEngine On
+#RewriteCond %{REQUEST_FILENAME} -s [OR]
+#RewriteCond %{REQUEST_FILENAME} -l [OR]
+#RewriteCond %{REQUEST_FILENAME} -d
+#RewriteRule ^.*$ - [L]
+#RewriteRule ^.*$ index.html [L]
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^$ index.html [L]
+RewriteRule ^(.*)$ index.php [L]

@@ -10,6 +10,15 @@ function insertComment($photoID, $userID, $comment) {
     return true;
 }
 
+function getPhotoEmail($photoID) {
+    try {
+        $email = DB::run("SELECT `user`.email FROM `user`, `image` WHERE `user`.id = `image`.id_user AND `image`.id = ?", [$photoID])->fetch()['email'];
+        return $email;
+    } catch (PDOException $e) {
+        return false;
+    }
+}
+
 function selectCommentList($photoID, $first, $last) {
     try {
         $sql = "SELECT `comment`.id, `user`.login as user, `comment`.comment as text, `comment`.id_image as img

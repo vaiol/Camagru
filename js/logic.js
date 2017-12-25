@@ -42,6 +42,14 @@ function restorePass(user) {
     });
 }
 
+function changePass(user, code, pass) {
+    return new Promise((resolve, reject) => {
+        ajax_post('POST', 'user', {"user":user, "code":code, "pass1":pass, "pass2":pass}, (response) => {
+            resolve(response);
+        });
+    });
+}
+
 function signup(login, email, pass1, pass2) {
     return new Promise((resolve, reject) => {
         ajax_post('PUT', 'user', {"login":login, "email":email, "pass1":pass1, "pass2":pass2}, (response) => {
@@ -64,6 +72,14 @@ function login(user, pass) {
             } else {
                 reject(403);
             }
+        });
+    });
+}
+
+function confirmMail(code) {
+    return new Promise((resolve, reject) => {
+        ajax_post('CONFIRM', 'user', {"code":code}, (response) => {
+            resolve(response);
         });
     });
 }
@@ -102,7 +118,8 @@ function getCurrentUser() {
 function getRoot() {
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'controller/get-root.php', true);
+
+        xhr.open('GET', 'controller/getRoot.php', true);
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 resolve(xhr.responseText);
@@ -282,8 +299,7 @@ function isLiked(id) {
 /*AVA*/
 
 function sendAva(imgSrc) {
-    ajax_post('PUT', 'user', {"file":imgSrc}, function (e) {
-    });
+    ajax_post('PUT', 'ava', {"file":imgSrc});
 }
 
 

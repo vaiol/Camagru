@@ -96,6 +96,22 @@ function restorePassPhase1($user, $code) {
     }
 }
 
+function restorePassPhase2($user, $code, $pass) {
+    try {
+        $stmt = DB::run("SELECT `id` FROM `user` WHERE `activated` = ? AND `email` = ? AND `activation_code` = ?", [1, $user, $code]);
+        $stmt->rowCount();
+        if ($stmt->rowCount() <= 0)
+            return "user not found";
+        $result = $stmt->fetch();
+        $stmt = DB::run("UPDATE `user` SET `activation_code` = ?, `password` = ? WHERE `id` = ?", ["1", hash('sha256', $pass), $result['id']]);
+        if ($stmt->rowCount() <= 0)
+            return "user not updated";
+        return true;
+    } catch (PDOException $e) {
+        return $e;
+    }
+}
+
 function getUserId($login) {
     try {
         $id = DB::run("SELECT `id` FROM `user` WHERE `login` = ? AND `activated` = ?", [$login, 1])->fetch()['id'];

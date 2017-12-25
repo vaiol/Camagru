@@ -524,3 +524,7 @@ function saveImage() {
     img.src = imageSrc;
 }
 
+function saveImagePHP() {
+    
+}
+

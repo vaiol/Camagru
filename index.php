@@ -1,12 +1,24 @@
+<?php
+function getRoot() {
+    $arr = explode('/', $_SERVER['PHP_SELF']);
+    if(!empty($arr[count($arr)-1])) {
+        unset($arr[count($arr)-1]);
+    }
+    $file = implode('/',$arr);
+    $file = $file.'/';
+    return $file;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>IP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="<?=getRoot()?>">
     <link href="https://fonts.googleapis.com/css?family=Play|Roboto|Saira+Extra+Condensed" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <link rel="stylesheet" type="text/css" href="style/sidebar.css">
     <link rel="stylesheet" type="text/css" href="style/index-page.css">
     <link rel="stylesheet" type="text/css" href="style/photo-page.css">

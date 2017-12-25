@@ -43,6 +43,14 @@ if ($type == 'PUT') {
     }
     registerSend($email, $code);
     print "200";
+} elseif ($type == "CONFIRM") {
+    $code = $_POST['code'];
+    $res = activateUser($code);
+    if ($res === true) {
+        print 200;
+    } else {
+        print "error: ".$code."/".print_r($res);
+    }
 } elseif ($type == "GET") {
     $code = generateRandomString();
     $email = restorePassPhase1($_POST['user'], $code);
@@ -50,13 +58,21 @@ if ($type == 'PUT') {
         print 300;
         return;
     }
+    restoreSend($email, $code);
+    print 200;
 } elseif ($type == "POST") {
+    $user = $_POST['user'];
     $code = $_POST['code'];
     $pass1 = $_POST['pass1'];
-    $pass2 = $_POST['pass1'];
-    $email = restorePassPhase1($_POST['user'], $code);
-    if (!$email) {
-        print 300;
+    $pass2 = $_POST['pass2'];
+    if ($pass1 !== $pass2) {
+        print "Pass do not match!";
         return;
     }
+    $res = restorePassPhase2($user, $code, $pass1);
+    if ($res === true) {
+        print 200;
+        return;
+    }
+    print "Not changed. Because ".$res;
 }

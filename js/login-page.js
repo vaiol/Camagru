@@ -1,7 +1,6 @@
 function openRestore() {
-    // document.querySelector("#restoreForm").classList.remove("none");
-    // document.querySelector("#restButt").classList.add("none");
-    let email =
+    document.querySelector("#restoreForm").classList.remove("none");
+    document.querySelector("#restButt").classList.add("none");
 }
 
 
@@ -193,18 +192,78 @@ function regProcc() {
     });
 }
 
-function restoreProcc() {
-    restorePass(login).then(function (status) {
+function restoreProcc(form) {
+    let formData = new FormData(document.querySelector('#restoreForm'));
+    let user = formData.get("user");
+    restorePass(user).then(function (status) {
         if (status === 200) {
             toastIt("Check your email to restore pass!", 8);
         } else if (status === 300) {
             toastIt("User not found", 5);
+        } else {
+            toastIt("Unexpected error: " + status, 5)
         }
     });
 }
 
-function restoreProccPh2() {
-    let activation_code = window.location.hash;
+function getURLdata(name, url ) {
+    if (!url) url = location.href;
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    let regexS = "[\\?&]"+name+"=([^&#]*)";
+    let regex = new RegExp( regexS );
+    let results = regex.exec( url );
+    return results === null ? null : results[1];
+}
 
+function restoreProccPh2() {
+    let formData = new FormData(document.querySelector('#restorePh2Form'));
+    let code = getURLdata("c");
+    let user = getURLdata("u");
+    let pass1 = formData.get("pass1");
+    let pass2 = formData.get("pass2");
+    if (pass1 !== pass2) {
+        toastIt("pass's don't match!");
+    } else if (!code) {
+        toastIt("activation code not found, your link broken");
+    }
+    else if (!user) {
+        toastIt("user email not found, your link broken");
+    } else {
+        changePass(user, code, pass1).then(function (status) {
+            if (status == 200) {
+                toastIt("Your pass changed successful!!", 8);
+                Router.navigate("login");
+                logout();
+                updateActiveElement();
+            } else {
+                toastIt("Error: " + status, 5)
+            }
+        });
+    }
+}
+
+function confirmMailController() {
+    let code = getURLdata("c");
+    confirmMail(code).then(function (status) {
+        if (status == 200) {
+            let div = document.querySelector(".main-text > .container");
+            div.innerHTML = "Your email confirmed successful, now you can log in!";
+            // let timer = document.createElement("div");
+            // timer.id = "timerCount";
+            // div.appendChild(timer);
+            let distance = 5;
+            let x = setInterval(function() {
+                toastIt("Redirect on index in: " + distance);
+                distance--;
+                if (distance < 0) {
+                    clearInterval(x);
+                    toastIt("Now yo can log in!");
+                    Router.navigate("index");
+                }
+            }, 1000);
+        } else {
+            toastIt("Error: " + status, 5)
+        }
+    });
 }
 

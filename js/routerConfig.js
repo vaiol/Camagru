@@ -4,14 +4,18 @@ let content = document.getElementById('content');
 
 
 function connectStyle(page) {
-    if (page === "index" || uploadedStyle.includes(page)) {
+    let pageName = page;
+    if (pageName === "signup" || pageName === "restore") {
+        pageName = "login";
+    }
+    if (pageName === "index" || uploadedStyle.includes(pageName)) {
         return;
     }
     let link = document.createElement('link');
     link.rel = "stylesheet";
     link.type = "text/css";
-    link.href = "style/"+page+"-page.css";
-    uploadedStyle.push(page);
+    link.href = "style/"+pageName+"-page.css";
+    uploadedStyle.push(pageName);
     document.head.appendChild(link);
 }
 
@@ -26,7 +30,6 @@ function uploadPartials(page, loadScript) {
             content.innerHTML = this.response;
             uploadedPartials[page] = this.response;
             loadScript();
-
         };
     } else {
         content.innerHTML = uploadedPartials[page];
@@ -313,12 +316,21 @@ getRoot().then(function (root) {
         .add(/restore/, function() {
             closePhotoPage(event, 'restore');
             sidebarClose();
-            if (getCurrentUser()) {
-                Router.navigate("profile");
-                return;
-            }
             uploadPartials('restore.htm', function() {
                 indexOpened = false;
+            });
+            toggleActive('');
+        })
+        .add(/confirm/, function() {
+            closePhotoPage(event, 'confirm');
+            sidebarClose();
+            if (getCurrentUser()) {
+                Router.navigate("index");
+                return;
+            }
+            uploadPartials('confirm.htm', function() {
+                indexOpened = false;
+                confirmMailController();
             });
             toggleActive('');
         })
