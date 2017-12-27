@@ -12,8 +12,8 @@ function insertComment($photoID, $userID, $comment) {
 
 function getPhotoEmail($photoID) {
     try {
-        $email = DB::run("SELECT `user`.email FROM `user`, `image` WHERE `user`.id = `image`.id_user AND `image`.id = ?", [$photoID])->fetch()['email'];
-        return $email;
+        $res = DB::run("SELECT `user`.email, `user`.notification FROM `user`, `image` WHERE `user`.id = `image`.id_user AND `image`.id = ?", [$photoID])->fetch();
+        return $res;
     } catch (PDOException $e) {
         return false;
     }

@@ -41,6 +41,13 @@ function openProfilePage() {
     getMyPhotoList(0, photosInPage).then(function (myPhotoList) {
         showPhotos(myPhotoListNode, myPhotoList, photosInPage, buttNext, generateMyPhoto, getMyPhotoList);
     });
+    getNotif().then(function (response) {
+        if (response == 1) {
+            insertNotif(generateNotifButton("DISABLE NOTIFICATIONS", disableNotificationsController));
+        } else {
+            insertNotif(generateNotifButton("ENABLE NOTIFICATIONS", enableNotificationsController));
+        }
+    });
     getCurrentUserAvatar().then((ava) => {
         document.querySelector("#p-author > img").src = ava;
     });
@@ -66,4 +73,50 @@ avaUploader.onload = (loadedImg) => {
 
 function uploadAva() {
     avaUploader.load();
+}
+
+
+function generateNotifButton(content, controller) {
+    let div = document.createElement("div");
+    div.className = "butt";
+    div.id = "p-notif";
+    div.innerHTML = content;
+    div.addEventListener("click", controller);
+    return div;
+}
+
+function insertNotif(butt) {
+    let parent = document.querySelector("#p-butts > .butt").parentNode;
+    let ref = document.querySelector("#p-butts > .butt").nextElementSibling;
+    parent.insertBefore(butt, ref);
+}
+
+function disableNotificationsController() {
+    disableNotifications().then(function (response) {
+        if (response == 1) {
+            let notif = document.querySelector("#p-notif");
+            if (notif) {
+                notif.parentNode.removeChild(notif);
+            }
+            insertNotif(generateNotifButton("ENABLE NOTIFICATIONS", enableNotificationsController));
+            toastIt("Notification disabled!")
+        } else {
+            toastIt("Error: " + response);
+        }
+    });
+}
+
+function enableNotificationsController() {
+    enableNotifications().then(function (response) {
+        if (response == 1) {
+            let notif = document.querySelector("#p-notif");
+            if (notif) {
+                notif.parentNode.removeChild(notif);
+            }
+            insertNotif(generateNotifButton("DISABLE NOTIFICATIONS", disableNotificationsController));
+            toastIt("Notification enabled!")
+        } else {
+            toastIt("Error: " + response);
+        }
+    });
 }

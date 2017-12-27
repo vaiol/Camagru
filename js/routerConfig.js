@@ -226,9 +226,11 @@ function updateActiveElement() {
 
 
 
+
 /*START POINT*/
 getRoot().then(function (root) {
-    Router.config({ mode: 'history', root: root});
+    Router.setRoot(root);
+    rootCache = root;
     let indexOpened = false;
     Router
         .add(/index/, function() {

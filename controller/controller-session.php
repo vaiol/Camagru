@@ -39,8 +39,6 @@ if ($type == 'PUT') {
         $response['status'] = "403";
     }
     print json_encode($response);
-}
-
-if ($type == 'GET') {
+} elseif ($type == 'GET') {
     print getUserName($authorID);
 }

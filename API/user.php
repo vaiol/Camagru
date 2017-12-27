@@ -3,25 +3,12 @@ require_once "DB.php";
 
 function add_user($email, $login, $pass, $code) {
 	try {
-		DB::run("INSERT INTO `user` VALUES (?, ?, ?, ?, ?, ?)", [NULL, $email, $login, hash('sha256', $pass), 0, $code]);
+		DB::run("INSERT INTO `user` VALUES (?, ?, ?, ?, ?, ?, ?)", [NULL, $email, $login, hash('sha256', $pass), 0, $code, 1]);
 	} catch (PDOException $e) {
 		return false;
 	}
 	return true;
 }
-
-function checkUserByEmail($email) {
-    try {
-        $id = DB::run("SELECT `id` FROM `user` WHERE `email` = ?", [$email])->fetch();
-        if ($id) {
-            return true;
-        }
-        return false;
-    } catch (PDOException $e) {
-        return false;
-    }
-}
-
 
 function activateUser($code) {
     try {
@@ -41,6 +28,18 @@ function activateUser($code) {
 function checkUserByLogin($login) {
     try {
         $id = DB::run("SELECT `id` FROM `user` WHERE `login` = ? AND", [$login])->fetch();
+        if ($id) {
+            return true;
+        }
+        return false;
+    } catch (PDOException $e) {
+        return false;
+    }
+}
+
+function checkUserByEmail($email) {
+    try {
+        $id = DB::run("SELECT `id` FROM `user` WHERE `email` = ?", [$email])->fetch();
         if ($id) {
             return true;
         }
@@ -126,28 +125,6 @@ function getUserName($id) {
     try {
         $login = DB::run("SELECT `login` FROM `user` WHERE `id` = ? AND `activated` = ?", [$id, 1])->fetch()['login'];
         return $login;
-    } catch (PDOException $e) {
-        return false;
-    }
-}
-
-function insertSession($userID, $sessionID) {
-    try {
-        DB::run("INSERT INTO `session` VALUES (?, ?, ?)", [null, $userID, $sessionID]);
-        return true;
-    } catch (PDOException $e) {
-        return $e;
-    }
-}
-
-function selectSession($user, $sessionID) {
-    $userID = getUserId($user);
-    try {
-        $id = DB::run("SELECT `id` FROM `session` WHERE `userID` = ? AND `sessionID` = ?", [$userID, $sessionID])->fetch()['id'];
-        if ($id) {
-            return $userID;
-        }
-        return $id;
     } catch (PDOException $e) {
         return false;
     }

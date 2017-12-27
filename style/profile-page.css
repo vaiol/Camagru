@@ -48,10 +48,10 @@
 
 #p-butts > .butt {
     margin: 0;
-    width: 49%;
+    width: 32%;
     height: 40px;
     line-height: 40px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 
@@ -126,6 +126,12 @@
     color: #fff;
 }
 
+@media (max-width: 1200px) {
+    #p-butts > .butt:hover {
+        letter-spacing: 2px;
+    }
+}
+
 @media (max-width: 1920px) {
     .photo .deleteIt {
         margin: -85% -5px 0 -5px;
@@ -147,6 +153,13 @@
     .deleteIt .material-icons {
         font-size: 9.5vw;
     }
+    #p-butts {
+        flex-direction: column;
+    }
+    #p-butts > .butt {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -167,12 +180,4 @@
     #p-author > div {
         font-size: 16px;
     }
-    #p-butts {
-        flex-direction: column;
-    }
-    #p-butts > .butt {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
 }

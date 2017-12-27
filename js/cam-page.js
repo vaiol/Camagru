@@ -11,7 +11,7 @@ let prevY = 0;
 let uploadedImg = null;
 let maskImg = null;
 let maskFlag = false;
-let corsProxy = '/camagru/controller/fetch.php?url=';
+let corsProxy = 'controller/fetch.php?url=';
 let prevCanvasWidth = -1;
 let vRender = null;
 let localStream = [];
@@ -24,7 +24,6 @@ let pcam = null;
 navigator.getUserMedia = navigator.getUserMedia ||
     navigator.webkitGetUserMedia ||
     navigator.mozGetUserMedia;
-
 
 
 let openedCam = false;
@@ -116,6 +115,7 @@ function videoFinish() {
     context = null;
     maskFlag = false;
     pcam = null;
+    uploadedImg = null;
 }
 
 
@@ -128,9 +128,15 @@ function renderFrame() {
     if (errorVideo !== null) {
         document.getElementById('errText').innerHTML = errorVideo;
         document.getElementById('overlay-canvas').style.backgroundColor = '#999999';
+        document.querySelector("#snap").classList.add("disabled");
+        document.getElementById('eff-control').style.display = 'none';
         clearInterval(vRender);
+    } else {
+        document.getElementById('errText').innerHTML = "";
+        document.getElementById('overlay-canvas').style.backgroundColor = 'transparent';
     }
 
+    // console.log(uploadedImg);
     if (uploadedImg === null) {
         //GET PICTURE FROM WEBCAM
         canvas.width = document.getElementById('video').offsetWidth;
@@ -141,12 +147,15 @@ function renderFrame() {
     } else if (uploadedImg) {
         canvas.width = uploadedImg.width;
         canvas.height = uploadedImg.height;
-        console.log('width : ' + uploadedImg.width + '; height: ' + uploadedImg.height);
-        console.log();
         context.drawImage(uploadedImg, 0, 0, canvas.width, canvas.height);
+    } else {
+        errorVideo = "error";
     }
 
     if (maskFlag) {
+        document.querySelector("#snap").classList.remove("disabled");
+        document.getElementById('eff-control').style.display = 'flex';
+
         //Change mask size to the canvas size:
         const smaller = 0.5;
         const ratio = (maskImg.width / maskImg.height);
@@ -170,7 +179,6 @@ function renderFrame() {
         //change moveXY if canvas.width was changed
         const moveRatio = prevCanvasWidth > 0 ? prevCanvasWidth / canvas.width : 1;
         //get new coordinate for mask:
-        let sX = moveX;
         let nextMoveX = shiftX - (moveX / moveRatio) - resizeX / 2;
         let nextMoveY = (moveY / moveRatio) - resizeY / 4;
         //border for moving:
@@ -193,12 +201,19 @@ function renderFrame() {
         }
         //draw mask:
         context.save();
+        if (uploadedImg) {
+            context.translate(canvas.width, 0);
+            context.scale(-1, 1);
+        }
         context.translate(nextMoveX + imgWidth / 2, nextMoveY + imgHeight / 3);
         context.rotate(document.getElementById("rotat").value * Math.PI / 180);
         context.translate((nextMoveX + imgWidth / 2) * -1, (nextMoveY + imgHeight / 3) * -1);
         context.drawImage(maskImg, nextMoveX, nextMoveY, imgWidth, imgHeight);
         context.restore();
 
+    } else {
+        document.querySelector("#snap").classList.add("disabled");
+        document.getElementById('eff-control').style.display = 'none';
     }
 }
 
@@ -380,7 +395,13 @@ imageUploader.onImageError = () => toastIt("Image is broken!");
 imageUploader.onloadend = () => overBoxClose();
 imageUploader.onload = (newImg) => {
     uploadedImg = newImg;
+    errorVideo = null;
     stopStream();
+    if (vRender) {
+        clearInterval(vRender);
+        vRender = null;
+    }
+    vRender = setInterval(renderFrame, 25);
     toastIt("File uploaded successful");
 };
 
@@ -393,7 +414,7 @@ function sendLinkImg() {
     if (link) {
         let img = new Image();
         img.onload = function () {
-            ImageUploader.resize(img, 2000, 2000, function (newImg) {
+            ImageProcessing.resize(img, 2000, 2000, function (newImg) {
                 uploadedImg = newImg;
                 stopStream();
             });
@@ -402,7 +423,7 @@ function sendLinkImg() {
             uploadedImg = null;
             toastIt('IMAGE IS BROKEN!1');
         };
-        img.src = corsProxy + link;
+        img.src = rootCache + corsProxy + link;
         overBoxClose();
     }
 }
@@ -453,7 +474,6 @@ function clearEffect() {
     event.initEvent('input', true, true);
     document.getElementById('rotat').dispatchEvent(event);
     document.getElementById('resize').dispatchEvent(event);
-    document.getElementById('eff-control').style.display = 'none';
     startStream();
 }
 
@@ -466,7 +486,6 @@ function changeEffect(src, loaded) {
             maskSave = newMask.src;
             makePreviewMask(maskSave);
         }
-        document.getElementById('eff-control').style.display = 'flex';
     };
     newMask.onerror = function () {
         toastIt('MASK IS BROKEN');
@@ -502,7 +521,10 @@ function insertAfter(elem, newElem) {
     }
 }
 
-function saveImage() {
+function saveImage(elem) {
+    if (elem.classList.contains('disabled')) {
+        return;
+    }
     let imageSrc = document.getElementById('canvas').toDataURL("image/png");
     let img = new Image();
     img.onload = function () {
@@ -524,7 +546,4 @@ function saveImage() {
     img.src = imageSrc;
 }
 
-function saveImagePHP() {
-    
-}
 

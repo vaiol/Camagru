@@ -41,7 +41,8 @@ try {
                               `login` varchar(22) NOT NULL,
                               `password` varchar(254) NOT NULL,
                               `activated` tinyint(1) NOT NULL,
-                              `activation_code` varchar(10) NOT NULL
+                              `activation_code` varchar(10) NOT NULL,
+                              `notification` tinyint(1) NOT NULL
                             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
     $pdo->query('ALTER TABLE `user`
                                   ADD PRIMARY KEY (`id`),
@@ -92,9 +93,9 @@ try {
 
 
 
-    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`, `activation_code`) VALUES ('1', 'vaiol.ans@gmail.com', 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', '0');");
-    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`, `activation_code`) VALUES ('2', 'alexander.stepano@gmail.com', 'AUTHOR', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', '0');");
-    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`, `activation_code`) VALUES ('3', 'astepano@student.unit.ua', 'Diana', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', '0');");
+    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`, `activation_code`, `notification`) VALUES ('1', 'vaiol.ans@gmail.com', 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', '0', '1');");
+    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`, `activation_code`, `notification`) VALUES ('2', 'alexander.stepano@gmail.com', 'AUTHOR', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', '0', '1');");
+    $pdo->query("INSERT INTO `user` (`id`, `email`, `login`, `password`, `activated`, `activation_code`, `notification`) VALUES ('3', 'astepano@student.unit.ua', 'Diana', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1', '0', '1');");
 
     $pdo->query("INSERT INTO `likes` (`id_user`, `id_image`) VALUES ('1', '1');");
     $pdo->query("INSERT INTO `likes` (`id_user`, `id_image`) VALUES ('1', '2');");

@@ -4,12 +4,18 @@
             <h1>RESTORE PASS</h1>
             <div class="line"></div>
         </div>
-        <form onsubmit="restoreProccPh2(); return false;" id="restorePh2Form" class="signForm">
-            <h3>New pass:</h3>
-            <input size="70" type="password" name="pass1">
-            <h3>Confirm new pass:</h3>
-            <input size="70" type="password" name="pass2">
-            <input type="submit" value="RESTORE">
+        <form onsubmit="restoreProccPh2(); return false;" oninput="formRestoreCheck(this);" id="restorePh2Form" class="signForm">
+            <div>
+                <h3>New pass:</h3>
+                <h4></h4>
+            </div>
+            <input size="70" type="password" name="pass1" oninput="passCheck(this, true)">
+            <div>
+                <h3>Confirm new pass:</h3>
+                <h4></h4>
+            </div>
+            <input size="70" type="password" name="pass2" oninput="pass2Check(this, true)">
+            <input type="submit" value="RESTORE" class="inactiveButt" disabled>
         </form>
     </div>
     <div>

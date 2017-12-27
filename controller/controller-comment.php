@@ -27,8 +27,12 @@ if ($type == 'GET') {
 
 function putComment($photoID, $authorID, $comment) {
     insertComment($photoID, $authorID, $comment);
-    $e = getPhotoEmail($photoID);
+    $arr = getPhotoEmail($photoID);
+    if ($arr['notification'] != 1) {
+        return ;
+    }
     $n = getUserName($authorID);
+    $e = $arr['email'];
     commentSend($e, $photoID, $n, $comment);
 }
 

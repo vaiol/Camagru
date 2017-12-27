@@ -140,6 +140,18 @@ canvas {
 }
 
 
+#control > .butt.disabled {
+    background-color: #969696;
+    color: white;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+}
+
+#control > .butt.disabled:hover {
+    color: white;
+    letter-spacing: 4px;
+    cursor: default;
+}
+
 #control .material-icons {
     font-size: 37px;
 }

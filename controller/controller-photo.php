@@ -59,42 +59,6 @@ function savePhoto($authorID) {
     insertPhoto($photoName, $authorID);
 }
 
-function savePhotoDouble($authorID) {
-    $img1 = $_POST['file1'];
-    $img1 = str_replace('data:image/jpeg;base64,', '', $img);
-    $img1 = str_replace(' ', '+', $img);
-
-    $img2 = $_POST['file2'];
-    $img2 = str_replace('data:image/jpeg;base64,', '', $img);
-    $img2 = str_replace(' ', '+', $img);
-
-    $data1 = base64_decode($img1);
-    $data2 = base64_decode($img2);
-
-    $image1 = imagecreatefromstring($data1);
-    $image2 = imagecreatefromstring($data2);
-
-    imagealphablending($image1, false);
-    imagesavealpha($image1, true);
-    list($width, $height) = getimagesize($image1);
-    imagecopymerge($image1, $image2, $width / 2, $height / 2, 0, 0, $width / 2, $height / 2, 100); //have to play with these numbers for it to work for you, etc.
-
-
-
-
-    //SAVE ORIGINAL PHOTO WITH SMALL COMPRESSION
-    $time = round(microtime(1) * 1000);
-    $photoName = $authorID.$time.".jpg";
-    $photoNameJPG = $authorID.$time.".jpg";
-    imagejpeg($image1, UPLOAD_DIR.$photoName, 90);
-    //RESIZE CROP AND COMPRESS PHOTO
-    $image = resize_image($image1, 425, 425);
-    $image = crop_image($image);
-    imagejpeg($image, COMPRESSED_DIR.$photoNameJPG, 25);
-    //SAVE PHOTO TO DB
-    insertPhoto($photoName, $authorID);
-}
-
 function removePhoto($authorID, $id) {
     $photo = selectPhotoOwner($id);
     if ($photo['id_user'] != $authorID) {
@@ -114,10 +78,6 @@ function removePhoto($authorID, $id) {
     deletePhoto($id, $authorID);
 }
 
-
-
-
-
 function getBase64Src($array, $dir) {
     foreach ($array as $key => $elem) {
         $path = $dir.$elem['name'];
@@ -129,7 +89,6 @@ function getBase64Src($array, $dir) {
     }
     return $array;
 }
-
 
 function getMyPhotoList($authorID, $first, $last)
 {
@@ -156,6 +115,31 @@ function getFeaturedPhotoList($max)
     print $result;
 }
 
+function savePhotoDouble($authorID) {
+    $img1 = $_POST['file'];
+    $img1 = str_replace('data:image/jpeg;base64,', '', $img1);
+    $img1 = str_replace(' ', '+', $img1);
+    $img2 = $_POST['file1'];
+    $img2 = str_replace('data:image/jpeg;base64,', '', $img2);
+    $img2 = str_replace(' ', '+', $img2);
+    $data1 = base64_decode($img1);
+    $data2 = base64_decode($img2);
+    $image1 = imagecreatefromstring($data1);
+    $image2 = imagecreatefromstring($data2);
+    imagealphablending($image1, false);
+    imagesavealpha($image1, true);
+    list($width, $height) = getimagesize($image1);
+    imagecopymerge($image1, $image2, 0, 0, 0, 0, $width, $height, 100);
+    $time = round(microtime(1) * 1000);
+    $photoName = $authorID.$time.".jpg";
+    $photoNameJPG = $authorID.$time.".jpg";
+    imagejpeg($image1, UPLOAD_DIR.$photoName, 90);
+    $image = resize_image($image1, 425, 425);
+    $image = crop_image($image);
+    imagejpeg($image, COMPRESSED_DIR.$photoNameJPG, 25);
+    insertPhoto($photoName, $authorID);
+}
+
 function getPhotoByID($id) {
     $result = selectPhotoByID($id);
     $path = UPLOAD_DIR.$result['name'];
@@ -172,8 +156,8 @@ $type = $_POST['type'];
 $authorID = selectSession($_COOKIE["name"], $_COOKIE["sessionID"]);
 
 
-if ($type == 'PUT') {
-    savePhoto($authorID);
+if ($type == 'PUD') {
+    savePhotoDouble($authorID);
 } elseif ($type == 'GET') {
     $list = $_POST['list'];
     if ($list === 'SINGLE') {
@@ -198,8 +182,8 @@ if ($type == 'PUT') {
 } elseif ($type == 'DELETE') {
     $idPhoto = $_POST['id'];
     removePhoto($authorID, $idPhoto);
-} elseif ($type == 'DOUBLE') {
-    savePhotoDouble($authorID);
+} elseif ($type == 'PUT') {
+    savePhoto($authorID);
 }
 
 

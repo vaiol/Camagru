@@ -1,6 +1,7 @@
 let userCache = null;
 let avatarCache = null;
 let photoListCache = null;
+let rootCache = null;
 
 let deletedPhotoCount = 0;
 
@@ -76,6 +77,12 @@ function login(user, pass) {
     });
 }
 
+function logout() {
+    userCache = undefined;
+    deleteCookie("name");
+    deleteCookie("sessionID");
+}
+
 function confirmMail(code) {
     return new Promise((resolve, reject) => {
         ajax_post('CONFIRM', 'user', {"code":code}, (response) => {
@@ -84,11 +91,35 @@ function confirmMail(code) {
     });
 }
 
-function logout() {
-    userCache = undefined;
-    deleteCookie("name");
-    deleteCookie("sessionID");
+
+/*NOTIFICATIONS FUNCTIONS */
+
+function getNotif() {
+    return new Promise((resolve, reject) => {
+        ajax_post('GET', 'notification', null, (response) => {
+            resolve(response);
+        });
+    });
 }
+
+function disableNotifications() {
+    return new Promise((resolve, reject) => {
+        ajax_post('DELETE', 'notification', null, (response) => {
+            resolve(response);
+        });
+    });
+}
+
+function enableNotifications() {
+    return new Promise((resolve, reject) => {
+        ajax_post('PUT', 'notification', null, (response) => {
+            resolve(response);
+        });
+    });
+}
+
+
+
 
 
 

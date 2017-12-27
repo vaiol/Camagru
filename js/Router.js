@@ -1,67 +1,55 @@
-var Router = {
-    routes: [],
-    mode: null,
-    root: '/',
-    config: function(options) {
-        this.mode = options && options.mode && options.mode === 'history' && !!(history.pushState) ? 'history' : 'hash';
-        this.root = options && options.root ? '/' + this.clearSlashes(options.root) + '/' : '/';
+class RouterC {
+    constructor(mode, root) {
+        this.setMode(mode);
+        this.setRoot(root);
+        this.routes = [];
+        this.interval = null;
         return this;
-    },
-    getFragment: function() {
-        var fragment = '';
+    }
+    setMode(mode) {
+        this.mode = mode && mode === 'history' && !!(history.pushState) ? 'history' : 'hash';
+        return this;
+    }
+    setRoot(root) {
+        this.root = root ? '/' + RouterC._clearSlashes(root) + '/' : '/';
+        return this;
+    }
+    getFragment() {
+        let fragment = '';
         if(this.mode === 'history') {
-            fragment = this.clearSlashes(decodeURI(location.pathname + location.search));
+            fragment = RouterC._clearSlashes(decodeURI(location.pathname + location.search));
             fragment = fragment.replace(/\?(.*)$/, '');
-            fragment = this.root !== '/' ? fragment.replace(this.clearSlashes(this.root), '') : fragment;
+            fragment = this.root !== '/' ? fragment.replace(RouterC._clearSlashes(this.root), '') : fragment;
         } else {
-            var match = window.location.href.match(/#(.*)$/);
+            let match = window.location.href.match(/#(.*)$/);
             fragment = match ? match[1] : '';
         }
-        return this.clearSlashes(fragment);
-    },
-    clearSlashes: function(path) {
-        return path.toString().replace(/\/$/, '').replace(/^\//, '');
-    },
-    add: function(re, handler) {
-        if (typeof re == 'function') {
+        return RouterC._clearSlashes(fragment);
+    }
+    add(re, handler) {
+        if (typeof re === 'function') {
             handler = re;
             re = '';
         }
-        this.routes.push({ re: re, handler: handler});
+        this.routes.push({ 'rout': re, 'handler': handler});
         return this;
-    },
-    remove: function(param) {
-        for(var i=0, r; i<this.routes.length, r = this.routes[i]; i++) {
-            if(r.handler === param || r.re.toString() === param.toString()) {
-                this.routes.splice(i, 1);
-                return this;
-            }
-        }
-        return this;
-    },
-    flush: function() {
-        this.routes = [];
-        this.mode = null;
-        this.root = '/';
-        clearInterval(this.interval);
-        return this;
-    },
-    check: function(f) {
+    }
+    check(f) {
         let fragment = f || this.getFragment();
-        for(let i=0; i < this.routes.length; i++) {
-            let match = fragment.match(this.routes[i].re);
-            if(match) {
+        for(let i = 0; i < this.routes.length; i++) {
+            let match = fragment.match(this.routes[i]['rout']);
+            if(match && match['input'] === match['0']) {
                 match.shift();
-                this.routes[i].handler.apply({}, match);
+                this.routes[i]['handler'].apply({}, match);
                 return this;
             }
         }
         return this;
-    },
-    listen: function() {
-        var self = this;
-        var current = self.getFragment();
-        var fn = function() {
+    }
+    listen() {
+        let self = this;
+        let current = self.getFragment();
+        let fn = function() {
             if(current !== self.getFragment()) {
                 current = self.getFragment();
                 self.check(current);
@@ -71,18 +59,18 @@ var Router = {
         clearInterval(this.interval);
         this.interval = setInterval(fn, 50);
         return this;
-    },
-    clearListener: function() {
-        clearInterval(this.interval);
-        return this;
-    },
-    navigate: function(path) {
+    }
+    navigate(path) {
         path = path ? path : '';
         if(this.mode === 'history') {
-            history.pushState(null, null, this.root + this.clearSlashes(path));
+            history.pushState(null, null, this.root + RouterC._clearSlashes(path));
         } else {
             window.location.href = window.location.href.replace(/#(.*)$/, '') + '#' + path;
         }
         return this;
     }
-};
+    static _clearSlashes(path) {
+        return path.toString().replace(/\/$/, '').replace(/^\//, '');
+    }
+}
+let Router = new RouterC('history');

@@ -31,6 +31,8 @@ function loginProcc() {
 }
 
 
+/*Login */
+
 
 let logF = false;
 let emaF = false;
@@ -67,7 +69,6 @@ function loginCheck(elem) {
     }
 }
 
-
 function emailCheck(elem) {
     let val = elem.value;
     elem.value = val.trim();
@@ -85,32 +86,35 @@ function emailCheck(elem) {
     }
 }
 
-function passCheck(elem) {
+const minPassLength = 6;
+const maxPassLength = 100;
+
+function passCheck(elem, flag) {
     let val = elem.value;
-    if (val.length < 7) {
-        addErrToElem(elem, "minimum 7 symbols");
-    } else if (val.length > 100) {
-        addErrToElem(elem, "maximum 100 symbols");
+    if (val.length < minPassLength) {
+        addErrToElem(elem, "minimum " + minPassLength + " symbols");
+    } else if (val.length > maxPassLength) {
+        addErrToElem(elem, "maximum " + maxPassLength + " symbols");
     } else {
         removeErrToElem(elem);
     }
     if (val === '') {
         removeErrToElem(elem);
     }
-    pass2Check(elem.nextElementSibling.nextElementSibling);
+    return pass2Check(elem.nextElementSibling.nextElementSibling, flag);
 }
 
-function pass2Check(elem) {
+function pass2Check(elem, flag) {
     let val = elem.value;
     let prevInput = elem.previousElementSibling.previousElementSibling;
     if (val !== prevInput.value) {
         addErrToElem(elem, "pass don't match");
         passF = false;
-    } else if (val.length < 7) {
-        addErrToElem(elem, "minimum 7 symbols");
+    } else if (val.length < minPassLength) {
+        addErrToElem(elem, "minimum " + minPassLength + " symbols");
         passF = false;
-    } else if (val.length > 100) {
-        addErrToElem(elem, "maximum 100 symbols");
+    } else if (val.length > maxPassLength) {
+        addErrToElem(elem, "maximum " + maxPassLength + " symbols");
         passF = false;
     } else {
         passF = true;
@@ -118,6 +122,9 @@ function pass2Check(elem) {
     }
     if (prevInput.value === '' || val === '') {
         removeErrToElem(elem);
+    }
+    if (flag) {
+        return passF;
     }
 }
 
@@ -192,7 +199,38 @@ function regProcc() {
     });
 }
 
-function restoreProcc(form) {
+
+
+function confirmMailController() {
+    let code = getURLdata("c");
+    confirmMail(code).then(function (status) {
+        if (status == 200) {
+            let div = document.querySelector(".main-text > .container");
+            div.innerHTML = "Your email confirmed successful, now you can log in!";
+            // let timer = document.createElement("div");
+            // timer.id = "timerCount";
+            // div.appendChild(timer);
+            let distance = 5;
+            let x = setInterval(function() {
+                toastIt("Redirect on index in: " + distance);
+                distance--;
+                if (distance < 0) {
+                    clearInterval(x);
+                    toastIt("Now yo can log in!");
+                    Router.navigate("index");
+                }
+            }, 1000);
+        } else {
+            toastIt("Error: " + status, 5)
+        }
+    });
+}
+
+
+/*Restore*/
+
+
+function restoreProcc() {
     let formData = new FormData(document.querySelector('#restoreForm'));
     let user = formData.get("user");
     restorePass(user).then(function (status) {
@@ -242,28 +280,12 @@ function restoreProccPh2() {
     }
 }
 
-function confirmMailController() {
-    let code = getURLdata("c");
-    confirmMail(code).then(function (status) {
-        if (status == 200) {
-            let div = document.querySelector(".main-text > .container");
-            div.innerHTML = "Your email confirmed successful, now you can log in!";
-            // let timer = document.createElement("div");
-            // timer.id = "timerCount";
-            // div.appendChild(timer);
-            let distance = 5;
-            let x = setInterval(function() {
-                toastIt("Redirect on index in: " + distance);
-                distance--;
-                if (distance < 0) {
-                    clearInterval(x);
-                    toastIt("Now yo can log in!");
-                    Router.navigate("index");
-                }
-            }, 1000);
-        } else {
-            toastIt("Error: " + status, 5)
-        }
-    });
+function formRestoreCheck(elem) {
+    if (passF) {
+        elem.lastElementChild.classList.remove('inactiveButt');
+        elem.lastElementChild.disabled = false;
+    } else {
+        elem.lastElementChild.classList.add('inactiveButt');
+        elem.lastElementChild.disabled = true;
+    }
 }
-
