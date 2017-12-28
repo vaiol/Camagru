@@ -433,13 +433,21 @@ footer .container {
 
 .social {
     width: 20%;
-    display: inline-block;
+    display: inline-flex;
+    cursor: pointer;
+    border-radius: 50%;
+    height: 60px;
 }
 
 .social > img {
     width: 100%;
-    cursor: pointer;
 }
+
+.social:hover {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.2);
+}
+
+
 
 
 h1 {

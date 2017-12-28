@@ -167,8 +167,8 @@ function regProcc() {
         }
         return;
     }
-    if (pass1.length < 7) {
-        toastIt("Password must be at least 7 symbols!", 5);
+    if (pass1.length < minPassLength) {
+        toastIt("Password must be at least " + minPassLength + " symbols!", 5);
         return;
     }
     if (pass1.length > 100) {
@@ -207,9 +207,6 @@ function confirmMailController() {
         if (status == 200) {
             let div = document.querySelector(".main-text > .container");
             div.innerHTML = "Your email confirmed successful, now you can log in!";
-            // let timer = document.createElement("div");
-            // timer.id = "timerCount";
-            // div.appendChild(timer);
             let distance = 5;
             let x = setInterval(function() {
                 toastIt("Redirect on index in: " + distance);

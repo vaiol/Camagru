@@ -14,11 +14,12 @@ function getRoot() {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>IP</title>
+    <title>Camagru</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="<?=getRoot()?>">
-    <link href="https://fonts.googleapis.com/css?family=Play|Roboto|Saira+Extra+Condensed" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Play|Roboto|Saira+Extra+Condensed">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" type="text/css" href="style/sidebar.css">
     <link rel="stylesheet" type="text/css" href="style/index-page.css">
     <link rel="stylesheet" type="text/css" href="style/photo-page.css">
@@ -74,25 +75,26 @@ function getRoot() {
         <div class="container">
             <div class="column s8">
                 <h2>About Project</h2>
-                <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h3>
+                <h3>App’s users should be able to select an image in a list of superposable images (for
+                    instance a picture frame, or other “we don’t wanna know what you are using this for”
+                    objects), take a picture with his/her webcam and admire the result that should be mixing
+                    both pictures. All captured images should be public, likeables and commentable.</h3>
             </div>
             <div class="column s1"></div>
             <div class="column s3">
                 <h2>Connect</h2>
-                <div class="social">
+                <a target="_blank" href="https://github.com/vaiol" class="social">
                     <img src="img/social-github.png" alt="github">
-                </div>
-                <div class="social">
+                </a>
+                <a target="_blank" href="https://www.linkedin.com/in/astepano/" class="social">
                     <img src="img/social-linkedin.png" alt="linkedin">
-                </div>
-                <div class="social">
+                </a>
+                <a target="_blank" href="https://www.google.com/+AlexanderStepanovans" class="social">
                     <img src="img/social-google.png" alt="google">
-                </div>
-                <div class="social">
+                </a>
+                <a target="_blank" href="http://telegram.me/astepano" class="social">
                     <img src="img/social-telegram.png" alt="telegram">
-                </div>
+                </a>
             </div>
         </div>
     </div>
